@@ -1,5 +1,6 @@
 """Metadata-only comparability checks for existing frozen embeddings."""
 from __future__ import annotations
+import hashlib
 from collections import Counter
 from typing import Any, Iterable
 
@@ -31,4 +32,29 @@ def alignment_contract(labels: Iterable[Any], donors: Iterable[Any], primary: di
         result["reason"] = "labels, donor counts and registered split names match"
     return result
 
-__all__ = ["alignment_contract"]
+def sequence_digest(values: Iterable[Any]) -> str:
+    """Hash an ordered metadata sequence with unambiguous boundaries."""
+    digest = hashlib.sha256()
+    for value in values:
+        encoded = str(value).encode("utf-8")
+        digest.update(len(encoded).to_bytes(8, "big"))
+        digest.update(encoded)
+    return digest.hexdigest()
+
+def metadata_sequence_contract(labels: Iterable[Any], donors: Iterable[Any], reference_labels: Iterable[Any], reference_donors: Iterable[Any]) -> dict[str, Any]:
+    """Verify ordered label/donor metadata without claiming barcode identity."""
+    y = list(map(str, labels)); b = list(map(str, donors))
+    ry = list(map(str, reference_labels)); rb = list(map(str, reference_donors))
+    label_match = y == ry; donor_match = b == rb
+    return {
+        "status": "PASS" if label_match and donor_match else "NOT_VERIFIED",
+        "n_cells": len(y),
+        "labels_sequence_match": label_match,
+        "donors_sequence_match": donor_match,
+        "metadata_sequence_verified": label_match and donor_match,
+        "barcode_identity_claim": False,
+        "metadata_sequence_sha256": sequence_digest([*y, *b]),
+        "reference_metadata_sequence_sha256": sequence_digest([*ry, *rb]),
+    }
+
+__all__ = ["alignment_contract", "metadata_sequence_contract", "sequence_digest"]

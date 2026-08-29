@@ -12,7 +12,9 @@ make the score interpretable. This package treats those conditions as a small co
 The same interface accepts a classical expression representation or an already computed
 frozen scFM embedding. Before any readout is fitted, the alignment helper checks complete
 label and donor-count maps and the presence of registered split donors. A mismatch is
-returned as NOT_COMPARABLE; no performance number is imputed.
+returned as NOT_COMPARABLE; no performance number is imputed. The release example carries
+six configurations spanning scGPT, Geneformer, CellPLM, UCE, and scFoundation, with an
+ordered metadata verification flag kept separate from barcode identity.
 
 This is an application and software contribution: it gives analysts a reproducible way
 to decide whether a transfer score is sufficiently specified for a claim and where an
