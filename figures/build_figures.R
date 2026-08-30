@@ -10,7 +10,7 @@ out <- file.path(root, "figures", "output")
 dir.create(out, recursive = TRUE, showWarnings = FALSE)
 draw <- function() {
   par(mfrow = c(1, 2), mar = c(5, 4, 3, 1), las = 1)
-  barplot(primary$median_auroc, names.arg = c("SC31", "SC32", "SC33"), ylim = c(0, 1), col = c("#246B8F", "#C47A2C", "#4C8C61"), ylab = "Median type-level AUROC", main = "(A) Role-labelled atlas measurements")
+  barplot(primary$median_auroc, names.arg = c("Lung", "Liver", "Adult heart"), ylim = c(0, 1), col = c("#246B8F", "#C47A2C", "#4C8C61"), ylab = "Median type-level AUROC", main = "(A) Role-labelled atlas measurements")
   text(seq_along(primary$median_auroc), primary$median_auroc, sprintf("%.3f", primary$median_auroc), pos = 3, font = 2)
   barplot(compat$median_auroc, names.arg = compat$model, ylim = c(0, 1), col = "#5B6FA5", ylab = "Median AUROC", las = 2, cex.names = 0.72, main = "(B) Six frozen-scFM configurations")
   segments(seq_along(compat$median_auroc), compat$auroc_min, seq_along(compat$median_auroc), compat$auroc_max, lwd = 2)

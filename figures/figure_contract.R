@@ -6,5 +6,7 @@ primary <- read.csv(file.path(root, "examples", "primary_estimands.csv"), string
 compat <- read.csv(file.path(root, "examples", "compatibility_summary.csv"), stringsAsFactors = FALSE)
 if (nrow(primary) != 3L || nrow(compat) != 6L) stop("row contract drift")
 if (any(abs(primary$median_auroc - 0.912) < 1e-12)) stop("forbidden stale value")
+if (!setequal(primary$atlas, c("Lung atlas", "Liver atlas", "Adult-heart atlas"))) stop("semantic atlas label drift")
+if (!"Geneformer (compact)" %in% compat$model) stop("semantic model label drift")
 if (!file.exists(file.path(root, "figures", "output", "primary_and_compatibility.pdf"))) stop("figure output missing")
 cat("public figure contract PASS\n")
