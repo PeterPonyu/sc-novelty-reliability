@@ -1,4 +1,7 @@
 \documentclass[border=3pt]{standalone}
+% pdfTeX otherwise records the included panel path under /PTEX.FileName, so a
+% reader who compiles this wrapper would ship their own directory layout.
+\pdfsuppressptexinfo=-1
 \usepackage{graphicx}
 \usepackage{tikz}
 \begin{document}
