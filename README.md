@@ -1,7 +1,7 @@
 # sc-novelty-reliability
 
 Release-safe reference implementation of a reliability contract for within-atlas,
-donor-held-out zero-shot novel-cell-type scoring (v0.1.0).
+donor-held-out zero-shot novel-cell-type scoring (v0.1.1).
 
 The package makes the operating conditions travel with a score: a registered estimand,
 group split, calibration-only temperature fit, selective risk--coverage points, and a
