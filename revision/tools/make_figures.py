@@ -115,7 +115,8 @@ def diagonal(ax,lo=0,hi=1):
 def hchance(ax):ax.axhline(.5,color='#6C727B',lw=.75,ls='--')
 def vchance(ax):ax.axvline(.5,color='#6C727B',lw=.75,ls='--')
 
-def heat(ax,frame,vmin=0,vmax=1,cmap='viridis',fmt=None,label='AUROC',labelsize=7):
+def heat(ax,frame,vmin=0,vmax=1,cmap='viridis',fmt=None,label='AUROC',labelsize=7,
+         compact_numbers=None,adaptive_contrast=False,colorbar_title_pad=4):
     v=frame.to_numpy(float);cm=plt.get_cmap(cmap).copy();cm.set_bad('#F0F2F4')
     im=ax.imshow(v,vmin=vmin,vmax=vmax,cmap=cm,aspect='auto',interpolation='nearest')
     ax.set_xticks(range(frame.shape[1]),frame.columns);ax.set_yticks(range(frame.shape[0]),frame.index)
@@ -127,13 +128,24 @@ def heat(ax,frame,vmin=0,vmax=1,cmap='viridis',fmt=None,label='AUROC',labelsize=
             for j in range(v.shape[1]):
                 if np.isfinite(v[i,j]):
                     fraction=(v[i,j]-vmin)/(vmax-vmin)
-                    ax.text(j,i,(format(v[i,j],fmt).replace('-0.','−.').replace('0.','.',1) if frame.shape[1]>=5 else format(v[i,j],fmt)),ha='center',va='center',fontsize=6.8,color='white' if fraction<.45 else '#1A232B')
+                    compact=frame.shape[1]>=5 if compact_numbers is None else compact_numbers
+                    text=format(v[i,j],fmt)
+                    if compact:text=text.replace('-0.','−.').replace('0.','.',1)
+                    foreground='white' if fraction<.45 else '#1A232B'
+                    if adaptive_contrast:
+                        # Both ends of RdBu are dark. Choose black/white from
+                        # the displayed cell color rather than its signed value.
+                        rgb=np.array(cm(im.norm(v[i,j]))[:3])
+                        linear=np.where(rgb<=.04045,rgb/12.92,((rgb+.055)/1.055)**2.4)
+                        luminance=linear @ np.array([.2126,.7152,.0722])
+                        foreground='white' if 1.05/(luminance+.05)>(luminance+.05)/.05 else 'black'
+                    ax.text(j,i,text,ha='center',va='center',fontsize=6.8,color=foreground)
                 else:ax.text(j,i,'-',ha='center',va='center',color='#818A94')
     pos=ax.get_position();cax=ax.figure.add_axes([pos.x1+.008,pos.y0+.025,.008,pos.height-.05])
     ax._colorbar_axes=cax;cb=ax.figure.colorbar(im,cax=cax);cb.outline.set_visible(False);cb.ax.tick_params(labelsize=6.5,length=2,pad=2)
     # Keep scale headings in the reserved colorbar margin, never over data.
     heading='log10\n(n+1)' if label=='log10(n+1)' else label
-    cb.ax.set_title(heading,fontsize=6.5,pad=4,loc='left')
+    cb.ax.set_title(heading,fontsize=6.5,pad=colorbar_title_pad,loc='left')
     return im
 
 def distribution(ax,frame,column,group,groups,colorset=None,labels=None,limits=None):
@@ -291,7 +303,7 @@ def figure4():
         d=DS[DS.atlas==atlas];frame=d.pivot_table(index='test_donor',columns='calibration_donor',values='auroc',aggfunc='median')
         short=lambda v:v.replace('ASK','').replace('_P1TLH','').replace('_P2TLH','').replace('_P3TLH','').replace('_P4TLH','').replace('_P5TLH','')
         frame.index=[short(v) for v in frame.index];frame.columns=[short(v) for v in frame.columns]
-        heat(ax[i],frame,cmap='viridis',fmt='.2f',label='Median',labelsize=6.8)
+        heat(ax[i],frame,cmap='viridis',fmt='.2f',label='Median',labelsize=6.8,compact_numbers=True)
         ax[i].set_xlabel('Calibration donor');ax[i].set_ylabel('Held donor')
     a=ax[3]
     for j,atlas in enumerate(ORDER):
@@ -391,7 +403,7 @@ def figure7():
         a.axvline(0,color='#8A939C',ls='--',lw=.7);a.set_ylim(0,1.03);a.set_xlabel('Held-score log-odds shift');a.set_ylabel(lab)
     a=ax[5];d=ST.groupby('shift').auroc.quantile([.25,.5,.75]).unstack();a.plot(d.index,d[.5],'-o',ms=4,color='#396FAC');a.fill_between(d.index,d[.25],d[.75],color='#396FAC',alpha=.17,lw=0);a.set_ylim(0,1);a.set_xlabel('Held-score log-odds shift');a.set_ylabel('AUROC; median and IQR')
     a.text(.02,.05,f"Maximum per-task change\n= {ST.auroc_difference.abs().max():.1f}",transform=a.transAxes,fontsize=8)
-    a=ax[6];d=PV[PV.method=='msp_temperature'].pivot_table(index='nominal_known_coverage',columns='novel_prevalence',values='risk',aggfunc='median');d.index=[f'{v:.0%}' for v in d.index];d.columns=[f'{v:.0%}' for v in d.columns];heat(a,d,vmin=0,vmax=1,cmap='magma',fmt='.2f',label='Risk');a.set_xlabel('Novel-cell prevalence');a.set_ylabel('Calibration-known coverage')
+    a=ax[6];d=PV[PV.method=='msp_temperature'].pivot_table(index='nominal_known_coverage',columns='novel_prevalence',values='risk',aggfunc='median');d.index=[f'{v:.0%}' for v in d.index];d.columns=[f'{v:.0%}' for v in d.columns];heat(a,d,vmin=0,vmax=1,cmap='magma',fmt='.2f',label='Risk',colorbar_title_pad=9);a.set_xlabel('Novel-cell prevalence');a.set_ylabel('Calibration-known coverage')
     a=ax[7];donors=sorted(ST.test_donor.unique());cols=dict(zip(donors,['#218572','#396FAC','#B66483','#C28B29']))
     for donor in donors:
         d=ST[ST.test_donor==donor].groupby('shift').known_coverage.median();a.plot(d.index,d,'-o',ms=3,color=cols[donor],label=donor,lw=1.2)
@@ -408,7 +420,7 @@ def figure8():
     for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
     hchance(a)
     a=ax[2];data=FM.melt(id_vars=['model'],value_vars=['risk_0.60','risk_0.70','risk_0.80','risk_0.90'],var_name='q',value_name='risk');data['coverage']=data.q.str.replace('risk_','').astype(float)
-    curves(a,data,'coverage','risk','model',MFO,cmap,dict(zip(MFO,MFL)),band=False);a.set_xlabel('Requested held-mixture coverage');a.set_ylabel('Median selective risk');a.legend(frameon=False,ncol=2,fontsize=6.2,loc='upper left')
+    curves(a,data,'coverage','risk','model',MFO,cmap,dict(zip(MFO,MFL)),band=False);a.set_xlabel('Requested held-mixture coverage');a.set_ylabel('Median selective risk');a.set_ylim(-.003,.22);a.legend(frameon=False,ncol=2,fontsize=6.2,loc='upper left')
     a=ax[3]
     for m in MFO:
         d=FM[FM.model==m];a.scatter(d.brier,d.ece,s=18,color=cmap[m],alpha=.8)
@@ -417,7 +429,7 @@ def figure8():
     a=ax[5];distribution(a,FM,'temperature','model',MFO,cmap,labels=MFL);a.set_ylabel('Calibration temperature');a.tick_params(axis='x',rotation=35)
     for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
     a.axhline(1,color='#8A939C',ls='--',lw=.8)
-    a=ax[6];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO].corr(method='spearman');frame.index=MFL;frame.columns=MFL;heat(a,frame,vmin=-1,vmax=1,cmap='RdBu_r',fmt='.2f',label='Rank r',labelsize=6.5);a.tick_params(axis='x',rotation=35)
+    a=ax[6];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO].corr(method='spearman');frame.index=MFL;frame.columns=MFL;heat(a,frame,vmin=-1,vmax=1,cmap='RdBu_r',fmt='.2f',label='Rank r',labelsize=6.5,adaptive_contrast=True);a.tick_params(axis='x',rotation=35)
     for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
     a=ax[7];d=FM.groupby('type').auroc.agg(['min','median','max']).sort_values('median');y=np.arange(len(d));a.hlines(y,d['min'],d['max'],color='#778999',lw=2);a.scatter(d['median'],y,color='#396FAC',s=18);a.set_yticks(y,[v.replace('Transformed epithelium','Transformed epi.') for v in d.index],fontsize=6.7);a.set_xlabel('Across-configuration AUROC range');a.set_xlim(0,1.03);vchance(a)
     save(fig,'8')

@@ -19,6 +19,10 @@ python tools/make_figures.py
 
 The [revision directory](revision/) contains the same analysis code and derived records without the prediction arrays. Its README specifies software and raw-input replay requirements. Local path prefixes are redacted in the public provenance records; original and exported hashes are recorded separately. Every numerical CSV and saved prediction array retains its original bytes.
 
+## Figure readability after v0.2.0
+
+The default branch includes display corrections after the immutable v0.2.0 release: consistent decimals in Figure 4A, colorbar spacing in Figure 7G, legend clearance in Figure 8C, and cell-color-based text contrast in Figure 8G. No plotted scientific arrays, numerical CSVs or saved predictions change. To reproduce the final proof figures from the complete v0.2.0 archive, replace its `tools/make_figures.py` with [the corrected script](revision/tools/make_figures.py), or apply [the exact patch](revision/figure-readability.patch) from the extracted archive root with `patch -p1 < figure-readability.patch`, then run `python tools/make_figures.py`. The supplied manuscript source packages contain the corresponding final artwork. The original tag and release asset remain unchanged.
+
 ## Reference interface
 
 The dependency-light interface and compact examples remain available:

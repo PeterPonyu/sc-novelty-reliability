@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased display corrections
+
+Clarifies heatmap decimals, colorbar headings, legend clearance and annotation contrast in Figures 4, 7 and 8. Scientific arrays and saved results are unchanged. An exact patch updates the v0.2.0 archive without replacing its immutable tag or release asset.
+
 ## Version 0.2.0 17 October 2026
 
 Adds reproducible pulmonary score, known-class calibration, calibration-selected rejection and monotone-shift analyses. Exposes complete saved donor-assignment, specification, representation and cached-context records; supplies paired aggregation intervals and sensitivity analyses. The standalone release archive includes saved prediction arrays. The public export removes local home-directory prefixes while preserving numerical CSVs and array bytes and separately recording provenance changes.

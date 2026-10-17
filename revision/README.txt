@@ -1,4 +1,4 @@
-This Git directory contains the v0.2.0 analysis code and derived records. Saved prediction arrays are supplied in numerical-reproduction-v0.2.0.zip on the v0.2.0 GitHub release. Extract that complete archive to a separate working directory before running saved-prediction checks.
+This Git directory contains the v0.2.0 analysis code and derived records plus the display-only corrections described in the root README. The immutable v0.2.0 archive retains the original figures; figure-readability.patch updates its plotting script to the final proof layout. Saved prediction arrays are supplied in numerical-reproduction-v0.2.0.zip on the v0.2.0 GitHub release. Extract that complete archive to a separate working directory before running saved-prediction checks.
 
 SC NOVELTY RELIABILITY VERSION 0.2.0
 
