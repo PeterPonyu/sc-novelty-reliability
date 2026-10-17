@@ -1,0 +1,1150 @@
+{
+  "sc31_fetal_lung_pns_novel": {
+    "experiment": "SC31_fetal_lung_pns_novel",
+    "kill_thresholds_preregistered": {
+      "min_novel_types": 2,
+      "min_n_per_target": 30,
+      "novel_auroc_ci_lo_gt": 0.5,
+      "shuffle_abs_delta_gt": 0.02,
+      "acc80_gt_forced": true,
+      "coarsen_schwann_to_fibroblast": false,
+      "random_cell_split": false
+    },
+    "metric_preregistered": "novel-type AUROC of (1-maxprob) on held PNS vs held GSE donor; bootstrap 95% CI; label-shuffle control; acc@80cov vs forced",
+    "split": "reference=GSE130148 leave-largest-donor-out; query=PNS leave-largest-donor-out; not random cells",
+    "held_pns_donor": "BRC2188",
+    "held_pns_n": 389,
+    "query_only_types": [
+      "Schwann cell",
+      "Schwann cell precursor",
+      "immature Schwann cell",
+      "neural progenitor cell",
+      "neuron"
+    ],
+    "n_novel": 5,
+    "held_type_n": {
+      "neuron": 204,
+      "Schwann cell precursor": 181,
+      "immature Schwann cell": 3,
+      "neural progenitor cell": 1
+    },
+    "full_pns_type_n": {
+      "neuron": 270,
+      "Schwann cell precursor": 192,
+      "Schwann cell": 139,
+      "immature Schwann cell": 33,
+      "neural progenitor cell": 15
+    },
+    "gse_type_n": {
+      "Macrophages": 2878,
+      "Type 2": 1410,
+      "B cell": 1250,
+      "T cell": 827,
+      "Secretory": 706,
+      "Mast cell": 660,
+      "Transformed epithelium": 659,
+      "Ciliated": 433,
+      "Type 1": 424,
+      "Endothelium": 360,
+      "NK cell": 354,
+      "Fibroblast": 204,
+      "Lymphatic": 195
+    },
+    "pns_donor_n": {
+      "BRC2188": 389,
+      "HDBR15280": 91,
+      "BRC2192": 73,
+      "HDBR15279": 49,
+      "HDBR15233": 23,
+      "HDBR15168": 11,
+      "HDBR15219": 9,
+      "HDBR14853": 2,
+      "HDBR14808": 1,
+      "HDBR15167": 1
+    },
+    "gse_donor_n": {
+      "ASK440": 3314,
+      "ASK452": 2485,
+      "ASK454": 2372,
+      "ASK428": 2189
+    },
+    "targets_n_ge_30_in_held": [
+      "Schwann cell precursor",
+      "neuron"
+    ],
+    "undersized_in_held_dropped_not_coarsened": [
+      "Schwann cell",
+      "immature Schwann cell",
+      "neural progenitor cell"
+    ],
+    "n_targets": 2,
+    "schwann_coarsened_to_fibroblast": false,
+    "mouse_lung_used": false,
+    "fm_embed": false,
+    "cuda": false,
+    "x_materialized_before_contingency": false,
+    "timestamp": "2026-08-20T15:16:48.567969+00:00",
+    "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_fetal_lung_pns_novel.py",
+    "source_pns": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/he_fetal_lung_PNS.h5ad",
+    "source_gse": "${SOURCE_ROOT}/Desktop/data/datasets/DevelopmentDatasets2/GSE130148_LungHmDev.h5ad",
+    "pns_sha256": "f28e1769e1542573ecd54affa85bdbd2306800c47cee84d898d2f0f0b029e655",
+    "pns_bytes": 12449314,
+    "scope": "zero-shot HVG/PCA cross-atlas novel-type; labels are benchmark labels only",
+    "do_not_claim": [
+      "clinical or diagnostic cell-type call",
+      "never-pretrained",
+      "foundation-model training",
+      "Schwann=fibroblast coarsen"
+    ],
+    "stop": false,
+    "science_dest_legal": true,
+    "stage0_survives": true,
+    "held_gse_donor": "ASK440",
+    "cal_gse_donor": "ASK452",
+    "train_gse_donors": [
+      "ASK454",
+      "ASK428"
+    ],
+    "n_shared_genes": 11783,
+    "n_hvg": 1000,
+    "n_train": 4561,
+    "n_cal": 2485,
+    "n_test_known": 3314,
+    "n_test_novel": 389,
+    "temperature": 2.076846319584978,
+    "novel_auroc": 0.79515663858089,
+    "novel_auroc_ci": [
+      0.776919588001972,
+      0.8136303154187452
+    ],
+    "shuffle_auroc": 0.5001473843924583,
+    "shuffle_auroc_ci": [
+      0.4673452106800348,
+      0.5351395428797925
+    ],
+    "acc_full_forced_mixed": 0.7061841749932487,
+    "acc@80cov_mixed": 0.8119513841998649,
+    "acc_full_known_only": 0.7890766445383223,
+    "acc@80cov_known_only": 0.8838174273858921,
+    "shared_type_sanity": [
+      {
+        "type": "T cell",
+        "auroc": 0.9759246453109665,
+        "n": 112
+      },
+      {
+        "type": "B cell",
+        "auroc": 0.7572013341419042,
+        "n": 16
+      },
+      {
+        "type": "Macrophages",
+        "auroc": 0.9879337336925929,
+        "n": 1293
+      }
+    ],
+    "kill_ci_lo_le_0.5": false,
+    "kill_within_0.02_of_shuffle": false,
+    "kill_acc80_le_forced": false,
+    "sc20_weak_band": false,
+    "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json"
+  },
+  "sc31_atlas_confound_control": {
+    "experiment": "SC31_atlas_confound_control",
+    "science_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json",
+    "redteam_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json",
+    "headline_novel_auroc": 0.79515663858089,
+    "headline_novel_auroc_ci": [
+      0.776919588001972,
+      0.8136303154187452
+    ],
+    "published_split_rerun": {
+      "auroc": 0.79515663858089,
+      "auroc_ci": [
+        0.776919588001972,
+        0.8136303154187452
+      ],
+      "n_neg": 3314,
+      "n_pos": 389,
+      "ci_lo_gt_0.5": true,
+      "temperature": 2.076846319584978,
+      "held_pns_donor": "BRC2188",
+      "held_gse_donor": "ASK440",
+      "cal_gse_donor": "ASK452",
+      "train_gse_donors": [
+        "ASK454",
+        "ASK428"
+      ],
+      "n_hvg": 1000
+    },
+    "readonly_sha256_before": {
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+        "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+        "bytes": 4190
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+        "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+        "bytes": 17416
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_fetal_lung_pns_novel.py": {
+        "sha256": "b095393b88dab859702e812ae3643914450b85e25923e20b63b7e619571ebdae",
+        "bytes": 17232
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_redteam_robustness.py": {
+        "sha256": "38a95087f02660112e7213748d1bc41dc275f4adbb392db9f554605cff9b132d",
+        "bytes": 30522
+      }
+    },
+    "readonly_sha256_after": {
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+        "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+        "bytes": 4190
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+        "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+        "bytes": 17416
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_fetal_lung_pns_novel.py": {
+        "sha256": "b095393b88dab859702e812ae3643914450b85e25923e20b63b7e619571ebdae",
+        "bytes": 17232
+      },
+      "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_redteam_robustness.py": {
+        "sha256": "38a95087f02660112e7213748d1bc41dc275f4adbb392db9f554605cff9b132d",
+        "bytes": 30522
+      }
+    },
+    "readonly_byte_identical": true,
+    "science_dest_untouched": true,
+    "redteam_dest_untouched": true,
+    "original_verdict_fields_modified": false,
+    "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_atlas_confound_control.py",
+    "source_pns": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/he_fetal_lung_PNS.h5ad",
+    "source_gse": "${SOURCE_ROOT}/Desktop/data/datasets/DevelopmentDatasets2/GSE130148_LungHmDev.h5ad",
+    "pns_sha256": "f28e1769e1542573ecd54affa85bdbd2306800c47cee84d898d2f0f0b029e655",
+    "pns_bytes": 12449314,
+    "fm_embed": false,
+    "cuda": false,
+    "schwann_coarsened_to_fibroblast": false,
+    "mouse_lung_used": false,
+    "scope": "negative control: is SC31 novel-type AUROC atlas provenance? labels are benchmark labels only, not clinical",
+    "do_not_claim": [
+      "clinical or diagnostic cell-type call",
+      "never-pretrained",
+      "foundation-model training",
+      "Schwann=fibroblast coarsen",
+      "Harmony-corrected AUROC is the unique truth"
+    ],
+    "checks": [
+      {
+        "check": "shared_type_from_query",
+        "gse_vocab": [
+          "B cell",
+          "Ciliated",
+          "Endothelium",
+          "Fibroblast",
+          "Lymphatic",
+          "Macrophages",
+          "Mast cell",
+          "NK cell",
+          "Secretory",
+          "T cell",
+          "Transformed epithelium",
+          "Type 1",
+          "Type 2"
+        ],
+        "pns_type_n": {
+          "neuron": 270,
+          "Schwann cell precursor": 192,
+          "Schwann cell": 139,
+          "immature Schwann cell": 33,
+          "neural progenitor cell": 15
+        },
+        "mapping": [
+          {
+            "pns_cell_type": "Schwann cell",
+            "n": 139,
+            "mapped_gse_type": null,
+            "how": "refused_schwann_to_fibroblast",
+            "in_gse_vocab_exact": false
+          },
+          {
+            "pns_cell_type": "Schwann cell precursor",
+            "n": 192,
+            "mapped_gse_type": null,
+            "how": "refused_schwann_to_fibroblast",
+            "in_gse_vocab_exact": false
+          },
+          {
+            "pns_cell_type": "immature Schwann cell",
+            "n": 33,
+            "mapped_gse_type": null,
+            "how": "refused_schwann_to_fibroblast",
+            "in_gse_vocab_exact": false
+          },
+          {
+            "pns_cell_type": "neural progenitor cell",
+            "n": 15,
+            "mapped_gse_type": null,
+            "how": "no_honest_match",
+            "in_gse_vocab_exact": false
+          },
+          {
+            "pns_cell_type": "neuron",
+            "n": 270,
+            "mapped_gse_type": null,
+            "how": "no_honest_match",
+            "in_gse_vocab_exact": false
+          }
+        ],
+        "n_he_total": 649,
+        "n_he_exact_shared": 0,
+        "n_he_honest_nearest": 0,
+        "min_n_for_auroc": 20,
+        "shared_type_control_underpowered": true,
+        "schwann_coarsened_to_fibroblast": false,
+        "refused_coarsen_note": "Schwann cell / precursor / immature Schwann were not mapped to Fibroblast. That coarsen is forbidden and would not be an honest match.",
+        "held_gse_known_n": 3314,
+        "auroc": null,
+        "auroc_ci": null,
+        "n_neg": 3314,
+        "n_pos": 0
+      },
+      {
+        "check": "within_atlas_novelty",
+        "holdout_type": "Mast cell",
+        "n_holdout_total": 660,
+        "n_holdout_held_donor": 90,
+        "held_gse_donor": "ASK440",
+        "train_gse_donors": [
+          "ASK454",
+          "ASK428"
+        ],
+        "n_train": 4153,
+        "n_cal": 2323,
+        "n_test_known_held_donor_nonholdout": 3224,
+        "temperature": 2.21421476601404,
+        "primary": "held_donor_same_atlas",
+        "held_donor_same_atlas": {
+          "auroc": 0.8583712434518886,
+          "auroc_ci": [
+            0.8358362564160327,
+            0.8838990798850281
+          ],
+          "n_neg": 3224,
+          "n_pos": 90,
+          "ci_lo_gt_0.5": true
+        },
+        "all_donors_holdout_type_as_novel": {
+          "auroc": 0.7491507820136852,
+          "auroc_ci": [
+            0.7323338228797548,
+            0.7633463448629485
+          ],
+          "n_neg": 3224,
+          "n_pos": 660,
+          "ci_lo_gt_0.5": true
+        },
+        "note": "Primary is held-donor Mast vs held-donor non-Mast: same atlas and same donor, so atlas provenance cannot explain AUROC. All-donor holdout-type cells are reported for power; those cells share donors with training (other types) and can bias novelty down.",
+        "much_lower_than_headline": false
+      },
+      {
+        "check": "atlas_label_probe",
+        "features": "same HVG/PCA as published type probe (fit on GSE train donors)",
+        "train": "GSE train+cal donors as atlas=GSE130148 vs PNS non-held donors as atlas=He; held donors never in atlas-probe training",
+        "test": "GSE held ASK440 vs PNS held BRC2188 (same cells as headline 0.795)",
+        "n_train_gse": 7046,
+        "n_train_he": 260,
+        "n_test_gse": 3314,
+        "n_test_he": 389,
+        "auroc": 0.9951766518299712,
+        "auroc_ci": [
+          0.9929914673318707,
+          0.9969998800172828
+        ],
+        "n_neg": 3314,
+        "n_pos": 389,
+        "ci_lo_gt_0.5": true,
+        "abs_delta_vs_headline": 0.20002001324908114,
+        "within_0.05_of_headline": false,
+        "exceeds_headline": true,
+        "note": "A dedicated atlas linear probe on the type-probe z-space. 1-maxprob of the type model on this same split is the headline 0.795 by construction and is not reused as check 3."
+      },
+      {
+        "check": "depth_matched_subsample",
+        "library_size_source": "PNS obs n_counts (X is log-normalized); GSE obs nUMI (matches counts X). Not row sums of log-X.",
+        "held_gse_nUMI": {
+          "n": 3314,
+          "median": 561.0,
+          "mean": 1010.3796016898009
+        },
+        "held_pns_n_counts": {
+          "n": 389,
+          "median": 10330.0,
+          "mean": 11047.935732647815
+        },
+        "primary": "quantile_bin_overlap",
+        "quantile_bin_overlap": {
+          "method": "quantile_bin_on_overlapping_log_depth",
+          "n_bins": 8,
+          "log_lo": 6.2422232654551655,
+          "log_hi": 9.479451058842528,
+          "n_a_in_overlap": 1767,
+          "n_b_in_overlap": 286,
+          "bin_kept": [
+            {
+              "bin": 0,
+              "n_a": 254,
+              "n_b": 2,
+              "n_kept": 2
+            },
+            {
+              "bin": 1,
+              "n_a": 256,
+              "n_b": 1,
+              "n_kept": 1
+            },
+            {
+              "bin": 2,
+              "n_a": 255,
+              "n_b": 2,
+              "n_kept": 2
+            },
+            {
+              "bin": 3,
+              "n_a": 251,
+              "n_b": 5,
+              "n_kept": 5
+            },
+            {
+              "bin": 4,
+              "n_a": 256,
+              "n_b": 1,
+              "n_kept": 1
+            },
+            {
+              "bin": 5,
+              "n_a": 253,
+              "n_b": 3,
+              "n_kept": 3
+            },
+            {
+              "bin": 6,
+              "n_a": 230,
+              "n_b": 27,
+              "n_kept": 27
+            },
+            {
+              "bin": 7,
+              "n_a": 12,
+              "n_b": 245,
+              "n_kept": 12
+            }
+          ],
+          "n_matched_each": 53,
+          "median_abs_dlog": 0.20560440475237662,
+          "underpowered": false,
+          "n_matched_gse": 53,
+          "n_matched_he": 53,
+          "auroc": 0.9369882520469919,
+          "auroc_ci": [
+            0.889965959321161,
+            0.9746574675324675
+          ],
+          "n_neg": 53,
+          "n_pos": 53,
+          "ci_lo_gt_0.5": true,
+          "drop_vs_headline": -0.14183161346610185,
+          "ci_lo_le_0.5": false
+        },
+        "nearest_neighbour": {
+          "method": "nearest_neighbour_log_depth_without_replacement",
+          "n_matched_each": 389,
+          "median_abs_dlog": 1.1763828723794525,
+          "max_abs_dlog": 2.454207292996066,
+          "underpowered": false,
+          "n_matched_gse": 389,
+          "n_matched_he": 389,
+          "auroc": 0.9341003561964303,
+          "auroc_ci": [
+            0.915374548899536,
+            0.9507057424706222
+          ],
+          "n_neg": 389,
+          "n_pos": 389,
+          "ci_lo_gt_0.5": true,
+          "drop_vs_headline": -0.13894371761554025,
+          "ci_lo_le_0.5": false
+        }
+      },
+      {
+        "check": "harmony_atlas_then_novel",
+        "ran": true,
+        "harmonypy_version": "0.0.10",
+        "batch_key": "atlas",
+        "max_iter_harmony": 20,
+        "harmony_includes_test_cells": true,
+        "n_hvg": 1000,
+        "temperature": 2.0549318740241973,
+        "unintegrated_published_auroc": 0.79515663858089,
+        "harmony_novel_auroc": 0.7997720971868199,
+        "harmony_novel_auroc_ci": [
+          0.779795254951632,
+          0.8192354502516794
+        ],
+        "n_test_known": 3314,
+        "n_test_novel": 389,
+        "drop_vs_headline": -0.004615458605929823,
+        "caveat": "Harmony is fit on atlas including test cells. Correcting on atlas can remove true type biology that is confounded with atlas. Report unintegrated and Harmony numbers; neither is claimed as the unique truth."
+      }
+    ],
+    "atlas_confound_dominates": false,
+    "atlas_confound_rule": "true if shared-type control AUROC (check 1) or atlas-label probe (check 3) is within 0.05 of headline 0.795, OR depth-matched quantile AUROC CI-lo <= 0.5. Check 1 does not fire when underpowered.",
+    "atlas_confound_triggers": {
+      "check1_shared_type_within_0.05": false,
+      "check1_underpowered": true,
+      "check3_atlas_probe_within_0.05": false,
+      "check4_depth_matched_ci_lo_le_0.5": false
+    },
+    "within_atlas_replication": true,
+    "within_atlas_replication_rule": "true only if check 2 primary (held-donor same-atlas) CI-lo > 0.5",
+    "atlas_linearly_readable": true,
+    "honest_reading": "Check 1 cannot decide: He PNS file is PNS-only (n_exact_shared=0, n_honest=0 of 649). Atlas-label probe AUROC is not within 0.05 of 0.795 so it does not fire atlas_confound_dominates, but atlas is linearly readable on the same z-space. Depth matching did not drop CI-lo to <=0.5. Within-atlas Mast holdout CI-lo > 0.5, so type novelty can appear without crossing atlases. Decisive shared-type control remains missing.",
+    "timestamp": "2026-08-21T05:40:54.882641+00:00",
+    "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json",
+    "hard_refuse_basenames": [
+      "sc31_fetal_lung_pns_novel.json",
+      "sc31_fetal_lung_pns_redteam.json"
+    ]
+  },
+  "sc31_fetal_lung_pns_redteam": {
+    "experiment": "SC31_fetal_lung_pns_redteam",
+    "science_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json",
+    "science_dest_sha256_before": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+    "science_dest_sha256_after": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+    "science_dest_bytes_before": 4190,
+    "science_dest_bytes_after": 4190,
+    "science_dest_byte_identical": true,
+    "science_dest_untouched": true,
+    "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_redteam_robustness.py",
+    "source_pns": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/he_fetal_lung_PNS.h5ad",
+    "source_gse": "${SOURCE_ROOT}/Desktop/data/datasets/DevelopmentDatasets2/GSE130148_LungHmDev.h5ad",
+    "pns_sha256": "f28e1769e1542573ecd54affa85bdbd2306800c47cee84d898d2f0f0b029e655",
+    "pns_bytes": 12449314,
+    "fm_embed": false,
+    "cuda": false,
+    "schwann_coarsened_to_fibroblast": false,
+    "mouse_lung_used": false,
+    "scope": "adversarial robustness of zero-shot HVG/PCA novel-type AUROC; labels are benchmark labels only, not clinical",
+    "do_not_claim": [
+      "clinical or diagnostic cell-type call",
+      "never-pretrained",
+      "foundation-model training",
+      "Schwann=fibroblast coarsen"
+    ],
+    "query_only_types": [
+      "Schwann cell",
+      "Schwann cell precursor",
+      "immature Schwann cell",
+      "neural progenitor cell",
+      "neuron"
+    ],
+    "pns_donor_n": {
+      "BRC2188": 389,
+      "HDBR15280": 91,
+      "BRC2192": 73,
+      "HDBR15279": 49,
+      "HDBR15233": 23,
+      "HDBR15168": 11,
+      "HDBR15219": 9,
+      "HDBR14853": 2,
+      "HDBR14808": 1,
+      "HDBR15167": 1
+    },
+    "gse_donor_n": {
+      "ASK440": 3314,
+      "ASK452": 2485,
+      "ASK454": 2372,
+      "ASK428": 2189
+    },
+    "donor_eligibility": [
+      {
+        "donor": "BRC2188",
+        "n_cells": 389,
+        "held_type_n": {
+          "neuron": 204,
+          "Schwann cell precursor": 181,
+          "immature Schwann cell": 3,
+          "neural progenitor cell": 1
+        },
+        "targets_n_ge_30": [
+          "Schwann cell precursor",
+          "neuron"
+        ],
+        "n_targets": 2,
+        "eligible": true,
+        "is_published_held": true
+      },
+      {
+        "donor": "HDBR15280",
+        "n_cells": 91,
+        "held_type_n": {
+          "Schwann cell": 71,
+          "neuron": 14,
+          "neural progenitor cell": 4,
+          "immature Schwann cell": 2
+        },
+        "targets_n_ge_30": [
+          "Schwann cell"
+        ],
+        "n_targets": 1,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "BRC2192",
+        "n_cells": 73,
+        "held_type_n": {
+          "neuron": 36,
+          "immature Schwann cell": 27,
+          "Schwann cell precursor": 10
+        },
+        "targets_n_ge_30": [
+          "neuron"
+        ],
+        "n_targets": 1,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR15279",
+        "n_cells": 49,
+        "held_type_n": {
+          "Schwann cell": 25,
+          "neuron": 14,
+          "neural progenitor cell": 8,
+          "Schwann cell precursor": 1,
+          "immature Schwann cell": 1
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR15233",
+        "n_cells": 23,
+        "held_type_n": {
+          "Schwann cell": 20,
+          "neuron": 2,
+          "neural progenitor cell": 1
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR15168",
+        "n_cells": 11,
+        "held_type_n": {
+          "Schwann cell": 11
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR15219",
+        "n_cells": 9,
+        "held_type_n": {
+          "Schwann cell": 8,
+          "neural progenitor cell": 1
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR14853",
+        "n_cells": 2,
+        "held_type_n": {
+          "Schwann cell": 2
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR14808",
+        "n_cells": 1,
+        "held_type_n": {
+          "Schwann cell": 1
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      },
+      {
+        "donor": "HDBR15167",
+        "n_cells": 1,
+        "held_type_n": {
+          "Schwann cell": 1
+        },
+        "targets_n_ge_30": [],
+        "n_targets": 0,
+        "eligible": false,
+        "is_published_held": false
+      }
+    ],
+    "eligible_held_pns_donors": [
+      "BRC2188"
+    ],
+    "single_donor_limitation": true,
+    "held_donor_note": "no other PNS donor has \u22652 query-only types with n\u226530; did not silently reuse BRC2188 as a swap",
+    "published_split_rerun": {
+      "held_pns_donor": "BRC2188",
+      "held_gse_donor": "ASK440",
+      "cal_gse_donor": "ASK452",
+      "train_gse_donors": [
+        "ASK454",
+        "ASK428"
+      ],
+      "n_hvg": 1000,
+      "n_hvg_requested": 1000,
+      "seed": 20260820,
+      "regress_out_depth": false,
+      "n_train": 4561,
+      "n_cal": 2485,
+      "n_test_known": 3314,
+      "n_test_novel": 389,
+      "temperature": 2.076846319584978,
+      "novel_auroc": 0.79515663858089,
+      "novel_auroc_ci": [
+        0.776919588001972,
+        0.8136303154187452
+      ]
+    },
+    "checks": [
+      {
+        "check": "held_donor_swap",
+        "pass": true,
+        "n_other_eligible": 0,
+        "other_eligible": [],
+        "single_donor_limitation": true,
+        "note": "no other PNS donor has \u22652 query-only types with n\u226530; did not silently reuse BRC2188 as a swap",
+        "published_ci": [
+          0.776919588001972,
+          0.8136303154187452
+        ],
+        "swaps": []
+      },
+      {
+        "check": "reference_donor_swap",
+        "pass": true,
+        "auroc_min": 0.5375580872344898,
+        "auroc_median": 0.7229619538042642,
+        "auroc_max": 0.79515663858089,
+        "auroc_spread": 0.2575985513464002,
+        "runs": [
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.076846319584978,
+            "novel_auroc": 0.79515663858089,
+            "novel_auroc_ci": [
+              0.776919588001972,
+              0.8136303154187452
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK452",
+            "cal_gse_donor": "ASK440",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 3314,
+            "n_test_known": 2485,
+            "n_test_novel": 389,
+            "temperature": 1.2763510818462656,
+            "novel_auroc": 0.6677308064324249,
+            "novel_auroc_ci": [
+              0.6441203237748492,
+              0.6961992782316634
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK454",
+            "cal_gse_donor": "ASK440",
+            "train_gse_donors": [
+              "ASK452",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4674,
+            "n_cal": 3314,
+            "n_test_known": 2372,
+            "n_test_novel": 389,
+            "temperature": 1.2328538754046376,
+            "novel_auroc": 0.7781931011761035,
+            "novel_auroc_ci": [
+              0.7558403655456459,
+              0.797591971103395
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK428",
+            "cal_gse_donor": "ASK440",
+            "train_gse_donors": [
+              "ASK452",
+              "ASK454"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4857,
+            "n_cal": 3314,
+            "n_test_known": 2189,
+            "n_test_novel": 389,
+            "temperature": 1.9134606329094237,
+            "novel_auroc": 0.5375580872344898,
+            "novel_auroc_ci": [
+              0.5103898021348547,
+              0.5615932275380069
+            ]
+          }
+        ],
+        "in_robust_rule": false
+      },
+      {
+        "check": "seed_sweep",
+        "pass": true,
+        "seeds": [
+          20260820,
+          20260821,
+          20260822,
+          20260823,
+          20260824
+        ],
+        "auroc_min": 0.7475468255728986,
+        "auroc_median": 0.7794283967836072,
+        "auroc_max": 0.79515663858089,
+        "runs": [
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.076846319584978,
+            "novel_auroc": 0.79515663858089,
+            "novel_auroc_ci": [
+              0.776919588001972,
+              0.8136303154187452
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260821,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 1.9985112152369666,
+            "novel_auroc": 0.7740170624584027,
+            "novel_auroc_ci": [
+              0.7549013705913242,
+              0.7971433824006943
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260822,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.1463085133703315,
+            "novel_auroc": 0.7794283967836072,
+            "novel_auroc_ci": [
+              0.7602787813505684,
+              0.7994902330427845
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260823,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.092846423647019,
+            "novel_auroc": 0.792174043901932,
+            "novel_auroc_ci": [
+              0.7753796671925866,
+              0.8116914375754907
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260824,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.053893568719781,
+            "novel_auroc": 0.7475468255728986,
+            "novel_auroc_ci": [
+              0.7255749615866015,
+              0.7688729745172047
+            ]
+          }
+        ]
+      },
+      {
+        "check": "depth_confound",
+        "pass": true,
+        "kill_novelty_is_library_size_only": false,
+        "depth_log_ncounts_auroc": 0.9883314225076136,
+        "depth_log_ncounts_ci": [
+          0.9830403692494389,
+          0.9948961890269049
+        ],
+        "depth_log_ngenes_auroc": 0.9913124657719141,
+        "depth_log_ngenes_ci": [
+          0.9874115564882218,
+          0.9951198308372338
+        ],
+        "score_on_depth_r2": 0.12144137436960556,
+        "partial_corr_score_vs_novel_given_depth": 0.44280518124695517,
+        "depth_controlled_residual_auroc": 0.7778102712958811,
+        "depth_controlled_residual_ci": [
+          0.7604953358573755,
+          0.7994914414873225
+        ],
+        "feature_regressout_auroc": 0.7941970886152538,
+        "feature_regressout_ci": [
+          0.7787020056585885,
+          0.8133666423333035
+        ],
+        "library_size_source": "PNS obs n_counts/n_genes (X is log-normalized); GSE obs nUMI/nGene (matches counts X)"
+      },
+      {
+        "check": "type_collapse_probe",
+        "pass": true,
+        "single_type_driver": false,
+        "targets": [
+          "Schwann cell precursor",
+          "neuron"
+        ],
+        "per_type": [
+          {
+            "type": "Schwann cell precursor",
+            "n": 181,
+            "novel_auroc": 0.7744192559941583,
+            "novel_auroc_ci": [
+              0.7530262911200425,
+              0.7957839608476153
+            ],
+            "ci_lo_gt_0.5": true
+          },
+          {
+            "type": "neuron",
+            "n": 204,
+            "novel_auroc": 0.8124534062267031,
+            "novel_auroc_ci": [
+              0.7858141277230133,
+              0.8337810415616383
+            ],
+            "ci_lo_gt_0.5": true
+          }
+        ],
+        "leave_one_type_out": [
+          {
+            "dropped_type": "Schwann cell precursor",
+            "n_remaining_novel": 208,
+            "novel_auroc": 0.8132021493895362,
+            "novel_auroc_ci": [
+              0.7926766729533862,
+              0.8339795429766631
+            ],
+            "ci_lo_gt_0.5": true
+          },
+          {
+            "dropped_type": "neuron",
+            "n_remaining_novel": 185,
+            "novel_auroc": 0.7760834461498312,
+            "novel_auroc_ci": [
+              0.7509636547107139,
+              0.798563173711119
+            ],
+            "ci_lo_gt_0.5": true
+          }
+        ],
+        "in_robust_rule": false
+      },
+      {
+        "check": "hvg_count_sensitivity",
+        "pass": true,
+        "n_hvg": [
+          500,
+          1000,
+          2000
+        ],
+        "runs": [
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 500,
+            "n_hvg_requested": 500,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.2535792032473676,
+            "novel_auroc": 0.9292182576682548,
+            "novel_auroc_ci": [
+              0.9178108771344369,
+              0.9399926764151249
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 1000,
+            "n_hvg_requested": 1000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 2.076846319584978,
+            "novel_auroc": 0.79515663858089,
+            "novel_auroc_ci": [
+              0.776919588001972,
+              0.8136303154187452
+            ]
+          },
+          {
+            "held_pns_donor": "BRC2188",
+            "held_gse_donor": "ASK440",
+            "cal_gse_donor": "ASK452",
+            "train_gse_donors": [
+              "ASK454",
+              "ASK428"
+            ],
+            "n_hvg": 2000,
+            "n_hvg_requested": 2000,
+            "seed": 20260820,
+            "regress_out_depth": false,
+            "n_train": 4561,
+            "n_cal": 2485,
+            "n_test_known": 3314,
+            "n_test_novel": 389,
+            "temperature": 1.8095068206764195,
+            "novel_auroc": 0.7261241162754256,
+            "novel_auroc_ci": [
+              0.7086881377605827,
+              0.7424390246507098
+            ]
+          }
+        ]
+      }
+    ],
+    "robust": true,
+    "robust_rule": "robust=true only if CI-lo > 0.5 across held-donor swaps that exist, seeds, and HVG counts, AND depth-controlled residual AUROC CI-lo > 0.5. reference-donor swap and type-collapse are reported but not in the conjunction.",
+    "timestamp": "2026-08-21T05:33:12.894326+00:00",
+    "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json",
+    "hard_refuse_basenames": [
+      "sc31_fetal_lung_pns_novel.json"
+    ]
+  }
+}

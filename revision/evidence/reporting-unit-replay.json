@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "analysis_id": "reporting-unit-descriptive-replay-20261016",
+  "created_utc": "2026-10-16T07:51:22.876755+00:00",
+  "scope": "New descriptive type resampling on saved results; no new biological samples, readout fits, donor resampling or raw-input replication.",
+  "input_sha256": "c3a225f1a87e3fa0d283db113a4970ed004e694c0c71e8630e3537e54f966e69",
+  "input_rows": 37,
+  "seed": 20261016,
+  "replicates": 20000,
+  "rng": "numpy.random.default_rng / PCG64",
+  "quantile_method": "linear",
+  "resampling_unit": "Atlas-type record sampled with replacement within its own atlas; fixed atlas counts 11, 11, 15.",
+  "centering": "Both variables centered within atlas, recomputed in each bootstrap replicate.",
+  "historical_intervals": {
+    "raw_distance": {
+      "pooled": [
+        -0.153,
+        0.61
+      ]
+    },
+    "log10_distance": {
+      "pooled": [
+        0.038,
+        0.676
+      ],
+      "atlas_centered": [
+        -0.392,
+        0.348
+      ]
+    }
+  },
+  "historical_status": "Endpoints transcribed from preserved exact-title PDF; generator, seed and replicate count not recovered. Historical and replay intervals are distinct.",
+  "metrics": {
+    "raw_distance": {
+      "pooled": {
+        "Pearson_r": 0.2531048042155589,
+        "type_resampling_95_interval": [
+          -0.15183628591771167,
+          0.613610201281656
+        ],
+        "finite_replicates": 20000
+      },
+      "atlas_centered": {
+        "Pearson_r": -0.0008630805428083496,
+        "type_resampling_95_interval": [
+          -0.3276042276775154,
+          0.30730978639914236
+        ],
+        "finite_replicates": 20000
+      },
+      "within_atlas_point_estimates": {
+        "Pulmonary": -0.2024937248060857,
+        "Hepatic": -0.2321184061115009,
+        "Adult cardiac": 0.2759945663860457
+      }
+    },
+    "log10_distance": {
+      "pooled": {
+        "Pearson_r": 0.3896811987418067,
+        "type_resampling_95_interval": [
+          0.03431394019827968,
+          0.6749820651557796
+        ],
+        "finite_replicates": 20000
+      },
+      "atlas_centered": {
+        "Pearson_r": -0.039189681719437784,
+        "type_resampling_95_interval": [
+          -0.39681398655423217,
+          0.350310270872275
+        ],
+        "finite_replicates": 20000
+      },
+      "within_atlas_point_estimates": {
+        "Pulmonary": -0.2590361207860812,
+        "Hepatic": -0.1827232278683679,
+        "Adult cardiac": 0.3694186380833405
+      }
+    },
+    "silhouette": {
+      "pooled": {
+        "Pearson_r": -0.07126304021357457,
+        "type_resampling_95_interval": [
+          -0.26855394255693377,
+          0.13759465789670555
+        ],
+        "finite_replicates": 20000
+      },
+      "atlas_centered": {
+        "Pearson_r": -0.038019996935145885,
+        "type_resampling_95_interval": [
+          -0.31788173172108974,
+          0.27897965835154653
+        ],
+        "finite_replicates": 20000
+      },
+      "within_atlas_point_estimates": {
+        "Pulmonary": -0.12831981034147416,
+        "Hepatic": -0.23988728102453866,
+        "Adult cardiac": 0.24453842073439616
+      }
+    }
+  },
+  "atlas_inventory": [
+    {
+      "atlas": "Pulmonary",
+      "types": 11,
+      "median_AUROC": 0.7767523203305329,
+      "below_chance": 1
+    },
+    {
+      "atlas": "Hepatic",
+      "types": 11,
+      "median_AUROC": 0.42547891074649946,
+      "below_chance": 6
+    },
+    {
+      "atlas": "Adult cardiac",
+      "types": 15,
+      "median_AUROC": 0.9113398447282745,
+      "below_chance": 0
+    }
+  ],
+  "pooled_median_of_type_AUROCs": 0.7395092708768994,
+  "pooled_below_chance": 7
+}

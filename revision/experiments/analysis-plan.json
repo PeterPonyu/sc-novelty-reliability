@@ -1,0 +1,263 @@
+{
+  "analysis": "fresh-score-and-locked-threshold-extension",
+  "specified_utc": "2026-10-16T09:33:02.019459+00:00",
+  "status": "specified before new fits; extension selected after original results",
+  "seed": 20261016,
+  "representation_seed": 20260820,
+  "hvg_n": 1000,
+  "pca_n": 30,
+  "pca_solver": "auto",
+  "logistic_max_iter": 2000,
+  "temperature_bounds": [
+    0.3,
+    10.0
+  ],
+  "nominal_known_coverage": [
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95
+  ],
+  "mixture_prevalence": [
+    0,
+    0.01,
+    0.05,
+    0.1,
+    0.25,
+    0.5
+  ],
+  "metrics": [
+    "msp_raw",
+    "msp_temperature",
+    "entropy_raw",
+    "entropy_temperature",
+    "centroid_distance"
+  ],
+  "threshold": "Known calibration novelty-score quantile at requested known coverage, numpy method higher; accept score <= threshold, including ties. No held-donor labels select thresholds.",
+  "label_control": "Permute training labels within each training donor once, independently per target/training donor set at a hash-derived seed; refit logistic readout on unchanged training-only features. Evaluate only original anchor assignments; calibrate on true known calibration labels.",
+  "eligibility": "All observed types retained as planned rows. Require n_total>=60, held target>=30, train>=2 classes, known calibration and evaluation>=2. Extra reference-absent evaluation labels are counted and excluded from the known-versus-target estimand. Nonconverged fits are retained but excluded from summaries.",
+  "uncertainty": "No donor population CI; existing donor schemes and new role assignments overlap. Report paired task differences and donor-level summaries as descriptive. New aggregation replay uses 20,000 within-atlas type resamples and simultaneous pooled/centered calculation.",
+  "full_cell_input": "Use all cells in the specified donor universe. Cardiac original 20,000-cell cap is not reproduced; this is explicitly a full-adult-cell extension.",
+  "atlases": {
+    "SC31": {
+      "atlas_path": "${SOURCE_ROOT}/Desktop/data/datasets/DevelopmentDatasets2/GSE130148_LungHmDev.h5ad",
+      "atlas_sha256": "771ce46b7f937c562cc2039142ebbbf41afe5df1e73630ff8a4b59fa4ceeca70",
+      "primary_result_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json",
+      "primary_result_sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+      "cell_type_column": "celltype",
+      "donor_column": "orig.ident",
+      "donor_cycle": [
+        "ASK440",
+        "ASK452",
+        "ASK454",
+        "ASK428",
+        "ASK440"
+      ],
+      "primary_anchor": {
+        "test": "ASK440",
+        "calibration": "ASK452",
+        "training": [
+          "ASK454",
+          "ASK428"
+        ]
+      },
+      "rotations": [
+        {
+          "test_donor": "ASK440",
+          "calibration_donor": "ASK452",
+          "training_donors": [
+            "ASK454",
+            "ASK428"
+          ]
+        },
+        {
+          "test_donor": "ASK452",
+          "calibration_donor": "ASK454",
+          "training_donors": [
+            "ASK440",
+            "ASK428"
+          ]
+        },
+        {
+          "test_donor": "ASK454",
+          "calibration_donor": "ASK428",
+          "training_donors": [
+            "ASK440",
+            "ASK452"
+          ]
+        },
+        {
+          "test_donor": "ASK428",
+          "calibration_donor": "ASK440",
+          "training_donors": [
+            "ASK452",
+            "ASK454"
+          ]
+        }
+      ]
+    },
+    "SC32": {
+      "atlas_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/macparland_liver.h5ad",
+      "atlas_sha256": "9d9c24983830f1948033c4fcf0c139e735e35e05db50e3778f64c7f8b3db7bee",
+      "primary_result_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC32/sc32_within_atlas_sweep_liver.json",
+      "primary_result_sha256": "8db0fff57d612452b31a62a30c9b1de05f0e0e3e6637fd40eb5a5cfecbbfbf5c",
+      "cell_type_column": "cell_type",
+      "donor_column": "donor_id",
+      "donor_cycle": [
+        "C43_P5TLH",
+        "C41_P3TLH",
+        "C37_P1TLH",
+        "C39_P2TLH",
+        "C42_P4TLH",
+        "C43_P5TLH"
+      ],
+      "primary_anchor": {
+        "test": "C43_P5TLH",
+        "calibration": "C41_P3TLH",
+        "training": [
+          "C37_P1TLH",
+          "C39_P2TLH",
+          "C42_P4TLH"
+        ]
+      },
+      "rotations": [
+        {
+          "test_donor": "C43_P5TLH",
+          "calibration_donor": "C41_P3TLH",
+          "training_donors": [
+            "C37_P1TLH",
+            "C39_P2TLH",
+            "C42_P4TLH"
+          ]
+        },
+        {
+          "test_donor": "C41_P3TLH",
+          "calibration_donor": "C37_P1TLH",
+          "training_donors": [
+            "C43_P5TLH",
+            "C39_P2TLH",
+            "C42_P4TLH"
+          ]
+        },
+        {
+          "test_donor": "C37_P1TLH",
+          "calibration_donor": "C39_P2TLH",
+          "training_donors": [
+            "C43_P5TLH",
+            "C41_P3TLH",
+            "C42_P4TLH"
+          ]
+        },
+        {
+          "test_donor": "C39_P2TLH",
+          "calibration_donor": "C42_P4TLH",
+          "training_donors": [
+            "C43_P5TLH",
+            "C41_P3TLH",
+            "C37_P1TLH"
+          ]
+        },
+        {
+          "test_donor": "C42_P4TLH",
+          "calibration_donor": "C43_P5TLH",
+          "training_donors": [
+            "C41_P3TLH",
+            "C37_P1TLH",
+            "C39_P2TLH"
+          ]
+        }
+      ]
+    },
+    "SC33_adult": {
+      "atlas_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/integrated_adult_foetal_hearts.h5ad",
+      "atlas_sha256": "2a4ce1eadc534ef1011349efab96e5c7fa3823956f3ab52c041d1d486acc173b",
+      "primary_result_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC33/sc33_within_atlas_sweep_heart.json",
+      "primary_result_sha256": "b929ba2ca653c2214eb98150016e515cb994d26707dafed9e7b35e52da994f5a",
+      "cell_type_column": "cell_type",
+      "donor_column": "donor_id",
+      "donor_cycle": [
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D2"
+      ],
+      "primary_anchor": {
+        "test": "D2",
+        "calibration": "D3",
+        "training": [
+          "D4",
+          "D5",
+          "D6",
+          "D7"
+        ]
+      },
+      "rotations": [
+        {
+          "test_donor": "D2",
+          "calibration_donor": "D3",
+          "training_donors": [
+            "D4",
+            "D5",
+            "D6",
+            "D7"
+          ]
+        },
+        {
+          "test_donor": "D3",
+          "calibration_donor": "D4",
+          "training_donors": [
+            "D2",
+            "D5",
+            "D6",
+            "D7"
+          ]
+        },
+        {
+          "test_donor": "D4",
+          "calibration_donor": "D5",
+          "training_donors": [
+            "D2",
+            "D3",
+            "D6",
+            "D7"
+          ]
+        },
+        {
+          "test_donor": "D5",
+          "calibration_donor": "D6",
+          "training_donors": [
+            "D2",
+            "D3",
+            "D4",
+            "D7"
+          ]
+        },
+        {
+          "test_donor": "D6",
+          "calibration_donor": "D7",
+          "training_donors": [
+            "D2",
+            "D3",
+            "D4",
+            "D5"
+          ]
+        },
+        {
+          "test_donor": "D7",
+          "calibration_donor": "D2",
+          "training_donors": [
+            "D3",
+            "D4",
+            "D5",
+            "D6"
+          ]
+        }
+      ]
+    }
+  },
+  "historical_protocol_sha256": "b22c016c46f10085c8adf377bcde3225962d03e95bc6c98c45139262a51afff1"
+}

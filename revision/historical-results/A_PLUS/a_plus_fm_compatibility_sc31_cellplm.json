@@ -1,0 +1,572 @@
+{
+  "schema": "a_plus_fm_compatibility_v1",
+  "model": "CellPLM",
+  "embedding_sha256": "c8a1805d3bc59b3de3c7500fca0bd9a423088c57f93d134c4a8e4a7735885dda",
+  "primary_sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+  "embedding_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/sc-fm-benchmark/expand_results/fm_emb/cellplm_GSE130148_lung.npz",
+  "primary_path": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json",
+  "protocol": {
+    "held_donor": "ASK440",
+    "calibration_donor": "ASK452",
+    "training_donors": [
+      "ASK454",
+      "ASK428"
+    ],
+    "features": "frozen embedding + deterministic PCA(32) + logistic readout",
+    "novelty_score": "1 - max softmax after calibration-only temperature grid",
+    "no_training_of_foundation_model": true
+  },
+  "alignment": {
+    "status": "COMPARABLE",
+    "n_cells": 10360,
+    "label_count_match": true,
+    "donor_count_match": true,
+    "alignment_basis": "label_and_donor_count_contract",
+    "row_order_verified": false,
+    "expected_label_counts": {
+      "B cell": 1250,
+      "Ciliated": 433,
+      "Endothelium": 360,
+      "Fibroblast": 204,
+      "Lymphatic": 195,
+      "Macrophages": 2878,
+      "Mast cell": 660,
+      "NK cell": 354,
+      "Secretory": 706,
+      "T cell": 827,
+      "Transformed epithelium": 659,
+      "Type 1": 424,
+      "Type 2": 1410
+    },
+    "observed_label_counts": {
+      "B cell": 1250,
+      "Ciliated": 433,
+      "Endothelium": 360,
+      "Fibroblast": 204,
+      "Lymphatic": 195,
+      "Macrophages": 2878,
+      "Mast cell": 660,
+      "NK cell": 354,
+      "Secretory": 706,
+      "T cell": 827,
+      "Transformed epithelium": 659,
+      "Type 1": 424,
+      "Type 2": 1410
+    },
+    "expected_donor_counts": {
+      "ASK428": 2189,
+      "ASK440": 3314,
+      "ASK452": 2485,
+      "ASK454": 2372
+    },
+    "observed_donor_counts": {
+      "ASK428": 2189,
+      "ASK440": 3314,
+      "ASK452": 2485,
+      "ASK454": 2372
+    },
+    "missing_split_donors": [],
+    "reason": "labels, donor counts and registered split names match"
+  },
+  "per_type": [
+    {
+      "type": "Ciliated",
+      "status": "SCORED",
+      "n_in_held_donor": 211,
+      "n_known": 3103,
+      "n_train": 4475,
+      "n_calibration": 2349,
+      "auroc": 0.2366919034171181,
+      "brier": 0.17750049672008777,
+      "ece": 0.2671783154452798,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.1669180492709904,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.18448275862068964,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.20437405731523384,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.23399262487428762,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1444,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Endothelium",
+      "status": "SCORED",
+      "n_in_held_donor": 76,
+      "n_known": 3238,
+      "n_train": 4439,
+      "n_calibration": 2323,
+      "auroc": 0.827866454276519,
+      "brier": 0.13993566251930825,
+      "ece": 0.2898493032713732,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.08999497234791354,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.11724137931034484,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.14630467571644046,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.17968488099228963,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1491,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Fibroblast",
+      "status": "SCORED",
+      "n_in_held_donor": 32,
+      "n_known": 3282,
+      "n_train": 4513,
+      "n_calibration": 2361,
+      "auroc": 0.6946221815965875,
+      "brier": 0.13829601042930248,
+      "ece": 0.29583471799906214,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.08094519859225746,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.11250000000000004,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.1406485671191554,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.1786791820315119,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1327,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Lymphatic",
+      "status": "SCORED",
+      "n_in_held_donor": 126,
+      "n_known": 3188,
+      "n_train": 4514,
+      "n_calibration": 2463,
+      "auroc": 0.7563282945968014,
+      "brier": 0.14235153256012123,
+      "ece": 0.2697522798958009,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.08597285067873306,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.11767241379310345,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.15271493212669685,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.19477036540395576,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1371,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Macrophages",
+      "status": "SCORED",
+      "n_in_held_donor": 1293,
+      "n_known": 2021,
+      "n_train": 3887,
+      "n_calibration": 1574,
+      "auroc": 0.6891854399646711,
+      "brier": 0.2112976542438416,
+      "ece": 0.12772247536648074,
+      "temperature": 1.9353209268545408,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.3212669683257918,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.32499999999999996,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.3306938159879337,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.33757961783439494,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1324,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Mast cell",
+      "status": "SCORED",
+      "n_in_held_donor": 90,
+      "n_known": 3224,
+      "n_train": 4153,
+      "n_calibration": 2323,
+      "auroc": 0.9242969396195203,
+      "brier": 0.13600566688213508,
+      "ece": 0.2929297633449685,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.06938159879336347,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.10301724137931034,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.13650075414781293,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.17331545424069728,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1642,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "NK cell",
+      "status": "SCORED",
+      "n_in_held_donor": 83,
+      "n_known": 3231,
+      "n_train": 4375,
+      "n_calibration": 2400,
+      "auroc": 0.6334604900567916,
+      "brier": 0.13761615123352414,
+      "ece": 0.270023596377402,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.05832076420311716,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.10387931034482756,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.14555052790346912,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.18504860878310425,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1075,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Secretory",
+      "status": "SCORED",
+      "n_in_held_donor": 563,
+      "n_known": 2751,
+      "n_train": 4486,
+      "n_calibration": 2417,
+      "auroc": 0.8848731254192727,
+      "brier": 0.1003657524841778,
+      "ece": 0.10165990578628305,
+      "temperature": 1.8512967834825544,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.039718451483157335,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.05043103448275865,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.06221719457013575,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.08917197452229297,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1473,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "T cell",
+      "status": "SCORED",
+      "n_in_held_donor": 112,
+      "n_known": 3202,
+      "n_train": 3950,
+      "n_calibration": 2381,
+      "auroc": 0.6046750914606942,
+      "brier": 0.14851198084265232,
+      "ece": 0.27984081495003943,
+      "temperature": 1.9353209268545408,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.1005530417295123,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.1254310344827586,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.15987933634992457,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.19678176332551123,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1150,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Type 1",
+      "status": "SCORED",
+      "n_in_held_donor": 83,
+      "n_known": 3231,
+      "n_train": 4306,
+      "n_calibration": 2399,
+      "auroc": 0.8773068131392794,
+      "brier": 0.13500103898733426,
+      "ece": 0.289767739300018,
+      "temperature": 1.9353209268545408,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.07943690296631478,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.10732758620689653,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.13536953242835592,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.1652698625544754,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1565,
+      "readout_converged": true,
+      "convergence_warnings": []
+    },
+    {
+      "type": "Type 2",
+      "status": "SCORED",
+      "n_in_held_donor": 612,
+      "n_known": 2702,
+      "n_train": 3797,
+      "n_calibration": 2451,
+      "auroc": 0.8498116863325641,
+      "brier": 0.13440336897021968,
+      "ece": 0.15236957103969148,
+      "temperature": 1.9353209268545408,
+      "risk_coverage": [
+        {
+          "requested_coverage": 0.6,
+          "actual_coverage": 0.600181050090525,
+          "risk": 0.07742584213172443,
+          "n": 1989
+        },
+        {
+          "requested_coverage": 0.7,
+          "actual_coverage": 0.700060350030175,
+          "risk": 0.11896551724137927,
+          "n": 2320
+        },
+        {
+          "requested_coverage": 0.8,
+          "actual_coverage": 0.8002414001207001,
+          "risk": 0.14856711915535448,
+          "n": 2652
+        },
+        {
+          "requested_coverage": 0.9,
+          "actual_coverage": 0.90012070006035,
+          "risk": 0.16426416359369767,
+          "n": 2983
+        }
+      ],
+      "n_components": 32,
+      "readout_solver": "lbfgs",
+      "readout_max_iter": 5000,
+      "readout_n_iter_max": 1522,
+      "readout_converged": true,
+      "convergence_warnings": []
+    }
+  ],
+  "aggregate": {
+    "n_types_requested": 11,
+    "n_types_scored": 11,
+    "median_auroc": 0.7563282945968014,
+    "auroc_min": 0.2366919034171181,
+    "auroc_max": 0.9242969396195203
+  },
+  "readout": {
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "all_converged": true,
+    "max_n_iter": 1642
+  },
+  "status": "COMPARABLE",
+  "reason": "same-split compatibility scores computed"
+}

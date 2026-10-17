@@ -1,0 +1,954 @@
+{
+  "experiment": "SC32_within_atlas_sweep_liver",
+  "jointly_preregistered": true,
+  "replicates_protocol_fixed_on_different_atlas": true,
+  "source_protocol": {
+    "atlas": "GSE130148 lung",
+    "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_within_atlas_type_sweep.py",
+    "dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json",
+    "dest_sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+    "hyperparameters": {
+      "hvg_n": 1000,
+      "pca_n": 30,
+      "n_boot": 200,
+      "min_n_total": 60,
+      "min_n_in_held_donor": 30,
+      "seed": 20260820,
+      "novelty_score": "1 - max_softmax after temperature scaling",
+      "features": "HVG(1000)+PCA(30)+logistic"
+    },
+    "paper_number": {
+      "atlas": "GSE130148 lung",
+      "n_types_detected": 10,
+      "n_types_swept": 11,
+      "median_auroc": 0.7767523203305329,
+      "median_auroc_paper": 0.777,
+      "auroc_range": [
+        0.3328523005671712,
+        0.9089019851116624
+      ],
+      "auroc_range_paper": [
+        0.333,
+        0.909
+      ],
+      "single_failure": "NK cell",
+      "failure_auroc": 0.3328523005671712,
+      "failure_nearest": "T cell",
+      "dest_sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a"
+    }
+  },
+  "not_a_relitigation_of_sc29": true,
+  "sc29_distinction": "SC29 asked whether a probe trained on a lung atlas (GSE130148) flags liver parenchyma (hepatocyte, cholangiocyte) as novel across atlases; it was killed (novel-type AUROC 0.425, CI [0.394, 0.463]). SC32 does not re-open that cross-atlas question. SC32 trains and tests inside MacParland liver only: a probe fit on remaining liver types in training donors is asked to flag a held-out liver type in a held test donor. A within-atlas survive here would not reverse the SC29 kill; a within-atlas fail would not be blamed on the SC29 protocol confound.",
+  "sc29_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC29/sc29_macparland_liver_vs_gse130148.json",
+  "sc29_dest_sha256": "3b2182d55921d724be6c1bf196ee76f9c870b40f07b02aa80ca14bfa1c0e7282",
+  "preregistration_note": "Full MacParland liver type list with n_total>=60 is frozen here before any novelty AUROC is computed. This replicates a protocol fixed on GSE130148 (SC31): donor-held-out splits, HVG(1000)+PCA(30)+logistic, temperature on a held calibration donor, novelty score = 1-max softmax, n_boot=200, min_n_total=60, min_n_held=30. Types with n_in_held_donor<30 are listed as underpowered and excluded from the aggregate; no alternate donor fold is fabricated to rescue them. Types are not coarsened.",
+  "split_rule_count_only": "held = donor maximizing n of (n_total>=60 types with n_held>=30); ties broken by larger donor n; cal = largest remaining donor; train = the rest. Rule uses type x donor counts only, never AUROC. The largest donor C41_P3TLH is 83% hepatocyte and would leave innate lymphoid cell at n_held=0 (plus several other eligible types underpowered), so it is used as calibration rather than test. This is one global split, not a per-type fold, and is not SC29's largest-donor query split.",
+  "metric_preregistered": "per-type AUROC of (1-max softmax) on held-donor remaining types vs held-donor cells of the removed type; bootstrap 95% CI n_boot=200; label-shuffle null; acc@80cov vs forced on the mixed held-donor test set",
+  "split": "donor-held-out donor_id; train=['C37_P1TLH', 'C39_P2TLH', 'C42_P4TLH']; cal=C41_P3TLH; test=C43_P5TLH; temperature on cal donor only; never random cells",
+  "features": "HVG(1000)+PCA(30)+logistic; fit on remaining types in train donors only",
+  "novelty_score": "1 - max_softmax after temperature scaling",
+  "min_n_total": 60,
+  "min_n_in_held_donor": 30,
+  "held_liver_donor": "C43_P5TLH",
+  "cal_liver_donor": "C41_P3TLH",
+  "train_liver_donors": [
+    "C37_P1TLH",
+    "C39_P2TLH",
+    "C42_P4TLH"
+  ],
+  "split_rule_n_powered": 11,
+  "types_all": [
+    "B cell",
+    "M1 macrophage",
+    "alpha-beta T cell",
+    "cholangiocyte",
+    "endothelial cell of hepatic sinusoid",
+    "endothelial cell of periportal hepatic sinusoid",
+    "erythrocyte",
+    "gamma-delta T cell",
+    "hepatic stellate cell",
+    "hepatocyte",
+    "innate lymphoid cell",
+    "macrophage",
+    "plasma cell"
+  ],
+  "types_eligible_n_ge_60": [
+    "B cell",
+    "M1 macrophage",
+    "alpha-beta T cell",
+    "cholangiocyte",
+    "endothelial cell of hepatic sinusoid",
+    "endothelial cell of periportal hepatic sinusoid",
+    "gamma-delta T cell",
+    "hepatocyte",
+    "innate lymphoid cell",
+    "macrophage",
+    "plasma cell"
+  ],
+  "types_underpowered_held_n_lt_30": [],
+  "types_to_score": [
+    "B cell",
+    "M1 macrophage",
+    "alpha-beta T cell",
+    "cholangiocyte",
+    "endothelial cell of hepatic sinusoid",
+    "endothelial cell of periportal hepatic sinusoid",
+    "gamma-delta T cell",
+    "hepatocyte",
+    "innate lymphoid cell",
+    "macrophage",
+    "plasma cell"
+  ],
+  "n_types_eligible": 11,
+  "n_types_underpowered": 0,
+  "n_types_swept": 11,
+  "detected_rule": "CI-lo > 0.5 on a scored (powered) type",
+  "aggregate_excludes_underpowered": true,
+  "type_n_total": {
+    "B cell": 140,
+    "M1 macrophage": 822,
+    "alpha-beta T cell": 1115,
+    "cholangiocyte": 121,
+    "endothelial cell of hepatic sinusoid": 641,
+    "endothelial cell of periportal hepatic sinusoid": 238,
+    "erythrocyte": 53,
+    "gamma-delta T cell": 671,
+    "hepatic stellate cell": 20,
+    "hepatocyte": 3498,
+    "innate lymphoid cell": 520,
+    "macrophage": 326,
+    "plasma cell": 279
+  },
+  "type_n_held_donor": {
+    "B cell": 78,
+    "M1 macrophage": 208,
+    "alpha-beta T cell": 463,
+    "cholangiocyte": 34,
+    "endothelial cell of hepatic sinusoid": 172,
+    "endothelial cell of periportal hepatic sinusoid": 71,
+    "erythrocyte": 41,
+    "gamma-delta T cell": 203,
+    "hepatic stellate cell": 1,
+    "hepatocyte": 122,
+    "innate lymphoid cell": 233,
+    "macrophage": 37,
+    "plasma cell": 42
+  },
+  "type_x_donor": {
+    "B cell": {
+      "C37_P1TLH": 7,
+      "C39_P2TLH": 14,
+      "C41_P3TLH": 6,
+      "C42_P4TLH": 35,
+      "C43_P5TLH": 78
+    },
+    "M1 macrophage": {
+      "C37_P1TLH": 183,
+      "C39_P2TLH": 63,
+      "C41_P3TLH": 175,
+      "C42_P4TLH": 193,
+      "C43_P5TLH": 208
+    },
+    "alpha-beta T cell": {
+      "C37_P1TLH": 288,
+      "C39_P2TLH": 28,
+      "C41_P3TLH": 10,
+      "C42_P4TLH": 326,
+      "C43_P5TLH": 463
+    },
+    "cholangiocyte": {
+      "C37_P1TLH": 8,
+      "C39_P2TLH": 25,
+      "C41_P3TLH": 40,
+      "C42_P4TLH": 14,
+      "C43_P5TLH": 34
+    },
+    "endothelial cell of hepatic sinusoid": {
+      "C37_P1TLH": 177,
+      "C39_P2TLH": 82,
+      "C41_P3TLH": 91,
+      "C42_P4TLH": 119,
+      "C43_P5TLH": 172
+    },
+    "endothelial cell of periportal hepatic sinusoid": {
+      "C37_P1TLH": 41,
+      "C39_P2TLH": 8,
+      "C41_P3TLH": 83,
+      "C42_P4TLH": 35,
+      "C43_P5TLH": 71
+    },
+    "erythrocyte": {
+      "C37_P1TLH": 1,
+      "C39_P2TLH": 1,
+      "C41_P3TLH": 1,
+      "C42_P4TLH": 9,
+      "C43_P5TLH": 41
+    },
+    "gamma-delta T cell": {
+      "C37_P1TLH": 71,
+      "C39_P2TLH": 170,
+      "C41_P3TLH": 21,
+      "C42_P4TLH": 206,
+      "C43_P5TLH": 203
+    },
+    "hepatic stellate cell": {
+      "C37_P1TLH": 0,
+      "C39_P2TLH": 1,
+      "C41_P3TLH": 18,
+      "C42_P4TLH": 0,
+      "C43_P5TLH": 1
+    },
+    "hepatocyte": {
+      "C37_P1TLH": 102,
+      "C39_P2TLH": 621,
+      "C41_P3TLH": 2600,
+      "C42_P4TLH": 53,
+      "C43_P5TLH": 122
+    },
+    "innate lymphoid cell": {
+      "C37_P1TLH": 96,
+      "C39_P2TLH": 2,
+      "C41_P3TLH": 0,
+      "C42_P4TLH": 189,
+      "C43_P5TLH": 233
+    },
+    "macrophage": {
+      "C37_P1TLH": 90,
+      "C39_P2TLH": 57,
+      "C41_P3TLH": 53,
+      "C42_P4TLH": 89,
+      "C43_P5TLH": 37
+    },
+    "plasma cell": {
+      "C37_P1TLH": 4,
+      "C39_P2TLH": 147,
+      "C41_P3TLH": 29,
+      "C42_P4TLH": 57,
+      "C43_P5TLH": 42
+    }
+  },
+  "liver_donor_n": {
+    "C41_P3TLH": 3127,
+    "C43_P5TLH": 1705,
+    "C42_P4TLH": 1325,
+    "C39_P2TLH": 1219,
+    "C37_P1TLH": 1068
+  },
+  "abundance_correlation": "Spearman(AUROC, n_total) on scored types",
+  "distinctness_correlation": "Spearman(AUROC, mean silhouette of held-out type vs rest) and Spearman(AUROC, nearest remaining-type centroid Euclidean) in LOTO PCA on non-test (train+cal) cells",
+  "depth_control": "library-size residual AUROC of novelty score \u22a5 log1p(n_detected genes) for the 3 best and 3 worst scored types by AUROC. MacParland CELLxGENE object has no nUMI; n_detected is the stored-X>0 gene count, not a fabricated UMI.",
+  "mechanism_claim": "Types sitting inside another type's manifold fail. SC31 single failure was NK cell (AUROC 0.333) nearest T cell. Liver analogue is innate lymphoid cell (author CellType NK-like) vs T cells; also macrophage pair and hepatic endothelial pair.",
+  "mechanism_sibling_groups": [
+    [
+      "alpha-beta T cell",
+      "gamma-delta T cell",
+      "innate lymphoid cell"
+    ],
+    [
+      "M1 macrophage",
+      "macrophage"
+    ],
+    [
+      "endothelial cell of hepatic sinusoid",
+      "endothelial cell of periportal hepatic sinusoid"
+    ],
+    [
+      "B cell",
+      "plasma cell"
+    ]
+  ],
+  "replication_rule": "protocol_replicates=true only if median AUROC is within 0.10 of 0.777 AND n_types_detected/n_types_swept >= 0.7. A worse liver median is a failed replication, reported honestly.",
+  "x_is_counts_branch": false,
+  "liver_transform": "same _log1p_cpm helper as SC31; stored X is non-integer (counts_branch=False) so no second normalize+log1p",
+  "do_not_coarsen_types": true,
+  "fm_embed": false,
+  "cuda": false,
+  "download": false,
+  "scope": "within-atlas leave-one-type-out novelty on MacParland liver; labels are benchmark labels only, not clinical calls",
+  "do_not_claim": [
+    "clinical or diagnostic cell-type call",
+    "never-pretrained",
+    "foundation-model training",
+    "this sweep reverses the SC29 cross-atlas parenchyma kill",
+    "this sweep re-litigates SC29"
+  ],
+  "seed": 20260820,
+  "n_boot": 200,
+  "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc32_within_atlas_sweep_liver.py",
+  "source_liver": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/macparland_liver.h5ad",
+  "liver_sha256": "9d9c24983830f1948033c4fcf0c139e735e35e05db50e3778f64c7f8b3db7bee",
+  "liver_bytes": 65380528,
+  "type_col": "cell_type",
+  "donor_col": "donor_id",
+  "author_celltype_note": "CELLxGENE cell_type is the 13-label panel (hepatocyte 3498, cholangiocyte 121, two endothelial subsets, T/B/ILC/macrophage, hepatic stellate). Author CellType NK-like maps 1-1 onto innate lymphoid cell; gdT 1/2 are already merged in cell_type. No further coarsening.",
+  "prereg_sha256": "f2f10ef546c446caa9020fd40bc6e3aa790bc97d158196d3d99f5301f0b8bf53",
+  "scoring_started": true,
+  "timestamp_preregistered": "2026-08-21T05:56:55.997385+00:00",
+  "timestamp": "2026-08-21T05:57:24.118179+00:00",
+  "readonly_sha256_before": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC29/sc29_macparland_liver_vs_gse130148.json": {
+      "sha256": "3b2182d55921d724be6c1bf196ee76f9c870b40f07b02aa80ca14bfa1c0e7282",
+      "bytes": 6863
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json": {
+      "sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+      "bytes": 24195
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    }
+  },
+  "readonly_sha256_after": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC29/sc29_macparland_liver_vs_gse130148.json": {
+      "sha256": "3b2182d55921d724be6c1bf196ee76f9c870b40f07b02aa80ca14bfa1c0e7282",
+      "bytes": 6863
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json": {
+      "sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+      "bytes": 24195
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    }
+  },
+  "readonly_byte_identical": true,
+  "sc29_dest_untouched": true,
+  "sc31_sweep_untouched": true,
+  "science_dest_untouched": true,
+  "redteam_dest_untouched": true,
+  "confound_dest_untouched": true,
+  "per_type": [
+    {
+      "type": "B cell",
+      "underpowered": false,
+      "n_total": 140,
+      "n_in_held_donor": 78,
+      "n_train": 3556,
+      "n_cal": 3121,
+      "n_test_known": 1627,
+      "n_hvg": 1000,
+      "temperature": 1.5339059150297465,
+      "auroc": 0.6864450853387547,
+      "auroc_ci": [
+        0.6219821619843173,
+        0.7357214341258435
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5506280238916994,
+      "shuffle_auroc_ci": [
+        0.49227709100204503,
+        0.6156059957127541
+      ],
+      "acc@80cov_mixed": 0.6019061583577713,
+      "acc_forced_mixed": 0.5636363636363636,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 62,
+      "mean_silhouette_type_vs_rest": 0.26912365728731713,
+      "nearest_centroid_type": "gamma-delta T cell",
+      "nearest_centroid_euclidean": 1.7223183224788334
+    },
+    {
+      "type": "M1 macrophage",
+      "underpowered": false,
+      "n_total": 822,
+      "n_in_held_donor": 208,
+      "n_train": 3173,
+      "n_cal": 2952,
+      "n_test_known": 1497,
+      "n_hvg": 1000,
+      "temperature": 1.5889817646518642,
+      "auroc": 0.6945654128770362,
+      "auroc_ci": [
+        0.6492028196543181,
+        0.7368007103828552
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5097695390781564,
+      "shuffle_auroc_ci": [
+        0.47316135145307286,
+        0.5511890556121484
+      ],
+      "acc@80cov_mixed": 0.5139296187683284,
+      "acc_forced_mixed": 0.4645161290322581,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 614,
+      "mean_silhouette_type_vs_rest": 0.3709308432084601,
+      "nearest_centroid_type": "macrophage",
+      "nearest_centroid_euclidean": 5.054451868642864
+    },
+    {
+      "type": "alpha-beta T cell",
+      "underpowered": false,
+      "n_total": 1115,
+      "n_in_held_donor": 463,
+      "n_train": 2970,
+      "n_cal": 3117,
+      "n_test_known": 1242,
+      "n_hvg": 1000,
+      "temperature": 1.4967661162920831,
+      "auroc": 0.6685360823308049,
+      "auroc_ci": [
+        0.6404133392213479,
+        0.6965534200038481
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5043474782886934,
+      "shuffle_auroc_ci": [
+        0.47780215658086245,
+        0.5326194750249487
+      ],
+      "acc@80cov_mixed": 0.533724340175953,
+      "acc_forced_mixed": 0.4750733137829912,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 652,
+      "mean_silhouette_type_vs_rest": 0.4206378166138607,
+      "nearest_centroid_type": "innate lymphoid cell",
+      "nearest_centroid_euclidean": 0.7403906194081623
+    },
+    {
+      "type": "cholangiocyte",
+      "underpowered": false,
+      "n_total": 121,
+      "n_in_held_donor": 34,
+      "n_train": 3565,
+      "n_cal": 3087,
+      "n_test_known": 1671,
+      "n_hvg": 1000,
+      "temperature": 1.8011655445724613,
+      "auroc": 0.3577639314253529,
+      "auroc_ci": [
+        0.2877569620667233,
+        0.4241965894385346
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.48546132995388463,
+      "shuffle_auroc_ci": [
+        0.38299375666236135,
+        0.5793022825343286
+      ],
+      "acc@80cov_mixed": 0.6136363636363636,
+      "acc_forced_mixed": 0.567741935483871,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 87,
+      "mean_silhouette_type_vs_rest": 0.47909603938853984,
+      "nearest_centroid_type": "hepatic stellate cell",
+      "nearest_centroid_euclidean": 2.261322469267044
+    },
+    {
+      "type": "endothelial cell of hepatic sinusoid",
+      "underpowered": false,
+      "n_total": 641,
+      "n_in_held_donor": 172,
+      "n_train": 3234,
+      "n_cal": 3036,
+      "n_test_known": 1533,
+      "n_hvg": 1000,
+      "temperature": 1.605033836221385,
+      "auroc": 0.3007668502252765,
+      "auroc_ci": [
+        0.2590561246300471,
+        0.33975488597867437
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.47621323139003924,
+      "shuffle_auroc_ci": [
+        0.4320045022964064,
+        0.5229816800337493
+      ],
+      "acc@80cov_mixed": 0.5667155425219942,
+      "acc_forced_mixed": 0.5284457478005865,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 469,
+      "mean_silhouette_type_vs_rest": 0.39992452464057204,
+      "nearest_centroid_type": "endothelial cell of periportal hepatic sinusoid",
+      "nearest_centroid_euclidean": 1.8429397546205102
+    },
+    {
+      "type": "endothelial cell of periportal hepatic sinusoid",
+      "underpowered": false,
+      "n_total": 238,
+      "n_in_held_donor": 71,
+      "n_train": 3528,
+      "n_cal": 3044,
+      "n_test_known": 1634,
+      "n_hvg": 1000,
+      "temperature": 1.5043849358237176,
+      "auroc": 0.1454393435275053,
+      "auroc_ci": [
+        0.1210304694288831,
+        0.17729157458062986
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.4330511834778561,
+      "shuffle_auroc_ci": [
+        0.37429660872164017,
+        0.48442358458120705
+      ],
+      "acc@80cov_mixed": 0.6202346041055719,
+      "acc_forced_mixed": 0.5718475073313783,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 167,
+      "mean_silhouette_type_vs_rest": 0.4397243029568057,
+      "nearest_centroid_type": "endothelial cell of hepatic sinusoid",
+      "nearest_centroid_euclidean": 0.8893909888154135
+    },
+    {
+      "type": "gamma-delta T cell",
+      "underpowered": false,
+      "n_total": 671,
+      "n_in_held_donor": 203,
+      "n_train": 3165,
+      "n_cal": 3106,
+      "n_test_known": 1502,
+      "n_hvg": 1000,
+      "temperature": 1.5065681707031817,
+      "auroc": 0.6009327464858023,
+      "auroc_ci": [
+        0.5637001995732734,
+        0.6343051107612577
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.49015762234918303,
+      "shuffle_auroc_ci": [
+        0.450149038965429,
+        0.5321562346878109
+      ],
+      "acc@80cov_mixed": 0.6304985337243402,
+      "acc_forced_mixed": 0.5882697947214076,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 468,
+      "mean_silhouette_type_vs_rest": 0.3158031776296603,
+      "nearest_centroid_type": "alpha-beta T cell",
+      "nearest_centroid_euclidean": 1.7296970038194426
+    },
+    {
+      "type": "hepatocyte",
+      "underpowered": false,
+      "n_total": 3498,
+      "n_in_held_donor": 122,
+      "n_train": 2836,
+      "n_cal": 527,
+      "n_test_known": 1583,
+      "n_hvg": 1000,
+      "temperature": 2.34479189364542,
+      "auroc": 0.22353800109772895,
+      "auroc_ci": [
+        0.18603928215650292,
+        0.263720466192192
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.49343951617079007,
+      "shuffle_auroc_ci": [
+        0.4388529151960193,
+        0.545075076248046
+      ],
+      "acc@80cov_mixed": 0.5469208211143695,
+      "acc_forced_mixed": 0.5266862170087977,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 3376,
+      "mean_silhouette_type_vs_rest": 0.3475863971995943,
+      "nearest_centroid_type": "cholangiocyte",
+      "nearest_centroid_euclidean": 11.78946347912469
+    },
+    {
+      "type": "innate lymphoid cell",
+      "underpowered": false,
+      "n_total": 520,
+      "n_in_held_donor": 233,
+      "n_train": 3325,
+      "n_cal": 3127,
+      "n_test_known": 1472,
+      "n_hvg": 1000,
+      "temperature": 1.5368169956388655,
+      "auroc": 0.5995783961559993,
+      "auroc_ci": [
+        0.5677120378979686,
+        0.6332923452366045
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5010758770292965,
+      "shuffle_auroc_ci": [
+        0.46030080573831994,
+        0.5410766851385824
+      ],
+      "acc@80cov_mixed": 0.6136363636363636,
+      "acc_forced_mixed": 0.5689149560117303,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 287,
+      "mean_silhouette_type_vs_rest": 0.4753595173424724,
+      "nearest_centroid_type": "alpha-beta T cell",
+      "nearest_centroid_euclidean": 0.5557410008157141
+    },
+    {
+      "type": "macrophage",
+      "underpowered": false,
+      "n_total": 326,
+      "n_in_held_donor": 37,
+      "n_train": 3376,
+      "n_cal": 3074,
+      "n_test_known": 1668,
+      "n_hvg": 1000,
+      "temperature": 1.4560973708373486,
+      "auroc": 0.18611057100265732,
+      "auroc_ci": [
+        0.15000700722177052,
+        0.23210943052681407
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.540265085229114,
+      "shuffle_auroc_ci": [
+        0.41703084830491044,
+        0.6413583677995565
+      ],
+      "acc@80cov_mixed": 0.6312316715542522,
+      "acc_forced_mixed": 0.575366568914956,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 289,
+      "mean_silhouette_type_vs_rest": 0.37315612731529985,
+      "nearest_centroid_type": "M1 macrophage",
+      "nearest_centroid_euclidean": 1.5528656282409345
+    },
+    {
+      "type": "plasma cell",
+      "underpowered": false,
+      "n_total": 279,
+      "n_in_held_donor": 42,
+      "n_train": 3404,
+      "n_cal": 3098,
+      "n_test_known": 1663,
+      "n_hvg": 1000,
+      "temperature": 1.5677879744921215,
+      "auroc": 0.42547891074649946,
+      "auroc_ci": [
+        0.3634364986260713,
+        0.5081631991341335
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.55832832230908,
+      "shuffle_auroc_ci": [
+        0.47337944911270075,
+        0.6398836664269657
+      ],
+      "acc@80cov_mixed": 0.6107038123167156,
+      "acc_forced_mixed": 0.5794721407624633,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 237,
+      "mean_silhouette_type_vs_rest": 0.32019361503773636,
+      "nearest_centroid_type": "gamma-delta T cell",
+      "nearest_centroid_euclidean": 3.5776749439006807
+    }
+  ],
+  "aggregate": {
+    "n_types_swept": 11,
+    "n_types_detected": 5,
+    "n_types_detected_over_swept": "5/11",
+    "detected_ratio": 0.45454545454545453,
+    "median_auroc": 0.42547891074649946,
+    "auroc_min": 0.1454393435275053,
+    "auroc_max": 0.6945654128770362,
+    "auroc_range": [
+      0.1454393435275053,
+      0.6945654128770362
+    ],
+    "types_detected": [
+      "B cell",
+      "M1 macrophage",
+      "alpha-beta T cell",
+      "gamma-delta T cell",
+      "innate lymphoid cell"
+    ],
+    "types_failing": [
+      "cholangiocyte",
+      "endothelial cell of hepatic sinusoid",
+      "endothelial cell of periportal hepatic sinusoid",
+      "hepatocyte",
+      "macrophage",
+      "plasma cell"
+    ],
+    "types_underpowered_excluded": [],
+    "spearman_auroc_vs_n_total": {
+      "rho": 0.20000000000000004,
+      "pvalue": 0.5554454421055854,
+      "n": 11
+    },
+    "spearman_auroc_vs_mean_silhouette": {
+      "rho": -0.3545454545454546,
+      "pvalue": 0.2846927409558867,
+      "n": 11
+    },
+    "spearman_auroc_vs_nearest_centroid_dist": {
+      "rho": 0.02727272727272728,
+      "pvalue": 0.9365584481926122,
+      "n": 11
+    },
+    "abundance_direction": "rarer types are harder (positive Spearman with n_total)"
+  },
+  "failing_detail": [
+    {
+      "type": "cholangiocyte",
+      "auroc": 0.3577639314253529,
+      "auroc_ci": [
+        0.2877569620667233,
+        0.4241965894385346
+      ],
+      "n_total": 121,
+      "n_in_held_donor": 34,
+      "mean_silhouette_type_vs_rest": 0.47909603938853984,
+      "nearest_centroid_type": "hepatic stellate cell",
+      "nearest_centroid_euclidean": 2.261322469267044,
+      "nearest_is_pre_registered_sibling": false,
+      "sibling_group": null,
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is hepatic stellate cell at Euclidean 2.261; held type has no pre-registered sibling group"
+    },
+    {
+      "type": "endothelial cell of hepatic sinusoid",
+      "auroc": 0.3007668502252765,
+      "auroc_ci": [
+        0.2590561246300471,
+        0.33975488597867437
+      ],
+      "n_total": 641,
+      "n_in_held_donor": 172,
+      "mean_silhouette_type_vs_rest": 0.39992452464057204,
+      "nearest_centroid_type": "endothelial cell of periportal hepatic sinusoid",
+      "nearest_centroid_euclidean": 1.8429397546205102,
+      "nearest_is_pre_registered_sibling": true,
+      "sibling_group": [
+        "endothelial cell of hepatic sinusoid",
+        "endothelial cell of periportal hepatic sinusoid"
+      ],
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is endothelial cell of periportal hepatic sinusoid at Euclidean 1.843; endothelial cell of hepatic sinusoid nearest endothelial cell of periportal hepatic sinusoid is in the same pre-registered group"
+    },
+    {
+      "type": "endothelial cell of periportal hepatic sinusoid",
+      "auroc": 0.1454393435275053,
+      "auroc_ci": [
+        0.1210304694288831,
+        0.17729157458062986
+      ],
+      "n_total": 238,
+      "n_in_held_donor": 71,
+      "mean_silhouette_type_vs_rest": 0.4397243029568057,
+      "nearest_centroid_type": "endothelial cell of hepatic sinusoid",
+      "nearest_centroid_euclidean": 0.8893909888154135,
+      "nearest_is_pre_registered_sibling": true,
+      "sibling_group": [
+        "endothelial cell of hepatic sinusoid",
+        "endothelial cell of periportal hepatic sinusoid"
+      ],
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is endothelial cell of hepatic sinusoid at Euclidean 0.889; endothelial cell of periportal hepatic sinusoid nearest endothelial cell of hepatic sinusoid is in the same pre-registered group"
+    },
+    {
+      "type": "hepatocyte",
+      "auroc": 0.22353800109772895,
+      "auroc_ci": [
+        0.18603928215650292,
+        0.263720466192192
+      ],
+      "n_total": 3498,
+      "n_in_held_donor": 122,
+      "mean_silhouette_type_vs_rest": 0.3475863971995943,
+      "nearest_centroid_type": "cholangiocyte",
+      "nearest_centroid_euclidean": 11.78946347912469,
+      "nearest_is_pre_registered_sibling": false,
+      "sibling_group": null,
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is cholangiocyte at Euclidean 11.789; held type has no pre-registered sibling group"
+    },
+    {
+      "type": "macrophage",
+      "auroc": 0.18611057100265732,
+      "auroc_ci": [
+        0.15000700722177052,
+        0.23210943052681407
+      ],
+      "n_total": 326,
+      "n_in_held_donor": 37,
+      "mean_silhouette_type_vs_rest": 0.37315612731529985,
+      "nearest_centroid_type": "M1 macrophage",
+      "nearest_centroid_euclidean": 1.5528656282409345,
+      "nearest_is_pre_registered_sibling": true,
+      "sibling_group": [
+        "M1 macrophage",
+        "macrophage"
+      ],
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is M1 macrophage at Euclidean 1.553; macrophage nearest M1 macrophage is in the same pre-registered group"
+    },
+    {
+      "type": "plasma cell",
+      "auroc": 0.42547891074649946,
+      "auroc_ci": [
+        0.3634364986260713,
+        0.5081631991341335
+      ],
+      "n_total": 279,
+      "n_in_held_donor": 42,
+      "mean_silhouette_type_vs_rest": 0.32019361503773636,
+      "nearest_centroid_type": "gamma-delta T cell",
+      "nearest_centroid_euclidean": 3.5776749439006807,
+      "nearest_is_pre_registered_sibling": false,
+      "sibling_group": [
+        "B cell",
+        "plasma cell"
+      ],
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is gamma-delta T cell at Euclidean 3.578; plasma cell nearest gamma-delta T cell is not a pre-registered sibling"
+    }
+  ],
+  "depth_control_best3_worst3": [
+    {
+      "type": "M1 macrophage",
+      "auroc": 0.6945654128770362,
+      "rank_group": "best",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.65038570731206,
+      "depth_alone_auroc_ci": [
+        0.616587880065963,
+        0.679755978633333
+      ],
+      "residual_auroc": 0.7177046400493293,
+      "residual_auroc_ci": [
+        0.6824679182267973,
+        0.7644200426910733
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "B cell",
+      "auroc": 0.6864450853387547,
+      "rank_group": "best",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.17375852993554283,
+      "depth_alone_auroc_ci": [
+        0.1291092430220548,
+        0.21326025330227294
+      ],
+      "residual_auroc": 0.5830378390304635,
+      "residual_auroc_ci": [
+        0.5344162949960536,
+        0.6467553336113009
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "alpha-beta T cell",
+      "auroc": 0.6685360823308049,
+      "rank_group": "best",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.3065285211965651,
+      "depth_alone_auroc_ci": [
+        0.283406226298218,
+        0.33326562459171444
+      ],
+      "residual_auroc": 0.6418756064732213,
+      "residual_auroc_ci": [
+        0.6155808596496876,
+        0.6643394636410026
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "endothelial cell of periportal hepatic sinusoid",
+      "auroc": 0.1454393435275053,
+      "rank_group": "worst",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.8020152740186529,
+      "depth_alone_auroc_ci": [
+        0.745488068527677,
+        0.8521077004086705
+      ],
+      "residual_auroc": 0.2309204061578775,
+      "residual_auroc_ci": [
+        0.19207743819241346,
+        0.2812804473592458
+      ],
+      "residual_ci_lo_gt_0.5": false
+    },
+    {
+      "type": "macrophage",
+      "auroc": 0.18611057100265732,
+      "rank_group": "worst",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.6379626028906604,
+      "depth_alone_auroc_ci": [
+        0.5580506349757137,
+        0.7081775162067352
+      ],
+      "residual_auroc": 0.1850087497569512,
+      "residual_auroc_ci": [
+        0.14400595469570293,
+        0.23528947574453943
+      ],
+      "residual_ci_lo_gt_0.5": false
+    },
+    {
+      "type": "hepatocyte",
+      "auroc": 0.22353800109772895,
+      "rank_group": "worst",
+      "library_size_source": "MacParland CELLxGENE has no nUMI; covariate = log1p(n_detected_genes) from stored X>0",
+      "depth_alone_auroc": 0.6451539409504675,
+      "depth_alone_auroc_ci": [
+        0.5785476861285944,
+        0.6981502454452446
+      ],
+      "residual_auroc": 0.22997421372575416,
+      "residual_auroc_ci": [
+        0.19042199339977478,
+        0.27268908526731817
+      ],
+      "residual_ci_lo_gt_0.5": false
+    }
+  ],
+  "replication_verdict": {
+    "protocol_replicates": false,
+    "sc31_median_auroc_paper": 0.777,
+    "liver_median_auroc": 0.42547891074649946,
+    "abs_median_delta": 0.35152108925350056,
+    "median_within_0.10": false,
+    "detected_ratio": 0.45454545454545453,
+    "detected_ratio_ge_0.7": false,
+    "n_types_detected_over_swept": "5/11",
+    "failure_mode_matches_nk_to_t": false,
+    "n_failures": 6,
+    "n_failures_with_sibling": 3,
+    "n_failures_without_sibling": 3,
+    "mechanism_reading": "3/6 failure(s) have a pre-registered sibling; 3 do not. Mixed support for the neighbourhood mechanism.",
+    "liver_replicates_worse": true
+  },
+  "paper_number": {
+    "median_auroc": 0.42547891074649946,
+    "auroc_range": [
+      0.1454393435275053,
+      0.6945654128770362
+    ],
+    "n_types_detected": 5,
+    "n_types_swept": 11,
+    "protocol_replicates": false
+  },
+  "honest_reading": "Within-atlas leave-one-type-out on MacParland liver does NOT numerically replicate SC31: 5/11 scored types detected; median 0.425 range [0.145, 0.695] vs SC31 median 0.777 and 10/11. |median-0.777|=0.352 (need <=0.10) and detected ratio 0.455 (need >=0.7). A failed replication now is cheaper than a reviewer finding it. This is not a re-litigation of SC29 (cross-atlas parenchyma AUROC 0.425). 3/6 failure(s) have a pre-registered sibling; 3 do not. Mixed support for the neighbourhood mechanism.",
+  "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC32/sc32_within_atlas_sweep_liver.json",
+  "hard_refuse_basenames": [
+    "sc29_macparland_liver_vs_gse130148.json",
+    "sc31_within_atlas_type_sweep.json",
+    "sc31_fetal_lung_pns_novel.json",
+    "sc31_fetal_lung_pns_redteam.json",
+    "sc31_atlas_confound_control.json",
+    "sc31_fetal_lung_pns_stop.json"
+  ]
+}

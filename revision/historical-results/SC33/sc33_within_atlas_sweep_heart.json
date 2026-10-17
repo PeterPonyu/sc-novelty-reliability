@@ -1,0 +1,3518 @@
+{
+  "experiment": "SC33_within_atlas_sweep_heart",
+  "jointly_preregistered": true,
+  "new_estimand_not_sc30": true,
+  "sc30_distinction": "SC30 asked whether the fetal cardiomyocyte label is fetal-only and STOPped because the label appears in 81 adult cells (n_query_only=0). SC33 does not reopen that STOP. SC33 asks a different question: whether a within-atlas leave-one-cell-type-out probe trained on the heart atlas itself flags a held-out heart cell type as novel. Fetal cardiomyocyte remains a heart label; if it is underpowered in the held adult donor it is excluded, not re-tested as a fetal-only discovery.",
+  "does_not_overwrite_sc30_stop": true,
+  "does_not_overwrite_sc31_dests": true,
+  "preregistration_note": "Heart type lists with n_total>=60 are frozen here for the adult primary sweep and the fetal secondary sweep before any novelty AUROC is computed. Donor splits are locked. Types with n_in_held_donor<30 on the FULL stratum are listed as underpowered and excluded; no alternate donor fold is fabricated.",
+  "primary_stratum": "adult",
+  "primary_stratum_justification": "The atlas mixes adult (D2\u2013D7, n=29779) and fetal (BRC*+alexsc, n=30889) donors. Mixing developmental stages would reintroduce a confound of the same class as the SC31 cross-atlas protocol shift: novelty could detect adult-vs-fetal rather than a held-out cell type. Adult-only is therefore the primary replication face. Held test donor is D2 (largest adult donor whose 10x 3' v3 fraction is typical of adult, ~10%) and calibration is D3. D6 is kept in train because it is the only adult donor with substantial 10x 3' v3 (~44%); holding D6 out would make chemistry a competing novelty signal.",
+  "fetal_secondary_if_powered": true,
+  "fetal_secondary_justification": "Fetal-only is powered (7 donors, 16 types with n>=60 if held=BRC2260). It is reported as a secondary, not used for protocol_replicates, because the replication target is the SC31 within-atlas adult-lung face and because fetal chemistry is almost entirely 10x 3' v3.",
+  "do_not_mix_adult_and_fetal": true,
+  "metric_preregistered": "per-type AUROC of (1-max softmax) on held-donor remaining types vs held-donor cells of the removed type; bootstrap 95% CI n_boot=200; label-shuffle null; acc@80cov vs forced on the mixed held-donor test set",
+  "split": "donor-held-out donor_id; temperature on cal donor only; never random cells; adult primary and fetal secondary are separate sweeps",
+  "features": "HVG(1000)+PCA(30)+logistic; fit on remaining types in train donors only; identical to SC31",
+  "novelty_score": "1 - max_softmax after temperature scaling",
+  "min_n_total": 60,
+  "min_n_in_held_donor": 30,
+  "subsample": {
+    "cap": 20000,
+    "seed": 20260820,
+    "method": "stratified by donor with largest-remainder quotas; per LOTO fold, union with ALL cells of the held-out type so n_held equals the full-stratum held-donor count"
+  },
+  "detected_rule": "CI-lo > 0.5 on a scored (powered) type",
+  "aggregate_excludes_underpowered": true,
+  "protocol_replicates_rule": "PRIMARY adult median AUROC within 0.1 of 0.777 AND detected ratio >= 0.7",
+  "sc31_reference": {
+    "dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json",
+    "sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+    "median_auroc_reported": 0.777,
+    "median_auroc_exact": 0.7767523203305329,
+    "auroc_range_reported": [
+      0.333,
+      0.909
+    ],
+    "n_types_detected": 10,
+    "n_types_swept": 11,
+    "detected_ratio": 0.9090909090909091,
+    "failure": "NK cell",
+    "failure_nearest": "T cell",
+    "hyperparameters": {
+      "hvg_n": 1000,
+      "pca_n": 30,
+      "n_boot": 200,
+      "min_n_total": 60,
+      "min_n_held": 30,
+      "logistic_max_iter": 2000,
+      "logistic_random_state": 20260820,
+      "temperature_bounds": [
+        0.3,
+        10
+      ]
+    }
+  },
+  "sibling_groups_preregistered": [
+    [
+      "capillary endothelial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "vein endothelial cell",
+      "endocardial cell"
+    ],
+    [
+      "cardiac muscle cell",
+      "fetal cardiomyocyte",
+      "smooth muscle cell"
+    ],
+    [
+      "pericyte",
+      "smooth muscle cell"
+    ],
+    [
+      "fibroblast",
+      "cardiac mesenchymal cell",
+      "mesothelial cell of epicardium"
+    ],
+    [
+      "myeloid cell",
+      "innate lymphoid cell"
+    ]
+  ],
+  "sibling_mechanism": "SC31 failure mode: NK cell AUROC 0.333 with nearest remaining centroid T cell. Pre-registered here: a failure matches that pattern if the nearest remaining centroid is in the same sibling group and/or its Euclidean distance is at or below the median nearest-centroid distance of scored types. If failures lack a close sibling, the mechanism claim weakens.",
+  "abundance_correlation": "Spearman(AUROC, n_total) on scored types",
+  "distinctness_correlation": "Spearman(AUROC, mean silhouette of held-out type vs rest) and Spearman(AUROC, nearest remaining-type centroid Euclidean) in LOTO PCA on non-test (train+cal) cells",
+  "depth_control": "library-size residual AUROC of novelty score \u22a5 log1p(nCount_RNA) for the 3 best and 3 worst scored types by AUROC",
+  "do_not_coarsen_types": true,
+  "fm_embed": false,
+  "cuda": false,
+  "download": false,
+  "scope": "within-atlas leave-one-type-out novelty on a heart atlas; labels are benchmark labels only, not clinical calls",
+  "do_not_claim": [
+    "clinical or diagnostic cell-type call",
+    "never-pretrained",
+    "foundation-model training",
+    "this sweep reopens or overturns the SC30 STOP",
+    "fetal cardiomyocyte as a biological discovery"
+  ],
+  "seed": 20260820,
+  "n_boot": 200,
+  "hvg_n": 1000,
+  "pca_n": 30,
+  "applied_log1p_cpm": false,
+  "type_col": "cell_type",
+  "donor_col": "donor_id",
+  "depth_col": "nCount_RNA",
+  "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc33_within_atlas_sweep_heart.py",
+  "source_h5ad": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/data/external/cellxgene/integrated_adult_foetal_hearts.h5ad",
+  "source_sha256": "2a4ce1eadc534ef1011349efab96e5c7fa3823956f3ab52c041d1d486acc173b",
+  "source_bytes": 428981170,
+  "adult_prereg": {
+    "stratum": "adult",
+    "donors": [
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "held_donor": "D2",
+    "cal_donor": "D3",
+    "train_donors": [
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "n_obs_stratum": 29779,
+    "donor_n": {
+      "D6": 5499,
+      "D2": 5045,
+      "D3": 4981,
+      "D7": 4857,
+      "D4": 4707,
+      "D5": 4690
+    },
+    "types_all": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_eligible_n_ge_60": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_underpowered_held_n_lt_30": [
+      "fetal cardiomyocyte"
+    ],
+    "types_to_score": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "n_types_eligible": 16,
+    "n_types_underpowered": 1,
+    "n_types_swept": 15,
+    "type_n_total": {
+      "adipocyte": 700,
+      "capillary endothelial cell": 3497,
+      "cardiac mesenchymal cell": 2,
+      "cardiac muscle cell": 5706,
+      "endocardial cell": 756,
+      "endothelial cell": 463,
+      "endothelial cell of artery": 634,
+      "fetal cardiomyocyte": 81,
+      "fibroblast": 4630,
+      "innate lymphoid cell": 2059,
+      "mesothelial cell of epicardium": 705,
+      "myeloid cell": 4905,
+      "neuron": 836,
+      "pericyte": 2376,
+      "smooth muscle cell": 1386,
+      "unknown": 395,
+      "vein endothelial cell": 648
+    },
+    "type_n_held_donor": {
+      "adipocyte": 169,
+      "capillary endothelial cell": 494,
+      "cardiac mesenchymal cell": 0,
+      "cardiac muscle cell": 1046,
+      "endocardial cell": 118,
+      "endothelial cell": 144,
+      "endothelial cell of artery": 61,
+      "fetal cardiomyocyte": 3,
+      "fibroblast": 776,
+      "innate lymphoid cell": 360,
+      "mesothelial cell of epicardium": 81,
+      "myeloid cell": 995,
+      "neuron": 140,
+      "pericyte": 359,
+      "smooth muscle cell": 121,
+      "unknown": 92,
+      "vein endothelial cell": 86
+    },
+    "type_x_donor": {
+      "adipocyte": {
+        "D2": 169,
+        "D3": 97,
+        "D4": 131,
+        "D5": 91,
+        "D6": 133,
+        "D7": 79
+      },
+      "capillary endothelial cell": {
+        "D2": 494,
+        "D3": 572,
+        "D4": 650,
+        "D5": 548,
+        "D6": 644,
+        "D7": 589
+      },
+      "cardiac muscle cell": {
+        "D2": 1046,
+        "D3": 840,
+        "D4": 959,
+        "D5": 980,
+        "D6": 882,
+        "D7": 999
+      },
+      "endocardial cell": {
+        "D2": 118,
+        "D3": 139,
+        "D4": 106,
+        "D5": 130,
+        "D6": 136,
+        "D7": 127
+      },
+      "endothelial cell": {
+        "D2": 144,
+        "D3": 14,
+        "D4": 66,
+        "D5": 45,
+        "D6": 149,
+        "D7": 45
+      },
+      "endothelial cell of artery": {
+        "D2": 61,
+        "D3": 103,
+        "D4": 103,
+        "D5": 128,
+        "D6": 128,
+        "D7": 111
+      },
+      "fetal cardiomyocyte": {
+        "D2": 3,
+        "D3": 8,
+        "D4": 19,
+        "D5": 15,
+        "D6": 11,
+        "D7": 25
+      },
+      "fibroblast": {
+        "D2": 776,
+        "D3": 635,
+        "D4": 710,
+        "D5": 776,
+        "D6": 1004,
+        "D7": 729
+      },
+      "innate lymphoid cell": {
+        "D2": 360,
+        "D3": 329,
+        "D4": 137,
+        "D5": 197,
+        "D6": 568,
+        "D7": 468
+      },
+      "mesothelial cell of epicardium": {
+        "D2": 81,
+        "D3": 100,
+        "D4": 80,
+        "D5": 79,
+        "D6": 264,
+        "D7": 101
+      },
+      "myeloid cell": {
+        "D2": 995,
+        "D3": 1112,
+        "D4": 754,
+        "D5": 740,
+        "D6": 641,
+        "D7": 663
+      },
+      "neuron": {
+        "D2": 140,
+        "D3": 125,
+        "D4": 145,
+        "D5": 155,
+        "D6": 160,
+        "D7": 111
+      },
+      "pericyte": {
+        "D2": 359,
+        "D3": 420,
+        "D4": 427,
+        "D5": 402,
+        "D6": 362,
+        "D7": 406
+      },
+      "smooth muscle cell": {
+        "D2": 121,
+        "D3": 265,
+        "D4": 244,
+        "D5": 256,
+        "D6": 280,
+        "D7": 220
+      },
+      "unknown": {
+        "D2": 92,
+        "D3": 107,
+        "D4": 76,
+        "D5": 30,
+        "D6": 32,
+        "D7": 58
+      },
+      "vein endothelial cell": {
+        "D2": 86,
+        "D3": 115,
+        "D4": 100,
+        "D5": 118,
+        "D6": 104,
+        "D7": 125
+      }
+    },
+    "assay_x_donor": {
+      "D2": {
+        "10x 3' v2": 4526,
+        "10x 3' v3": 519
+      },
+      "D3": {
+        "10x 3' v2": 4486,
+        "10x 3' v3": 495
+      },
+      "D4": {
+        "10x 3' v2": 4220,
+        "10x 3' v3": 487
+      },
+      "D5": {
+        "10x 3' v2": 4170,
+        "10x 3' v3": 520
+      },
+      "D6": {
+        "10x 3' v2": 3062,
+        "10x 3' v3": 2437
+      },
+      "D7": {
+        "10x 3' v2": 4316,
+        "10x 3' v3": 541
+      }
+    },
+    "underpowered_rule": "n_in_held_donor < 30 on the FULL stratum (not the subsample); excluded from aggregate; no alternate donor fold fabricated"
+  },
+  "fetal_prereg": {
+    "stratum": "fetal",
+    "donors": [
+      "BRC2251",
+      "BRC2252",
+      "BRC2256",
+      "BRC2260",
+      "BRC2262",
+      "BRC2263",
+      "alexsc"
+    ],
+    "held_donor": "BRC2260",
+    "cal_donor": "BRC2251",
+    "train_donors": [
+      "BRC2252",
+      "BRC2256",
+      "BRC2262",
+      "BRC2263",
+      "alexsc"
+    ],
+    "n_obs_stratum": 30889,
+    "donor_n": {
+      "BRC2260": 8332,
+      "BRC2251": 5950,
+      "BRC2256": 4429,
+      "BRC2252": 4083,
+      "BRC2263": 3391,
+      "BRC2262": 3239,
+      "alexsc": 1465
+    },
+    "types_all": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_eligible_n_ge_60": [
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_underpowered_held_n_lt_30": [],
+    "types_to_score": [
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "n_types_eligible": 16,
+    "n_types_underpowered": 0,
+    "n_types_swept": 16,
+    "type_n_total": {
+      "adipocyte": 1,
+      "capillary endothelial cell": 1567,
+      "cardiac mesenchymal cell": 315,
+      "cardiac muscle cell": 2566,
+      "endocardial cell": 1667,
+      "endothelial cell": 1104,
+      "endothelial cell of artery": 903,
+      "fetal cardiomyocyte": 1310,
+      "fibroblast": 4207,
+      "innate lymphoid cell": 1656,
+      "mesothelial cell of epicardium": 890,
+      "myeloid cell": 3323,
+      "neuron": 2014,
+      "pericyte": 1134,
+      "smooth muscle cell": 3020,
+      "unknown": 4964,
+      "vein endothelial cell": 248
+    },
+    "type_n_held_donor": {
+      "adipocyte": 0,
+      "capillary endothelial cell": 632,
+      "cardiac mesenchymal cell": 198,
+      "cardiac muscle cell": 191,
+      "endocardial cell": 216,
+      "endothelial cell": 246,
+      "endothelial cell of artery": 252,
+      "fetal cardiomyocyte": 173,
+      "fibroblast": 623,
+      "innate lymphoid cell": 1206,
+      "mesothelial cell of epicardium": 515,
+      "myeloid cell": 1120,
+      "neuron": 251,
+      "pericyte": 241,
+      "smooth muscle cell": 664,
+      "unknown": 1724,
+      "vein endothelial cell": 80
+    },
+    "type_x_donor": {
+      "capillary endothelial cell": {
+        "BRC2251": 218,
+        "BRC2252": 104,
+        "BRC2256": 183,
+        "BRC2260": 632,
+        "BRC2262": 168,
+        "BRC2263": 207,
+        "alexsc": 55
+      },
+      "cardiac mesenchymal cell": {
+        "BRC2251": 74,
+        "BRC2252": 8,
+        "BRC2256": 29,
+        "BRC2260": 198,
+        "BRC2262": 2,
+        "BRC2263": 3,
+        "alexsc": 1
+      },
+      "cardiac muscle cell": {
+        "BRC2251": 531,
+        "BRC2252": 722,
+        "BRC2256": 445,
+        "BRC2260": 191,
+        "BRC2262": 258,
+        "BRC2263": 193,
+        "alexsc": 226
+      },
+      "endocardial cell": {
+        "BRC2251": 292,
+        "BRC2252": 234,
+        "BRC2256": 255,
+        "BRC2260": 216,
+        "BRC2262": 341,
+        "BRC2263": 213,
+        "alexsc": 116
+      },
+      "endothelial cell": {
+        "BRC2251": 209,
+        "BRC2252": 69,
+        "BRC2256": 174,
+        "BRC2260": 246,
+        "BRC2262": 206,
+        "BRC2263": 173,
+        "alexsc": 27
+      },
+      "endothelial cell of artery": {
+        "BRC2251": 94,
+        "BRC2252": 24,
+        "BRC2256": 345,
+        "BRC2260": 252,
+        "BRC2262": 64,
+        "BRC2263": 112,
+        "alexsc": 12
+      },
+      "fetal cardiomyocyte": {
+        "BRC2251": 252,
+        "BRC2252": 204,
+        "BRC2256": 90,
+        "BRC2260": 173,
+        "BRC2262": 283,
+        "BRC2263": 72,
+        "alexsc": 236
+      },
+      "fibroblast": {
+        "BRC2251": 775,
+        "BRC2252": 887,
+        "BRC2256": 497,
+        "BRC2260": 623,
+        "BRC2262": 526,
+        "BRC2263": 527,
+        "alexsc": 372
+      },
+      "innate lymphoid cell": {
+        "BRC2251": 82,
+        "BRC2252": 6,
+        "BRC2256": 217,
+        "BRC2260": 1206,
+        "BRC2262": 77,
+        "BRC2263": 62,
+        "alexsc": 6
+      },
+      "mesothelial cell of epicardium": {
+        "BRC2251": 143,
+        "BRC2252": 47,
+        "BRC2256": 116,
+        "BRC2260": 515,
+        "BRC2262": 26,
+        "BRC2263": 16,
+        "alexsc": 27
+      },
+      "myeloid cell": {
+        "BRC2251": 401,
+        "BRC2252": 381,
+        "BRC2256": 532,
+        "BRC2260": 1120,
+        "BRC2262": 397,
+        "BRC2263": 441,
+        "alexsc": 51
+      },
+      "neuron": {
+        "BRC2251": 1076,
+        "BRC2252": 57,
+        "BRC2256": 332,
+        "BRC2260": 251,
+        "BRC2262": 75,
+        "BRC2263": 223,
+        "alexsc": 0
+      },
+      "pericyte": {
+        "BRC2251": 226,
+        "BRC2252": 222,
+        "BRC2256": 127,
+        "BRC2260": 241,
+        "BRC2262": 101,
+        "BRC2263": 78,
+        "alexsc": 139
+      },
+      "smooth muscle cell": {
+        "BRC2251": 737,
+        "BRC2252": 186,
+        "BRC2256": 699,
+        "BRC2260": 664,
+        "BRC2262": 206,
+        "BRC2263": 489,
+        "alexsc": 39
+      },
+      "unknown": {
+        "BRC2251": 782,
+        "BRC2252": 907,
+        "BRC2256": 350,
+        "BRC2260": 1724,
+        "BRC2262": 491,
+        "BRC2263": 558,
+        "alexsc": 152
+      },
+      "vein endothelial cell": {
+        "BRC2251": 57,
+        "BRC2252": 25,
+        "BRC2256": 38,
+        "BRC2260": 80,
+        "BRC2262": 18,
+        "BRC2263": 24,
+        "alexsc": 6
+      }
+    },
+    "assay_x_donor": {
+      "BRC2251": {
+        "10x 3' v3": 5950
+      },
+      "BRC2252": {
+        "10x 3' v3": 4083
+      },
+      "BRC2256": {
+        "10x 3' v3": 4429
+      },
+      "BRC2260": {
+        "10x 3' v3": 8332
+      },
+      "BRC2262": {
+        "10x 3' v3": 3239
+      },
+      "BRC2263": {
+        "10x 3' v3": 3391
+      },
+      "alexsc": {
+        "10x 3' v2": 1300,
+        "10x 3' v3": 165
+      }
+    },
+    "underpowered_rule": "n_in_held_donor < 30 on the FULL stratum (not the subsample); excluded from aggregate; no alternate donor fold fabricated"
+  },
+  "prereg_sha256": "deb5d8d990f6e1728026ff6323b07cb5af7272ca76635eef53fb4e8ce09c5a67",
+  "scoring_started": true,
+  "timestamp_preregistered": "2026-08-21T05:57:36.256747+00:00",
+  "timestamp": "2026-08-21T06:02:15.282415+00:00",
+  "readonly_sha256_before": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC30/sc30_fetal_cardiomyocyte_stop.json": {
+      "sha256": "46e02ebaba335ef068830ed79955ba1a87fc3f48a62170bfe206a9013ccec25d",
+      "bytes": 3541
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json": {
+      "sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+      "bytes": 24195
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    }
+  },
+  "readonly_sha256_after": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC30/sc30_fetal_cardiomyocyte_stop.json": {
+      "sha256": "46e02ebaba335ef068830ed79955ba1a87fc3f48a62170bfe206a9013ccec25d",
+      "bytes": 3541
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json": {
+      "sha256": "c85e1a3552821ca419ed06c3ce7cb0947772b06ce17ff27f2dc243f22c6ca69a",
+      "bytes": 24195
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    }
+  },
+  "readonly_byte_identical": true,
+  "sc30_stop_untouched": true,
+  "sc31_dests_untouched": true,
+  "primary": {
+    "stratum": "adult",
+    "donors": [
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "held_donor": "D2",
+    "cal_donor": "D3",
+    "train_donors": [
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "n_obs_stratum": 29779,
+    "donor_n": {
+      "D6": 5499,
+      "D2": 5045,
+      "D3": 4981,
+      "D7": 4857,
+      "D4": 4707,
+      "D5": 4690
+    },
+    "types_all": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_eligible_n_ge_60": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_underpowered_held_n_lt_30": [
+      "fetal cardiomyocyte"
+    ],
+    "types_to_score": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "n_types_eligible": 16,
+    "n_types_underpowered": 1,
+    "n_types_swept": 15,
+    "type_n_total": {
+      "adipocyte": 700,
+      "capillary endothelial cell": 3497,
+      "cardiac mesenchymal cell": 2,
+      "cardiac muscle cell": 5706,
+      "endocardial cell": 756,
+      "endothelial cell": 463,
+      "endothelial cell of artery": 634,
+      "fetal cardiomyocyte": 81,
+      "fibroblast": 4630,
+      "innate lymphoid cell": 2059,
+      "mesothelial cell of epicardium": 705,
+      "myeloid cell": 4905,
+      "neuron": 836,
+      "pericyte": 2376,
+      "smooth muscle cell": 1386,
+      "unknown": 395,
+      "vein endothelial cell": 648
+    },
+    "type_n_held_donor": {
+      "adipocyte": 169,
+      "capillary endothelial cell": 494,
+      "cardiac mesenchymal cell": 0,
+      "cardiac muscle cell": 1046,
+      "endocardial cell": 118,
+      "endothelial cell": 144,
+      "endothelial cell of artery": 61,
+      "fetal cardiomyocyte": 3,
+      "fibroblast": 776,
+      "innate lymphoid cell": 360,
+      "mesothelial cell of epicardium": 81,
+      "myeloid cell": 995,
+      "neuron": 140,
+      "pericyte": 359,
+      "smooth muscle cell": 121,
+      "unknown": 92,
+      "vein endothelial cell": 86
+    },
+    "type_x_donor": {
+      "adipocyte": {
+        "D2": 169,
+        "D3": 97,
+        "D4": 131,
+        "D5": 91,
+        "D6": 133,
+        "D7": 79
+      },
+      "capillary endothelial cell": {
+        "D2": 494,
+        "D3": 572,
+        "D4": 650,
+        "D5": 548,
+        "D6": 644,
+        "D7": 589
+      },
+      "cardiac muscle cell": {
+        "D2": 1046,
+        "D3": 840,
+        "D4": 959,
+        "D5": 980,
+        "D6": 882,
+        "D7": 999
+      },
+      "endocardial cell": {
+        "D2": 118,
+        "D3": 139,
+        "D4": 106,
+        "D5": 130,
+        "D6": 136,
+        "D7": 127
+      },
+      "endothelial cell": {
+        "D2": 144,
+        "D3": 14,
+        "D4": 66,
+        "D5": 45,
+        "D6": 149,
+        "D7": 45
+      },
+      "endothelial cell of artery": {
+        "D2": 61,
+        "D3": 103,
+        "D4": 103,
+        "D5": 128,
+        "D6": 128,
+        "D7": 111
+      },
+      "fetal cardiomyocyte": {
+        "D2": 3,
+        "D3": 8,
+        "D4": 19,
+        "D5": 15,
+        "D6": 11,
+        "D7": 25
+      },
+      "fibroblast": {
+        "D2": 776,
+        "D3": 635,
+        "D4": 710,
+        "D5": 776,
+        "D6": 1004,
+        "D7": 729
+      },
+      "innate lymphoid cell": {
+        "D2": 360,
+        "D3": 329,
+        "D4": 137,
+        "D5": 197,
+        "D6": 568,
+        "D7": 468
+      },
+      "mesothelial cell of epicardium": {
+        "D2": 81,
+        "D3": 100,
+        "D4": 80,
+        "D5": 79,
+        "D6": 264,
+        "D7": 101
+      },
+      "myeloid cell": {
+        "D2": 995,
+        "D3": 1112,
+        "D4": 754,
+        "D5": 740,
+        "D6": 641,
+        "D7": 663
+      },
+      "neuron": {
+        "D2": 140,
+        "D3": 125,
+        "D4": 145,
+        "D5": 155,
+        "D6": 160,
+        "D7": 111
+      },
+      "pericyte": {
+        "D2": 359,
+        "D3": 420,
+        "D4": 427,
+        "D5": 402,
+        "D6": 362,
+        "D7": 406
+      },
+      "smooth muscle cell": {
+        "D2": 121,
+        "D3": 265,
+        "D4": 244,
+        "D5": 256,
+        "D6": 280,
+        "D7": 220
+      },
+      "unknown": {
+        "D2": 92,
+        "D3": 107,
+        "D4": 76,
+        "D5": 30,
+        "D6": 32,
+        "D7": 58
+      },
+      "vein endothelial cell": {
+        "D2": 86,
+        "D3": 115,
+        "D4": 100,
+        "D5": 118,
+        "D6": 104,
+        "D7": 125
+      }
+    },
+    "assay_x_donor": {
+      "D2": {
+        "10x 3' v2": 4526,
+        "10x 3' v3": 519
+      },
+      "D3": {
+        "10x 3' v2": 4486,
+        "10x 3' v3": 495
+      },
+      "D4": {
+        "10x 3' v2": 4220,
+        "10x 3' v3": 487
+      },
+      "D5": {
+        "10x 3' v2": 4170,
+        "10x 3' v3": 520
+      },
+      "D6": {
+        "10x 3' v2": 3062,
+        "10x 3' v3": 2437
+      },
+      "D7": {
+        "10x 3' v2": 4316,
+        "10x 3' v3": 541
+      }
+    },
+    "underpowered_rule": "n_in_held_donor < 30 on the FULL stratum (not the subsample); excluded from aggregate; no alternate donor fold fabricated",
+    "n_subsample_base": 20000,
+    "cap": 20000,
+    "subsample_seed": 20260820,
+    "fold_n": {
+      "adipocyte": 20235,
+      "capillary endothelial cell": 21198,
+      "cardiac muscle cell": 21881,
+      "endocardial cell": 20268,
+      "endothelial cell": 20145,
+      "endothelial cell of artery": 20197,
+      "fibroblast": 21516,
+      "innate lymphoid cell": 20637,
+      "mesothelial cell of epicardium": 20231,
+      "myeloid cell": 21586,
+      "neuron": 20259,
+      "pericyte": 20815,
+      "smooth muscle cell": 20416,
+      "unknown": 20145,
+      "vein endothelial cell": 20217
+    },
+    "per_type": [
+      {
+        "type": "adipocyte",
+        "underpowered": false,
+        "n_total": 700,
+        "n_in_held_donor": 169,
+        "n_train": 12965,
+        "n_cal": 3287,
+        "n_test_known": 3283,
+        "n_hvg": 1000,
+        "temperature": 1.0926000340653264,
+        "auroc": 0.9316741975426575,
+        "auroc_ci": [
+          0.9153276574876551,
+          0.9453517561741489
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.53984755608505,
+        "shuffle_auroc_ci": [
+          0.4996063449799709,
+          0.584888342373403
+        ],
+        "acc@80cov_mixed": 0.9630568634552699,
+        "acc_forced_mixed": 0.8812282734646582,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 531,
+        "mean_silhouette_type_vs_rest": 0.5111049700352739,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 4.209272377147946,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20235,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "capillary endothelial cell",
+        "underpowered": false,
+        "n_total": 3497,
+        "n_in_held_donor": 494,
+        "n_train": 11675,
+        "n_cal": 2967,
+        "n_test_known": 3059,
+        "n_hvg": 1000,
+        "temperature": 1.0755500854711586,
+        "auroc": 0.8905797322032417,
+        "auroc_ci": [
+          0.8740213759421194,
+          0.9033094960843623
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5035171982058649,
+        "shuffle_auroc_ci": [
+          0.4805026595301168,
+          0.5270901347407924
+        ],
+        "acc@80cov_mixed": 0.9183673469387755,
+        "acc_forced_mixed": 0.8057979172530256,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 3003,
+        "mean_silhouette_type_vs_rest": 0.4058035531710609,
+        "nearest_centroid_type": "endothelial cell of artery",
+        "nearest_centroid_euclidean": 3.4559828044443126,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 21198,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "cardiac muscle cell",
+        "underpowered": false,
+        "n_total": 5706,
+        "n_in_held_donor": 1046,
+        "n_train": 10699,
+        "n_cal": 2787,
+        "n_test_known": 2689,
+        "n_hvg": 1000,
+        "temperature": 1.1128386526736735,
+        "auroc": 0.9300158495733983,
+        "auroc_ci": [
+          0.9212763689260101,
+          0.9387357482974842
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.507460463171607,
+        "shuffle_auroc_ci": [
+          0.4888647161249207,
+          0.5250093431862447
+        ],
+        "acc@80cov_mixed": 0.8055555555555556,
+        "acc_forced_mixed": 0.6663989290495315,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 4660,
+        "mean_silhouette_type_vs_rest": 0.4876010745975052,
+        "nearest_centroid_type": "fetal cardiomyocyte",
+        "nearest_centroid_euclidean": 6.799909287080949,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 21881,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endocardial cell",
+        "underpowered": false,
+        "n_total": 756,
+        "n_in_held_donor": 118,
+        "n_train": 12954,
+        "n_cal": 3247,
+        "n_test_known": 3311,
+        "n_hvg": 1000,
+        "temperature": 1.0830322964751402,
+        "auroc": 0.6660540878120697,
+        "auroc_ci": [
+          0.6123624495226401,
+          0.711878002421031
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.49588172962236815,
+        "shuffle_auroc_ci": [
+          0.4438024892755744,
+          0.5500717196648566
+        ],
+        "acc@80cov_mixed": 0.9456799125045571,
+        "acc_forced_mixed": 0.8941382327209099,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 638,
+        "mean_silhouette_type_vs_rest": 0.40679879820023795,
+        "nearest_centroid_type": "vein endothelial cell",
+        "nearest_centroid_euclidean": 3.5333412599893594,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20268,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endothelial cell",
+        "underpowered": false,
+        "n_total": 463,
+        "n_in_held_donor": 144,
+        "n_train": 13068,
+        "n_cal": 3335,
+        "n_test_known": 3279,
+        "n_hvg": 1000,
+        "temperature": 1.0891291308715263,
+        "auroc": 0.9000224492562096,
+        "auroc_ci": [
+          0.8719244643206889,
+          0.9264578625430995
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5220172139202331,
+        "shuffle_auroc_ci": [
+          0.46778822047568724,
+          0.5692994441254665
+        ],
+        "acc@80cov_mixed": 0.9590942293644996,
+        "acc_forced_mixed": 0.8892784107508034,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 319,
+        "mean_silhouette_type_vs_rest": 0.43759750619485843,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 4.706349236457411,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20145,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endothelial cell of artery",
+        "underpowered": false,
+        "n_total": 634,
+        "n_in_held_donor": 61,
+        "n_train": 12949,
+        "n_cal": 3267,
+        "n_test_known": 3347,
+        "n_hvg": 1000,
+        "temperature": 1.101623807760644,
+        "auroc": 0.6424054817869685,
+        "auroc_ci": [
+          0.5830625365739095,
+          0.7058176471685839
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4816400299754613,
+        "shuffle_auroc_ci": [
+          0.4181838234613363,
+          0.5444154845109341
+        ],
+        "acc@80cov_mixed": 0.9589141599413059,
+        "acc_forced_mixed": 0.9216549295774648,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 573,
+        "mean_silhouette_type_vs_rest": 0.407121764839595,
+        "nearest_centroid_type": "capillary endothelial cell",
+        "nearest_centroid_euclidean": 2.0965290297194676,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20197,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "fetal cardiomyocyte",
+        "underpowered": true,
+        "reason": "n_in_held_donor=3 < 30; excluded from aggregate; no alternate donor fold fabricated",
+        "n_total": 81,
+        "n_in_held_donor": 3,
+        "auroc": null,
+        "auroc_ci": null,
+        "ci_lo_gt_0.5": null,
+        "shuffle_auroc": null,
+        "acc@80cov_mixed": null,
+        "acc_forced_mixed": null,
+        "mean_silhouette_type_vs_rest": null,
+        "nearest_centroid_type": null,
+        "nearest_centroid_euclidean": null,
+        "nearest_is_preregistered_sibling": null,
+        "n_fold": null,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "fibroblast",
+        "underpowered": false,
+        "n_total": 4630,
+        "n_in_held_donor": 776,
+        "n_train": 11101,
+        "n_cal": 2914,
+        "n_test_known": 2871,
+        "n_hvg": 1000,
+        "temperature": 1.0586618004148736,
+        "auroc": 0.9308684067837997,
+        "auroc_ci": [
+          0.9221576891718122,
+          0.9377543554921407
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.47268364411983327,
+        "shuffle_auroc_ci": [
+          0.4493119094132815,
+          0.49934364404071896
+        ],
+        "acc@80cov_mixed": 0.8731573534453205,
+        "acc_forced_mixed": 0.7315601864546203,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 3854,
+        "mean_silhouette_type_vs_rest": 0.41186445778521075,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 7.983538373335629,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 21516,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "innate lymphoid cell",
+        "underpowered": false,
+        "n_total": 2059,
+        "n_in_held_donor": 360,
+        "n_train": 12316,
+        "n_cal": 3106,
+        "n_test_known": 3156,
+        "n_hvg": 1000,
+        "temperature": 1.0983092238808148,
+        "auroc": 0.915401880016899,
+        "auroc_ci": [
+          0.9044332109590852,
+          0.9264042266757738
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4874489508519926,
+        "shuffle_auroc_ci": [
+          0.4572918015131816,
+          0.5185622315062025
+        ],
+        "acc@80cov_mixed": 0.9388335704125178,
+        "acc_forced_mixed": 0.8310580204778157,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 1699,
+        "mean_silhouette_type_vs_rest": 0.15143764913927626,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 18.45181261351265,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20637,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "mesothelial cell of epicardium",
+        "underpowered": false,
+        "n_total": 705,
+        "n_in_held_donor": 81,
+        "n_train": 12896,
+        "n_cal": 3289,
+        "n_test_known": 3341,
+        "n_hvg": 1000,
+        "temperature": 1.0875302093584174,
+        "auroc": 0.9357551705152224,
+        "auroc_ci": [
+          0.9075775475460846,
+          0.9547420660250016
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.47924957782285926,
+        "shuffle_auroc_ci": [
+          0.414806958086578,
+          0.5338210683367955
+        ],
+        "acc@80cov_mixed": 0.9663865546218487,
+        "acc_forced_mixed": 0.902104032729398,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 624,
+        "mean_silhouette_type_vs_rest": 0.4224022448976896,
+        "nearest_centroid_type": "fibroblast",
+        "nearest_centroid_euclidean": 7.049771790728531,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20231,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "myeloid cell",
+        "underpowered": false,
+        "n_total": 4905,
+        "n_in_held_donor": 995,
+        "n_train": 11383,
+        "n_cal": 2606,
+        "n_test_known": 2692,
+        "n_hvg": 1000,
+        "temperature": 1.1172604179328538,
+        "auroc": 0.9105766574327805,
+        "auroc_ci": [
+          0.8995818516189813,
+          0.9202061444878885
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4945399359352483,
+        "shuffle_auroc_ci": [
+          0.47449347146316745,
+          0.5154175452441605
+        ],
+        "acc@80cov_mixed": 0.8118006103763988,
+        "acc_forced_mixed": 0.6791429346352048,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 3910,
+        "mean_silhouette_type_vs_rest": 0.28090012084239235,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 7.108843432466448,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 21586,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "neuron",
+        "underpowered": false,
+        "n_total": 836,
+        "n_in_held_donor": 140,
+        "n_train": 12870,
+        "n_cal": 3263,
+        "n_test_known": 3290,
+        "n_hvg": 1000,
+        "temperature": 1.079278474833562,
+        "auroc": 0.9506795484151107,
+        "auroc_ci": [
+          0.932639054915771,
+          0.96677855672208
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5219192357794182,
+        "shuffle_auroc_ci": [
+          0.4619180768291898,
+          0.5741326058384805
+        ],
+        "acc@80cov_mixed": 0.9631924198250729,
+        "acc_forced_mixed": 0.8903790087463557,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 696,
+        "mean_silhouette_type_vs_rest": 0.4568313678137187,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 3.489332659761345,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20259,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "pericyte",
+        "underpowered": false,
+        "n_total": 2376,
+        "n_in_held_donor": 359,
+        "n_train": 12209,
+        "n_cal": 3066,
+        "n_test_known": 3164,
+        "n_hvg": 1000,
+        "temperature": 1.117688778196113,
+        "auroc": 0.9313234895358296,
+        "auroc_ci": [
+          0.9125087563048938,
+          0.9458678860723845
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4898985452637436,
+        "shuffle_auroc_ci": [
+          0.4593851125847906,
+          0.5171306499673595
+        ],
+        "acc@80cov_mixed": 0.9542228530872959,
+        "acc_forced_mixed": 0.8461538461538461,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 2017,
+        "mean_silhouette_type_vs_rest": 0.43466975273055297,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 3.756444977892115,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20815,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "smooth muscle cell",
+        "underpowered": false,
+        "n_total": 1386,
+        "n_in_held_donor": 121,
+        "n_train": 12561,
+        "n_cal": 3169,
+        "n_test_known": 3300,
+        "n_hvg": 1000,
+        "temperature": 1.0923102565351566,
+        "auroc": 0.9113398447282745,
+        "auroc_ci": [
+          0.8895549658999883,
+          0.931869070652784
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.49833959429000746,
+        "shuffle_auroc_ci": [
+          0.4385394423446023,
+          0.5482777314142364
+        ],
+        "acc@80cov_mixed": 0.9601608187134503,
+        "acc_forced_mixed": 0.8959368605670857,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 1265,
+        "mean_silhouette_type_vs_rest": 0.47458721139524773,
+        "nearest_centroid_type": "pericyte",
+        "nearest_centroid_euclidean": 4.980197186154736,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20416,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "unknown",
+        "underpowered": false,
+        "n_total": 395,
+        "n_in_held_donor": 92,
+        "n_train": 13147,
+        "n_cal": 3283,
+        "n_test_known": 3320,
+        "n_hvg": 1000,
+        "temperature": 1.1838673346814481,
+        "auroc": 0.515469486642221,
+        "auroc_ci": [
+          0.4449728223522539,
+          0.581493344945349
+        ],
+        "ci_lo_gt_0.5": false,
+        "shuffle_auroc": 0.43801401257202727,
+        "shuffle_auroc_ci": [
+          0.3840541659523594,
+          0.4884487268827687
+        ],
+        "acc@80cov_mixed": 0.9622572370831807,
+        "acc_forced_mixed": 0.9185228604923799,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 303,
+        "mean_silhouette_type_vs_rest": 0.3015939727066619,
+        "nearest_centroid_type": "cardiac muscle cell",
+        "nearest_centroid_euclidean": 5.0823916718215605,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20145,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "vein endothelial cell",
+        "underpowered": false,
+        "n_total": 648,
+        "n_in_held_donor": 86,
+        "n_train": 12973,
+        "n_cal": 3264,
+        "n_test_known": 3332,
+        "n_hvg": 1000,
+        "temperature": 1.0499632256430538,
+        "auroc": 0.8238853681007287,
+        "auroc_ci": [
+          0.7675843306138367,
+          0.8646138936067359
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4919595745274854,
+        "shuffle_auroc_ci": [
+          0.429223416501528,
+          0.5698412404343565
+        ],
+        "acc@80cov_mixed": 0.9612289685442575,
+        "acc_forced_mixed": 0.9040374488004681,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 562,
+        "mean_silhouette_type_vs_rest": 0.3556099705634887,
+        "nearest_centroid_type": "endothelial cell of artery",
+        "nearest_centroid_euclidean": 4.900605033496569,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20217,
+        "n_subsample_base": 20000
+      }
+    ],
+    "aggregate": {
+      "n_types_swept": 15,
+      "n_types_detected": 14,
+      "n_types_detected_over_swept": "14/15",
+      "detected_ratio": 0.9333333333333333,
+      "median_auroc": 0.9113398447282745,
+      "auroc_min": 0.515469486642221,
+      "auroc_max": 0.9506795484151107,
+      "auroc_range": [
+        0.515469486642221,
+        0.9506795484151107
+      ],
+      "types_detected": [
+        "adipocyte",
+        "capillary endothelial cell",
+        "cardiac muscle cell",
+        "endocardial cell",
+        "endothelial cell",
+        "endothelial cell of artery",
+        "fibroblast",
+        "innate lymphoid cell",
+        "mesothelial cell of epicardium",
+        "myeloid cell",
+        "neuron",
+        "pericyte",
+        "smooth muscle cell",
+        "vein endothelial cell"
+      ],
+      "types_failing": [
+        "unknown"
+      ],
+      "types_underpowered_excluded": [
+        "fetal cardiomyocyte"
+      ],
+      "spearman_auroc_vs_n_total": {
+        "rho": 0.3928571428571428,
+        "pvalue": 0.14746665531132622,
+        "n": 15
+      },
+      "spearman_auroc_vs_mean_silhouette": {
+        "rho": 0.5642857142857142,
+        "pvalue": 0.028432522148708533,
+        "n": 15
+      },
+      "spearman_auroc_vs_nearest_centroid_dist": {
+        "rho": 0.2178571428571428,
+        "pvalue": 0.43539267351553756,
+        "n": 15
+      },
+      "abundance_direction": "rarer types are harder (positive Spearman with n_total)",
+      "median_nearest_centroid_euclidean": 4.900605033496569,
+      "n_failures": 1,
+      "n_failures_with_preregistered_sibling": 0,
+      "n_failures_with_close_sibling": 0,
+      "fail_mode": "1/1 failures lack a close sibling; the SC31 mechanism claim (types inside another type's manifold fail) weakens on this atlas",
+      "fail_mode_matches_nk_to_t": false,
+      "mechanism_claim_weakens": true,
+      "sc31_median_reported": 0.777,
+      "median_minus_sc31": 0.13433984472827443,
+      "protocol_replicates": false,
+      "protocol_replicates_rule": "median AUROC within 0.1 of 0.777 AND detected ratio >= 0.7",
+      "replicates_worse_note": "protocol does not replicate on this atlas: median AUROC 0.911 is outside 0.777\u00b10.10"
+    },
+    "failing_detail": [
+      {
+        "type": "unknown",
+        "auroc": 0.515469486642221,
+        "auroc_ci": [
+          0.4449728223522539,
+          0.581493344945349
+        ],
+        "n_total": 395,
+        "n_in_held_donor": 92,
+        "mean_silhouette_type_vs_rest": 0.3015939727066619,
+        "nearest_centroid_type": "cardiac muscle cell",
+        "nearest_centroid_euclidean": 5.0823916718215605,
+        "nearest_is_preregistered_sibling": false,
+        "nearest_dist_le_median": false,
+        "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is cardiac muscle cell at Euclidean 5.082; nearest class is NOT a pre-registered sibling"
+      }
+    ],
+    "depth_control_best3_worst3": [
+      {
+        "type": "neuron",
+        "auroc": 0.9506795484151107,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.30813721233174124,
+        "depth_alone_auroc_ci": [
+          0.2749533408293727,
+          0.34031922242605095
+        ],
+        "residual_auroc": 0.9429070777247069,
+        "residual_auroc_ci": [
+          0.9217418757143866,
+          0.9657181035848851
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "mesothelial cell of epicardium",
+        "auroc": 0.9357551705152224,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.7477080492644695,
+        "depth_alone_auroc_ci": [
+          0.7143439453482923,
+          0.7776965213539624
+        ],
+        "residual_auroc": 0.941249939952923,
+        "residual_auroc_ci": [
+          0.9204547175011676,
+          0.9575455948991365
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "adipocyte",
+        "auroc": 0.9316741975426575,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.8045030252673356,
+        "depth_alone_auroc_ci": [
+          0.7778711542860528,
+          0.8282053042853306
+        ],
+        "residual_auroc": 0.919598361290997,
+        "residual_auroc_ci": [
+          0.8994756634353663,
+          0.9399477249131145
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "unknown",
+        "auroc": 0.515469486642221,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.35023899947616555,
+        "depth_alone_auroc_ci": [
+          0.297510833851558,
+          0.4103995932933649
+        ],
+        "residual_auroc": 0.5239294133053956,
+        "residual_auroc_ci": [
+          0.4551509060760637,
+          0.5872814214643703
+        ],
+        "residual_ci_lo_gt_0.5": false
+      },
+      {
+        "type": "endothelial cell of artery",
+        "auroc": 0.6424054817869685,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.3456484152678934,
+        "depth_alone_auroc_ci": [
+          0.298700961963382,
+          0.4040735622021499
+        ],
+        "residual_auroc": 0.5662227490240832,
+        "residual_auroc_ci": [
+          0.4967249308082883,
+          0.6650812514922966
+        ],
+        "residual_ci_lo_gt_0.5": false
+      },
+      {
+        "type": "endocardial cell",
+        "auroc": 0.6660540878120697,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.5669327716036427,
+        "depth_alone_auroc_ci": [
+          0.5355443875436238,
+          0.6023498536249949
+        ],
+        "residual_auroc": 0.6565736195219837,
+        "residual_auroc_ci": [
+          0.6023262369102181,
+          0.7021492045478174
+        ],
+        "residual_ci_lo_gt_0.5": true
+      }
+    ]
+  },
+  "fetal_secondary": {
+    "stratum": "fetal",
+    "donors": [
+      "BRC2251",
+      "BRC2252",
+      "BRC2256",
+      "BRC2260",
+      "BRC2262",
+      "BRC2263",
+      "alexsc"
+    ],
+    "held_donor": "BRC2260",
+    "cal_donor": "BRC2251",
+    "train_donors": [
+      "BRC2252",
+      "BRC2256",
+      "BRC2262",
+      "BRC2263",
+      "alexsc"
+    ],
+    "n_obs_stratum": 30889,
+    "donor_n": {
+      "BRC2260": 8332,
+      "BRC2251": 5950,
+      "BRC2256": 4429,
+      "BRC2252": 4083,
+      "BRC2263": 3391,
+      "BRC2262": 3239,
+      "alexsc": 1465
+    },
+    "types_all": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_eligible_n_ge_60": [
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "types_underpowered_held_n_lt_30": [],
+    "types_to_score": [
+      "capillary endothelial cell",
+      "cardiac mesenchymal cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fetal cardiomyocyte",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "unknown",
+      "vein endothelial cell"
+    ],
+    "n_types_eligible": 16,
+    "n_types_underpowered": 0,
+    "n_types_swept": 16,
+    "type_n_total": {
+      "adipocyte": 1,
+      "capillary endothelial cell": 1567,
+      "cardiac mesenchymal cell": 315,
+      "cardiac muscle cell": 2566,
+      "endocardial cell": 1667,
+      "endothelial cell": 1104,
+      "endothelial cell of artery": 903,
+      "fetal cardiomyocyte": 1310,
+      "fibroblast": 4207,
+      "innate lymphoid cell": 1656,
+      "mesothelial cell of epicardium": 890,
+      "myeloid cell": 3323,
+      "neuron": 2014,
+      "pericyte": 1134,
+      "smooth muscle cell": 3020,
+      "unknown": 4964,
+      "vein endothelial cell": 248
+    },
+    "type_n_held_donor": {
+      "adipocyte": 0,
+      "capillary endothelial cell": 632,
+      "cardiac mesenchymal cell": 198,
+      "cardiac muscle cell": 191,
+      "endocardial cell": 216,
+      "endothelial cell": 246,
+      "endothelial cell of artery": 252,
+      "fetal cardiomyocyte": 173,
+      "fibroblast": 623,
+      "innate lymphoid cell": 1206,
+      "mesothelial cell of epicardium": 515,
+      "myeloid cell": 1120,
+      "neuron": 251,
+      "pericyte": 241,
+      "smooth muscle cell": 664,
+      "unknown": 1724,
+      "vein endothelial cell": 80
+    },
+    "type_x_donor": {
+      "capillary endothelial cell": {
+        "BRC2251": 218,
+        "BRC2252": 104,
+        "BRC2256": 183,
+        "BRC2260": 632,
+        "BRC2262": 168,
+        "BRC2263": 207,
+        "alexsc": 55
+      },
+      "cardiac mesenchymal cell": {
+        "BRC2251": 74,
+        "BRC2252": 8,
+        "BRC2256": 29,
+        "BRC2260": 198,
+        "BRC2262": 2,
+        "BRC2263": 3,
+        "alexsc": 1
+      },
+      "cardiac muscle cell": {
+        "BRC2251": 531,
+        "BRC2252": 722,
+        "BRC2256": 445,
+        "BRC2260": 191,
+        "BRC2262": 258,
+        "BRC2263": 193,
+        "alexsc": 226
+      },
+      "endocardial cell": {
+        "BRC2251": 292,
+        "BRC2252": 234,
+        "BRC2256": 255,
+        "BRC2260": 216,
+        "BRC2262": 341,
+        "BRC2263": 213,
+        "alexsc": 116
+      },
+      "endothelial cell": {
+        "BRC2251": 209,
+        "BRC2252": 69,
+        "BRC2256": 174,
+        "BRC2260": 246,
+        "BRC2262": 206,
+        "BRC2263": 173,
+        "alexsc": 27
+      },
+      "endothelial cell of artery": {
+        "BRC2251": 94,
+        "BRC2252": 24,
+        "BRC2256": 345,
+        "BRC2260": 252,
+        "BRC2262": 64,
+        "BRC2263": 112,
+        "alexsc": 12
+      },
+      "fetal cardiomyocyte": {
+        "BRC2251": 252,
+        "BRC2252": 204,
+        "BRC2256": 90,
+        "BRC2260": 173,
+        "BRC2262": 283,
+        "BRC2263": 72,
+        "alexsc": 236
+      },
+      "fibroblast": {
+        "BRC2251": 775,
+        "BRC2252": 887,
+        "BRC2256": 497,
+        "BRC2260": 623,
+        "BRC2262": 526,
+        "BRC2263": 527,
+        "alexsc": 372
+      },
+      "innate lymphoid cell": {
+        "BRC2251": 82,
+        "BRC2252": 6,
+        "BRC2256": 217,
+        "BRC2260": 1206,
+        "BRC2262": 77,
+        "BRC2263": 62,
+        "alexsc": 6
+      },
+      "mesothelial cell of epicardium": {
+        "BRC2251": 143,
+        "BRC2252": 47,
+        "BRC2256": 116,
+        "BRC2260": 515,
+        "BRC2262": 26,
+        "BRC2263": 16,
+        "alexsc": 27
+      },
+      "myeloid cell": {
+        "BRC2251": 401,
+        "BRC2252": 381,
+        "BRC2256": 532,
+        "BRC2260": 1120,
+        "BRC2262": 397,
+        "BRC2263": 441,
+        "alexsc": 51
+      },
+      "neuron": {
+        "BRC2251": 1076,
+        "BRC2252": 57,
+        "BRC2256": 332,
+        "BRC2260": 251,
+        "BRC2262": 75,
+        "BRC2263": 223,
+        "alexsc": 0
+      },
+      "pericyte": {
+        "BRC2251": 226,
+        "BRC2252": 222,
+        "BRC2256": 127,
+        "BRC2260": 241,
+        "BRC2262": 101,
+        "BRC2263": 78,
+        "alexsc": 139
+      },
+      "smooth muscle cell": {
+        "BRC2251": 737,
+        "BRC2252": 186,
+        "BRC2256": 699,
+        "BRC2260": 664,
+        "BRC2262": 206,
+        "BRC2263": 489,
+        "alexsc": 39
+      },
+      "unknown": {
+        "BRC2251": 782,
+        "BRC2252": 907,
+        "BRC2256": 350,
+        "BRC2260": 1724,
+        "BRC2262": 491,
+        "BRC2263": 558,
+        "alexsc": 152
+      },
+      "vein endothelial cell": {
+        "BRC2251": 57,
+        "BRC2252": 25,
+        "BRC2256": 38,
+        "BRC2260": 80,
+        "BRC2262": 18,
+        "BRC2263": 24,
+        "alexsc": 6
+      }
+    },
+    "assay_x_donor": {
+      "BRC2251": {
+        "10x 3' v3": 5950
+      },
+      "BRC2252": {
+        "10x 3' v3": 4083
+      },
+      "BRC2256": {
+        "10x 3' v3": 4429
+      },
+      "BRC2260": {
+        "10x 3' v3": 8332
+      },
+      "BRC2262": {
+        "10x 3' v3": 3239
+      },
+      "BRC2263": {
+        "10x 3' v3": 3391
+      },
+      "alexsc": {
+        "10x 3' v2": 1300,
+        "10x 3' v3": 165
+      }
+    },
+    "underpowered_rule": "n_in_held_donor < 30 on the FULL stratum (not the subsample); excluded from aggregate; no alternate donor fold fabricated",
+    "n_subsample_base": 20000,
+    "cap": 20000,
+    "subsample_seed": 20260820,
+    "fold_n": {
+      "capillary endothelial cell": 20542,
+      "cardiac mesenchymal cell": 20100,
+      "cardiac muscle cell": 20926,
+      "endocardial cell": 20557,
+      "endothelial cell": 20389,
+      "endothelial cell of artery": 20307,
+      "fetal cardiomyocyte": 20480,
+      "fibroblast": 21532,
+      "innate lymphoid cell": 20582,
+      "mesothelial cell of epicardium": 20313,
+      "myeloid cell": 21136,
+      "neuron": 20730,
+      "pericyte": 20421,
+      "smooth muscle cell": 21045,
+      "unknown": 21742,
+      "vein endothelial cell": 20086
+    },
+    "per_type": [
+      {
+        "type": "capillary endothelial cell",
+        "underpowered": false,
+        "n_total": 1567,
+        "n_in_held_donor": 632,
+        "n_train": 10280,
+        "n_cal": 3711,
+        "n_test_known": 4984,
+        "n_hvg": 1000,
+        "temperature": 1.7073826924410525,
+        "auroc": 0.6979032270353739,
+        "auroc_ci": [
+          0.6834031340699408,
+          0.7136450197696997
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5116699387406791,
+        "shuffle_auroc_ci": [
+          0.4867760810365618,
+          0.5325678567615783
+        ],
+        "acc@80cov_mixed": 0.8025378450578807,
+        "acc_forced_mixed": 0.7327279202279202,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 935,
+        "mean_silhouette_type_vs_rest": 0.4936734329367652,
+        "nearest_centroid_type": "vein endothelial cell",
+        "nearest_centroid_euclidean": 8.032452554748913,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20542,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "cardiac mesenchymal cell",
+        "underpowered": false,
+        "n_total": 315,
+        "n_in_held_donor": 198,
+        "n_train": 10726,
+        "n_cal": 3794,
+        "n_test_known": 5265,
+        "n_hvg": 1000,
+        "temperature": 1.6523736045638115,
+        "auroc": 0.22999510777288554,
+        "auroc_ci": [
+          0.20976702459315255,
+          0.24624773832262434
+        ],
+        "ci_lo_gt_0.5": false,
+        "shuffle_auroc": 0.5358897618156877,
+        "shuffle_auroc_ci": [
+          0.494107139632027,
+          0.5698701364366017
+        ],
+        "acc@80cov_mixed": 0.8702517162471396,
+        "acc_forced_mixed": 0.8012081274025261,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 117,
+        "mean_silhouette_type_vs_rest": 0.5969054228557601,
+        "nearest_centroid_type": "mesothelial cell of epicardium",
+        "nearest_centroid_euclidean": 8.899030212938728,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20100,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "cardiac muscle cell",
+        "underpowered": false,
+        "n_total": 2566,
+        "n_in_held_donor": 191,
+        "n_train": 9570,
+        "n_cal": 3519,
+        "n_test_known": 5271,
+        "n_hvg": 1000,
+        "temperature": 1.6554089560487628,
+        "auroc": 0.35646792039024155,
+        "auroc_ci": [
+          0.32649743273405585,
+          0.39086224342138587
+        ],
+        "ci_lo_gt_0.5": false,
+        "shuffle_auroc": 0.47832703094378903,
+        "shuffle_auroc_ci": [
+          0.4373735694776974,
+          0.5198129944379525
+        ],
+        "acc@80cov_mixed": 0.8496223392080567,
+        "acc_forced_mixed": 0.777920175759795,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 2375,
+        "mean_silhouette_type_vs_rest": 0.6981318658028594,
+        "nearest_centroid_type": "fetal cardiomyocyte",
+        "nearest_centroid_euclidean": 7.855436936653911,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20926,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endocardial cell",
+        "underpowered": false,
+        "n_total": 1667,
+        "n_in_held_donor": 216,
+        "n_train": 9980,
+        "n_cal": 3661,
+        "n_test_known": 5249,
+        "n_hvg": 1000,
+        "temperature": 1.6515998110436845,
+        "auroc": 0.7679866711825181,
+        "auroc_ci": [
+          0.7466047019100861,
+          0.7851267647754029
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5096173521587886,
+        "shuffle_auroc_ci": [
+          0.47579102950934704,
+          0.5462465069203285
+        ],
+        "acc@80cov_mixed": 0.8364592863677951,
+        "acc_forced_mixed": 0.7560841720036596,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 1451,
+        "mean_silhouette_type_vs_rest": 0.5917287096894349,
+        "nearest_centroid_type": "endothelial cell",
+        "nearest_centroid_euclidean": 5.427541902458391,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20557,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endothelial cell",
+        "underpowered": false,
+        "n_total": 1104,
+        "n_in_held_donor": 246,
+        "n_train": 10323,
+        "n_cal": 3719,
+        "n_test_known": 5243,
+        "n_hvg": 1000,
+        "temperature": 1.667218983866247,
+        "auroc": 0.7170900728652527,
+        "auroc_ci": [
+          0.6902910650668638,
+          0.7418533211226108
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5133976544800734,
+        "shuffle_auroc_ci": [
+          0.4711180247061375,
+          0.552145884110448
+        ],
+        "acc@80cov_mixed": 0.8592575723069916,
+        "acc_forced_mixed": 0.7879395153944252,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 858,
+        "mean_silhouette_type_vs_rest": 0.3411780612061346,
+        "nearest_centroid_type": "vein endothelial cell",
+        "nearest_centroid_euclidean": 7.5565687908563595,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20389,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "endothelial cell of artery",
+        "underpowered": false,
+        "n_total": 903,
+        "n_in_held_donor": 252,
+        "n_train": 10383,
+        "n_cal": 3794,
+        "n_test_known": 5227,
+        "n_hvg": 1000,
+        "temperature": 1.6363715772761684,
+        "auroc": 0.7107608236841066,
+        "auroc_ci": [
+          0.6881299207941173,
+          0.7318420324355634
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.49552461122195196,
+        "shuffle_auroc_ci": [
+          0.459336961084801,
+          0.5337856780117949
+        ],
+        "acc@80cov_mixed": 0.8357289527720739,
+        "acc_forced_mixed": 0.762000365030115,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 651,
+        "mean_silhouette_type_vs_rest": 0.5043531847034959,
+        "nearest_centroid_type": "vein endothelial cell",
+        "nearest_centroid_euclidean": 4.475269239997503,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20307,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "fetal cardiomyocyte",
+        "underpowered": false,
+        "n_total": 1310,
+        "n_in_held_donor": 173,
+        "n_train": 10199,
+        "n_cal": 3682,
+        "n_test_known": 5289,
+        "n_hvg": 1000,
+        "temperature": 1.7031224312784738,
+        "auroc": 0.693534514320812,
+        "auroc_ci": [
+          0.6585006425048295,
+          0.7230214933256396
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5008060135716292,
+        "shuffle_auroc_ci": [
+          0.4585224088688041,
+          0.5424814008693745
+        ],
+        "acc@80cov_mixed": 0.8610666056305791,
+        "acc_forced_mixed": 0.7841450018308312,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 1137,
+        "mean_silhouette_type_vs_rest": 0.5682702955919134,
+        "nearest_centroid_type": "cardiac muscle cell",
+        "nearest_centroid_euclidean": 6.365238924908753,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20480,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "fibroblast",
+        "underpowered": false,
+        "n_total": 4207,
+        "n_in_held_donor": 623,
+        "n_train": 8952,
+        "n_cal": 3354,
+        "n_test_known": 5019,
+        "n_hvg": 1000,
+        "temperature": 1.577876012447544,
+        "auroc": 0.8603819130962055,
+        "auroc_ci": [
+          0.8504073069136198,
+          0.8708493666783643
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5011546812321845,
+        "shuffle_auroc_ci": [
+          0.4769211841668193,
+          0.5240074190781268
+        ],
+        "acc@80cov_mixed": 0.8373587414136938,
+        "acc_forced_mixed": 0.739276852180078,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 3584,
+        "mean_silhouette_type_vs_rest": 0.5441600985182449,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 5.585172900839991,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 21532,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "innate lymphoid cell",
+        "underpowered": false,
+        "n_total": 1656,
+        "n_in_held_donor": 1206,
+        "n_train": 10511,
+        "n_cal": 3806,
+        "n_test_known": 4609,
+        "n_hvg": 1000,
+        "temperature": 1.5691390230467406,
+        "auroc": 0.3444279650420783,
+        "auroc_ci": [
+          0.3246401219854629,
+          0.3598899078771696
+        ],
+        "ci_lo_gt_0.5": false,
+        "shuffle_auroc": 0.5078097255100069,
+        "shuffle_auroc_ci": [
+          0.49546651739618947,
+          0.5217286601665756
+        ],
+        "acc@80cov_mixed": 0.676268271711092,
+        "acc_forced_mixed": 0.6433361994840928,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 450,
+        "mean_silhouette_type_vs_rest": -0.16902191659121835,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 24.096495741629695,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20582,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "mesothelial cell of epicardium",
+        "underpowered": false,
+        "n_total": 890,
+        "n_in_held_donor": 515,
+        "n_train": 10598,
+        "n_cal": 3754,
+        "n_test_known": 5071,
+        "n_hvg": 1000,
+        "temperature": 1.693655796738214,
+        "auroc": 0.6895803857074206,
+        "auroc_ci": [
+          0.6664305821416959,
+          0.709980168826196
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5071200601937919,
+        "shuffle_auroc_ci": [
+          0.48653936076059207,
+          0.5341293151551092
+        ],
+        "acc@80cov_mixed": 0.8200537153088631,
+        "acc_forced_mixed": 0.734156820622986,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 375,
+        "mean_silhouette_type_vs_rest": 0.4857502648612335,
+        "nearest_centroid_type": "cardiac mesenchymal cell",
+        "nearest_centroid_euclidean": 3.6046112293886257,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20313,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "myeloid cell",
+        "underpowered": false,
+        "n_total": 3323,
+        "n_in_held_donor": 1120,
+        "n_train": 9583,
+        "n_cal": 3580,
+        "n_test_known": 4650,
+        "n_hvg": 1000,
+        "temperature": 1.6066792043844813,
+        "auroc": 0.16430577956989245,
+        "auroc_ci": [
+          0.14988360508429635,
+          0.18123219250867112
+        ],
+        "ci_lo_gt_0.5": false,
+        "shuffle_auroc": 0.5105879416282642,
+        "shuffle_auroc_ci": [
+          0.4947011362868622,
+          0.529037533597727
+        ],
+        "acc@80cov_mixed": 0.6867417677642981,
+        "acc_forced_mixed": 0.6386481802426344,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 2203,
+        "mean_silhouette_type_vs_rest": 0.18835126214743497,
+        "nearest_centroid_type": "innate lymphoid cell",
+        "nearest_centroid_euclidean": 22.686560648690353,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 21136,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "neuron",
+        "underpowered": false,
+        "n_total": 2014,
+        "n_in_held_donor": 251,
+        "n_train": 10313,
+        "n_cal": 3162,
+        "n_test_known": 5241,
+        "n_hvg": 1000,
+        "temperature": 1.293619428532346,
+        "auroc": 0.7192736400325049,
+        "auroc_ci": [
+          0.6926847165646209,
+          0.7430124497022879
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4906061691033995,
+        "shuffle_auroc_ci": [
+          0.45675339936351794,
+          0.5255608269730229
+        ],
+        "acc@80cov_mixed": 0.855679490097883,
+        "acc_forced_mixed": 0.7798616168973052,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 1763,
+        "mean_silhouette_type_vs_rest": 0.479022746494034,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 3.7210646146551856,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20730,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "pericyte",
+        "underpowered": false,
+        "n_total": 1134,
+        "n_in_held_donor": 241,
+        "n_train": 10333,
+        "n_cal": 3709,
+        "n_test_known": 5245,
+        "n_hvg": 1000,
+        "temperature": 1.6493402696272983,
+        "auroc": 0.8018828443607625,
+        "auroc_ci": [
+          0.7804525935699362,
+          0.8231864435497468
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.4555953308624297,
+        "shuffle_auroc_ci": [
+          0.41805153450790594,
+          0.4941942869207853
+        ],
+        "acc@80cov_mixed": 0.8646308113035551,
+        "acc_forced_mixed": 0.7883703973751367,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 893,
+        "mean_silhouette_type_vs_rest": 0.5309254505941807,
+        "nearest_centroid_type": "fibroblast",
+        "nearest_centroid_euclidean": 5.663166403900235,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 20421,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "smooth muscle cell",
+        "underpowered": false,
+        "n_total": 3020,
+        "n_in_held_donor": 664,
+        "n_train": 9697,
+        "n_cal": 3384,
+        "n_test_known": 4944,
+        "n_hvg": 1000,
+        "temperature": 1.6510548203053663,
+        "auroc": 0.699532352711818,
+        "auroc_ci": [
+          0.6802355023655464,
+          0.7158932136904442
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5264530512828012,
+        "shuffle_auroc_ci": [
+          0.5020429184517771,
+          0.5500099137365669
+        ],
+        "acc@80cov_mixed": 0.7833259028087383,
+        "acc_forced_mixed": 0.704885877318117,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 2356,
+        "mean_silhouette_type_vs_rest": 0.556861240811563,
+        "nearest_centroid_type": "pericyte",
+        "nearest_centroid_euclidean": 9.054777444235379,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 21045,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "unknown",
+        "underpowered": false,
+        "n_total": 4964,
+        "n_in_held_donor": 1724,
+        "n_train": 9161,
+        "n_cal": 3339,
+        "n_test_known": 4278,
+        "n_hvg": 1000,
+        "temperature": 1.726161010583978,
+        "auroc": 0.8680333416855677,
+        "auroc_ci": [
+          0.8590146561807874,
+          0.8792716447996236
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.49794082170799936,
+        "shuffle_auroc_ci": [
+          0.48466444035491374,
+          0.5147540658135427
+        ],
+        "acc@80cov_mixed": 0.7133930431160175,
+        "acc_forced_mixed": 0.5914695101632789,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 3240,
+        "mean_silhouette_type_vs_rest": 0.34182921336479705,
+        "nearest_centroid_type": "fibroblast",
+        "nearest_centroid_euclidean": 6.140369270952477,
+        "nearest_is_preregistered_sibling": false,
+        "n_fold": 21742,
+        "n_subsample_base": 20000
+      },
+      {
+        "type": "vein endothelial cell",
+        "underpowered": false,
+        "n_total": 248,
+        "n_in_held_donor": 80,
+        "n_train": 10686,
+        "n_cal": 3812,
+        "n_test_known": 5340,
+        "n_hvg": 1000,
+        "temperature": 1.6542427632849486,
+        "auroc": 0.7155383895131086,
+        "auroc_ci": [
+          0.6839899704796868,
+          0.7508494164479663
+        ],
+        "ci_lo_gt_0.5": true,
+        "shuffle_auroc": 0.5079541198501873,
+        "shuffle_auroc_ci": [
+          0.4364897684913827,
+          0.575586785548992
+        ],
+        "acc@80cov_mixed": 0.8779981549815498,
+        "acc_forced_mixed": 0.8018450184501845,
+        "acc80_gt_forced": true,
+        "n_distinctness_nontest": 168,
+        "mean_silhouette_type_vs_rest": 0.5809698748291866,
+        "nearest_centroid_type": "endothelial cell",
+        "nearest_centroid_euclidean": 7.069064485730031,
+        "nearest_is_preregistered_sibling": true,
+        "n_fold": 20086,
+        "n_subsample_base": 20000
+      }
+    ],
+    "aggregate": {
+      "n_types_swept": 16,
+      "n_types_detected": 12,
+      "n_types_detected_over_swept": "12/16",
+      "detected_ratio": 0.75,
+      "median_auroc": 0.7051465881979624,
+      "auroc_min": 0.16430577956989245,
+      "auroc_max": 0.8680333416855677,
+      "auroc_range": [
+        0.16430577956989245,
+        0.8680333416855677
+      ],
+      "types_detected": [
+        "capillary endothelial cell",
+        "endocardial cell",
+        "endothelial cell",
+        "endothelial cell of artery",
+        "fetal cardiomyocyte",
+        "fibroblast",
+        "mesothelial cell of epicardium",
+        "neuron",
+        "pericyte",
+        "smooth muscle cell",
+        "unknown",
+        "vein endothelial cell"
+      ],
+      "types_failing": [
+        "cardiac mesenchymal cell",
+        "cardiac muscle cell",
+        "innate lymphoid cell",
+        "myeloid cell"
+      ],
+      "types_underpowered_excluded": [],
+      "spearman_auroc_vs_n_total": {
+        "rho": 0.2411764705882353,
+        "pvalue": 0.36820660804263405,
+        "n": 16
+      },
+      "spearman_auroc_vs_mean_silhouette": {
+        "rho": -0.0029411764705882353,
+        "pvalue": 0.9913748045563624,
+        "n": 16
+      },
+      "spearman_auroc_vs_nearest_centroid_dist": {
+        "rho": -0.5882352941176471,
+        "pvalue": 0.016539722195378158,
+        "n": 16
+      },
+      "abundance_direction": "rarer types are harder (positive Spearman with n_total)",
+      "median_nearest_centroid_euclidean": 6.717151705319392,
+      "n_failures": 4,
+      "n_failures_with_preregistered_sibling": 3,
+      "n_failures_with_close_sibling": 3,
+      "fail_mode": "1/4 failures lack a close sibling; the SC31 mechanism claim (types inside another type's manifold fail) weakens on this atlas",
+      "fail_mode_matches_nk_to_t": false,
+      "mechanism_claim_weakens": true,
+      "sc31_median_reported": 0.777,
+      "median_minus_sc31": -0.07185341180203764,
+      "protocol_replicates": true,
+      "protocol_replicates_rule": "median AUROC within 0.1 of 0.777 AND detected ratio >= 0.7",
+      "replicates_worse_note": "protocol replicates; point-estimate median is modestly lower than SC31 0.777"
+    },
+    "failing_detail": [
+      {
+        "type": "cardiac mesenchymal cell",
+        "auroc": 0.22999510777288554,
+        "auroc_ci": [
+          0.20976702459315255,
+          0.24624773832262434
+        ],
+        "n_total": 315,
+        "n_in_held_donor": 198,
+        "mean_silhouette_type_vs_rest": 0.5969054228557601,
+        "nearest_centroid_type": "mesothelial cell of epicardium",
+        "nearest_centroid_euclidean": 8.899030212938728,
+        "nearest_is_preregistered_sibling": true,
+        "nearest_dist_le_median": false,
+        "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is mesothelial cell of epicardium at Euclidean 8.899; nearest class is a pre-registered sibling"
+      },
+      {
+        "type": "cardiac muscle cell",
+        "auroc": 0.35646792039024155,
+        "auroc_ci": [
+          0.32649743273405585,
+          0.39086224342138587
+        ],
+        "n_total": 2566,
+        "n_in_held_donor": 191,
+        "mean_silhouette_type_vs_rest": 0.6981318658028594,
+        "nearest_centroid_type": "fetal cardiomyocyte",
+        "nearest_centroid_euclidean": 7.855436936653911,
+        "nearest_is_preregistered_sibling": true,
+        "nearest_dist_le_median": false,
+        "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is fetal cardiomyocyte at Euclidean 7.855; nearest class is a pre-registered sibling"
+      },
+      {
+        "type": "innate lymphoid cell",
+        "auroc": 0.3444279650420783,
+        "auroc_ci": [
+          0.3246401219854629,
+          0.3598899078771696
+        ],
+        "n_total": 1656,
+        "n_in_held_donor": 1206,
+        "mean_silhouette_type_vs_rest": -0.16902191659121835,
+        "nearest_centroid_type": "unknown",
+        "nearest_centroid_euclidean": 24.096495741629695,
+        "nearest_is_preregistered_sibling": false,
+        "nearest_dist_le_median": false,
+        "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; mean silhouette vs rest is -0.169 (sits inside another type's manifold); nearest remaining centroid is unknown at Euclidean 24.096; nearest class is NOT a pre-registered sibling"
+      },
+      {
+        "type": "myeloid cell",
+        "auroc": 0.16430577956989245,
+        "auroc_ci": [
+          0.14988360508429635,
+          0.18123219250867112
+        ],
+        "n_total": 3323,
+        "n_in_held_donor": 1120,
+        "mean_silhouette_type_vs_rest": 0.18835126214743497,
+        "nearest_centroid_type": "innate lymphoid cell",
+        "nearest_centroid_euclidean": 22.686560648690353,
+        "nearest_is_preregistered_sibling": true,
+        "nearest_dist_le_median": false,
+        "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is innate lymphoid cell at Euclidean 22.687; nearest class is a pre-registered sibling"
+      }
+    ],
+    "depth_control_best3_worst3": [
+      {
+        "type": "unknown",
+        "auroc": 0.8680333416855677,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.4694552960216247,
+        "depth_alone_auroc_ci": [
+          0.45613619187889504,
+          0.4840523118076147
+        ],
+        "residual_auroc": 0.8583069207481432,
+        "residual_auroc_ci": [
+          0.8467843045244746,
+          0.86847127248383
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "fibroblast",
+        "auroc": 0.8603819130962055,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.4446440604355136,
+        "depth_alone_auroc_ci": [
+          0.41970969127112506,
+          0.47173194741989755
+        ],
+        "residual_auroc": 0.8564757293072839,
+        "residual_auroc_ci": [
+          0.8410056427841184,
+          0.8689678444656961
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "pericyte",
+        "auroc": 0.8018828443607625,
+        "rank_group": "best",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.4494048866931162,
+        "depth_alone_auroc_ci": [
+          0.4132015396293537,
+          0.48274515204892504
+        ],
+        "residual_auroc": 0.7929733514234065,
+        "residual_auroc_ci": [
+          0.7684319265155583,
+          0.8157056372172858
+        ],
+        "residual_ci_lo_gt_0.5": true
+      },
+      {
+        "type": "myeloid cell",
+        "auroc": 0.16430577956989245,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.5521498655913979,
+        "depth_alone_auroc_ci": [
+          0.5342193102643185,
+          0.5715058788376572
+        ],
+        "residual_auroc": 0.2708369815668203,
+        "residual_auroc_ci": [
+          0.254798826416743,
+          0.2869586735393386
+        ],
+        "residual_ci_lo_gt_0.5": false
+      },
+      {
+        "type": "cardiac mesenchymal cell",
+        "auroc": 0.22999510777288554,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.623451514192255,
+        "depth_alone_auroc_ci": [
+          0.5866524399641133,
+          0.6588571149418729
+        ],
+        "residual_auroc": 0.27317716576975837,
+        "residual_auroc_ci": [
+          0.2521351462030594,
+          0.29505837154240827
+        ],
+        "residual_ci_lo_gt_0.5": false
+      },
+      {
+        "type": "innate lymphoid cell",
+        "auroc": 0.3444279650420783,
+        "rank_group": "worst",
+        "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+        "depth_alone_auroc": 0.4045884880939916,
+        "depth_alone_auroc_ci": [
+          0.38754361135745524,
+          0.4213270788431753
+        ],
+        "residual_auroc": 0.2763153207708474,
+        "residual_auroc_ci": [
+          0.26090024361117786,
+          0.2949176015992814
+        ],
+        "residual_ci_lo_gt_0.5": false
+      }
+    ]
+  },
+  "per_type": [
+    {
+      "type": "adipocyte",
+      "underpowered": false,
+      "n_total": 700,
+      "n_in_held_donor": 169,
+      "n_train": 12965,
+      "n_cal": 3287,
+      "n_test_known": 3283,
+      "n_hvg": 1000,
+      "temperature": 1.0926000340653264,
+      "auroc": 0.9316741975426575,
+      "auroc_ci": [
+        0.9153276574876551,
+        0.9453517561741489
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.53984755608505,
+      "shuffle_auroc_ci": [
+        0.4996063449799709,
+        0.584888342373403
+      ],
+      "acc@80cov_mixed": 0.9630568634552699,
+      "acc_forced_mixed": 0.8812282734646582,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 531,
+      "mean_silhouette_type_vs_rest": 0.5111049700352739,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 4.209272377147946,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20235,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "capillary endothelial cell",
+      "underpowered": false,
+      "n_total": 3497,
+      "n_in_held_donor": 494,
+      "n_train": 11675,
+      "n_cal": 2967,
+      "n_test_known": 3059,
+      "n_hvg": 1000,
+      "temperature": 1.0755500854711586,
+      "auroc": 0.8905797322032417,
+      "auroc_ci": [
+        0.8740213759421194,
+        0.9033094960843623
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5035171982058649,
+      "shuffle_auroc_ci": [
+        0.4805026595301168,
+        0.5270901347407924
+      ],
+      "acc@80cov_mixed": 0.9183673469387755,
+      "acc_forced_mixed": 0.8057979172530256,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 3003,
+      "mean_silhouette_type_vs_rest": 0.4058035531710609,
+      "nearest_centroid_type": "endothelial cell of artery",
+      "nearest_centroid_euclidean": 3.4559828044443126,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 21198,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "cardiac muscle cell",
+      "underpowered": false,
+      "n_total": 5706,
+      "n_in_held_donor": 1046,
+      "n_train": 10699,
+      "n_cal": 2787,
+      "n_test_known": 2689,
+      "n_hvg": 1000,
+      "temperature": 1.1128386526736735,
+      "auroc": 0.9300158495733983,
+      "auroc_ci": [
+        0.9212763689260101,
+        0.9387357482974842
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.507460463171607,
+      "shuffle_auroc_ci": [
+        0.4888647161249207,
+        0.5250093431862447
+      ],
+      "acc@80cov_mixed": 0.8055555555555556,
+      "acc_forced_mixed": 0.6663989290495315,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 4660,
+      "mean_silhouette_type_vs_rest": 0.4876010745975052,
+      "nearest_centroid_type": "fetal cardiomyocyte",
+      "nearest_centroid_euclidean": 6.799909287080949,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 21881,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "endocardial cell",
+      "underpowered": false,
+      "n_total": 756,
+      "n_in_held_donor": 118,
+      "n_train": 12954,
+      "n_cal": 3247,
+      "n_test_known": 3311,
+      "n_hvg": 1000,
+      "temperature": 1.0830322964751402,
+      "auroc": 0.6660540878120697,
+      "auroc_ci": [
+        0.6123624495226401,
+        0.711878002421031
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.49588172962236815,
+      "shuffle_auroc_ci": [
+        0.4438024892755744,
+        0.5500717196648566
+      ],
+      "acc@80cov_mixed": 0.9456799125045571,
+      "acc_forced_mixed": 0.8941382327209099,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 638,
+      "mean_silhouette_type_vs_rest": 0.40679879820023795,
+      "nearest_centroid_type": "vein endothelial cell",
+      "nearest_centroid_euclidean": 3.5333412599893594,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 20268,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "endothelial cell",
+      "underpowered": false,
+      "n_total": 463,
+      "n_in_held_donor": 144,
+      "n_train": 13068,
+      "n_cal": 3335,
+      "n_test_known": 3279,
+      "n_hvg": 1000,
+      "temperature": 1.0891291308715263,
+      "auroc": 0.9000224492562096,
+      "auroc_ci": [
+        0.8719244643206889,
+        0.9264578625430995
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5220172139202331,
+      "shuffle_auroc_ci": [
+        0.46778822047568724,
+        0.5692994441254665
+      ],
+      "acc@80cov_mixed": 0.9590942293644996,
+      "acc_forced_mixed": 0.8892784107508034,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 319,
+      "mean_silhouette_type_vs_rest": 0.43759750619485843,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 4.706349236457411,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20145,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "endothelial cell of artery",
+      "underpowered": false,
+      "n_total": 634,
+      "n_in_held_donor": 61,
+      "n_train": 12949,
+      "n_cal": 3267,
+      "n_test_known": 3347,
+      "n_hvg": 1000,
+      "temperature": 1.101623807760644,
+      "auroc": 0.6424054817869685,
+      "auroc_ci": [
+        0.5830625365739095,
+        0.7058176471685839
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4816400299754613,
+      "shuffle_auroc_ci": [
+        0.4181838234613363,
+        0.5444154845109341
+      ],
+      "acc@80cov_mixed": 0.9589141599413059,
+      "acc_forced_mixed": 0.9216549295774648,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 573,
+      "mean_silhouette_type_vs_rest": 0.407121764839595,
+      "nearest_centroid_type": "capillary endothelial cell",
+      "nearest_centroid_euclidean": 2.0965290297194676,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 20197,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "fetal cardiomyocyte",
+      "underpowered": true,
+      "reason": "n_in_held_donor=3 < 30; excluded from aggregate; no alternate donor fold fabricated",
+      "n_total": 81,
+      "n_in_held_donor": 3,
+      "auroc": null,
+      "auroc_ci": null,
+      "ci_lo_gt_0.5": null,
+      "shuffle_auroc": null,
+      "acc@80cov_mixed": null,
+      "acc_forced_mixed": null,
+      "mean_silhouette_type_vs_rest": null,
+      "nearest_centroid_type": null,
+      "nearest_centroid_euclidean": null,
+      "nearest_is_preregistered_sibling": null,
+      "n_fold": null,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "fibroblast",
+      "underpowered": false,
+      "n_total": 4630,
+      "n_in_held_donor": 776,
+      "n_train": 11101,
+      "n_cal": 2914,
+      "n_test_known": 2871,
+      "n_hvg": 1000,
+      "temperature": 1.0586618004148736,
+      "auroc": 0.9308684067837997,
+      "auroc_ci": [
+        0.9221576891718122,
+        0.9377543554921407
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.47268364411983327,
+      "shuffle_auroc_ci": [
+        0.4493119094132815,
+        0.49934364404071896
+      ],
+      "acc@80cov_mixed": 0.8731573534453205,
+      "acc_forced_mixed": 0.7315601864546203,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 3854,
+      "mean_silhouette_type_vs_rest": 0.41186445778521075,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 7.983538373335629,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 21516,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "innate lymphoid cell",
+      "underpowered": false,
+      "n_total": 2059,
+      "n_in_held_donor": 360,
+      "n_train": 12316,
+      "n_cal": 3106,
+      "n_test_known": 3156,
+      "n_hvg": 1000,
+      "temperature": 1.0983092238808148,
+      "auroc": 0.915401880016899,
+      "auroc_ci": [
+        0.9044332109590852,
+        0.9264042266757738
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4874489508519926,
+      "shuffle_auroc_ci": [
+        0.4572918015131816,
+        0.5185622315062025
+      ],
+      "acc@80cov_mixed": 0.9388335704125178,
+      "acc_forced_mixed": 0.8310580204778157,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 1699,
+      "mean_silhouette_type_vs_rest": 0.15143764913927626,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 18.45181261351265,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20637,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "mesothelial cell of epicardium",
+      "underpowered": false,
+      "n_total": 705,
+      "n_in_held_donor": 81,
+      "n_train": 12896,
+      "n_cal": 3289,
+      "n_test_known": 3341,
+      "n_hvg": 1000,
+      "temperature": 1.0875302093584174,
+      "auroc": 0.9357551705152224,
+      "auroc_ci": [
+        0.9075775475460846,
+        0.9547420660250016
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.47924957782285926,
+      "shuffle_auroc_ci": [
+        0.414806958086578,
+        0.5338210683367955
+      ],
+      "acc@80cov_mixed": 0.9663865546218487,
+      "acc_forced_mixed": 0.902104032729398,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 624,
+      "mean_silhouette_type_vs_rest": 0.4224022448976896,
+      "nearest_centroid_type": "fibroblast",
+      "nearest_centroid_euclidean": 7.049771790728531,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 20231,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "myeloid cell",
+      "underpowered": false,
+      "n_total": 4905,
+      "n_in_held_donor": 995,
+      "n_train": 11383,
+      "n_cal": 2606,
+      "n_test_known": 2692,
+      "n_hvg": 1000,
+      "temperature": 1.1172604179328538,
+      "auroc": 0.9105766574327805,
+      "auroc_ci": [
+        0.8995818516189813,
+        0.9202061444878885
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4945399359352483,
+      "shuffle_auroc_ci": [
+        0.47449347146316745,
+        0.5154175452441605
+      ],
+      "acc@80cov_mixed": 0.8118006103763988,
+      "acc_forced_mixed": 0.6791429346352048,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 3910,
+      "mean_silhouette_type_vs_rest": 0.28090012084239235,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 7.108843432466448,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 21586,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "neuron",
+      "underpowered": false,
+      "n_total": 836,
+      "n_in_held_donor": 140,
+      "n_train": 12870,
+      "n_cal": 3263,
+      "n_test_known": 3290,
+      "n_hvg": 1000,
+      "temperature": 1.079278474833562,
+      "auroc": 0.9506795484151107,
+      "auroc_ci": [
+        0.932639054915771,
+        0.96677855672208
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5219192357794182,
+      "shuffle_auroc_ci": [
+        0.4619180768291898,
+        0.5741326058384805
+      ],
+      "acc@80cov_mixed": 0.9631924198250729,
+      "acc_forced_mixed": 0.8903790087463557,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 696,
+      "mean_silhouette_type_vs_rest": 0.4568313678137187,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 3.489332659761345,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20259,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "pericyte",
+      "underpowered": false,
+      "n_total": 2376,
+      "n_in_held_donor": 359,
+      "n_train": 12209,
+      "n_cal": 3066,
+      "n_test_known": 3164,
+      "n_hvg": 1000,
+      "temperature": 1.117688778196113,
+      "auroc": 0.9313234895358296,
+      "auroc_ci": [
+        0.9125087563048938,
+        0.9458678860723845
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4898985452637436,
+      "shuffle_auroc_ci": [
+        0.4593851125847906,
+        0.5171306499673595
+      ],
+      "acc@80cov_mixed": 0.9542228530872959,
+      "acc_forced_mixed": 0.8461538461538461,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 2017,
+      "mean_silhouette_type_vs_rest": 0.43466975273055297,
+      "nearest_centroid_type": "unknown",
+      "nearest_centroid_euclidean": 3.756444977892115,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20815,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "smooth muscle cell",
+      "underpowered": false,
+      "n_total": 1386,
+      "n_in_held_donor": 121,
+      "n_train": 12561,
+      "n_cal": 3169,
+      "n_test_known": 3300,
+      "n_hvg": 1000,
+      "temperature": 1.0923102565351566,
+      "auroc": 0.9113398447282745,
+      "auroc_ci": [
+        0.8895549658999883,
+        0.931869070652784
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.49833959429000746,
+      "shuffle_auroc_ci": [
+        0.4385394423446023,
+        0.5482777314142364
+      ],
+      "acc@80cov_mixed": 0.9601608187134503,
+      "acc_forced_mixed": 0.8959368605670857,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 1265,
+      "mean_silhouette_type_vs_rest": 0.47458721139524773,
+      "nearest_centroid_type": "pericyte",
+      "nearest_centroid_euclidean": 4.980197186154736,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 20416,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "unknown",
+      "underpowered": false,
+      "n_total": 395,
+      "n_in_held_donor": 92,
+      "n_train": 13147,
+      "n_cal": 3283,
+      "n_test_known": 3320,
+      "n_hvg": 1000,
+      "temperature": 1.1838673346814481,
+      "auroc": 0.515469486642221,
+      "auroc_ci": [
+        0.4449728223522539,
+        0.581493344945349
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.43801401257202727,
+      "shuffle_auroc_ci": [
+        0.3840541659523594,
+        0.4884487268827687
+      ],
+      "acc@80cov_mixed": 0.9622572370831807,
+      "acc_forced_mixed": 0.9185228604923799,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 303,
+      "mean_silhouette_type_vs_rest": 0.3015939727066619,
+      "nearest_centroid_type": "cardiac muscle cell",
+      "nearest_centroid_euclidean": 5.0823916718215605,
+      "nearest_is_preregistered_sibling": false,
+      "n_fold": 20145,
+      "n_subsample_base": 20000
+    },
+    {
+      "type": "vein endothelial cell",
+      "underpowered": false,
+      "n_total": 648,
+      "n_in_held_donor": 86,
+      "n_train": 12973,
+      "n_cal": 3264,
+      "n_test_known": 3332,
+      "n_hvg": 1000,
+      "temperature": 1.0499632256430538,
+      "auroc": 0.8238853681007287,
+      "auroc_ci": [
+        0.7675843306138367,
+        0.8646138936067359
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4919595745274854,
+      "shuffle_auroc_ci": [
+        0.429223416501528,
+        0.5698412404343565
+      ],
+      "acc@80cov_mixed": 0.9612289685442575,
+      "acc_forced_mixed": 0.9040374488004681,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 562,
+      "mean_silhouette_type_vs_rest": 0.3556099705634887,
+      "nearest_centroid_type": "endothelial cell of artery",
+      "nearest_centroid_euclidean": 4.900605033496569,
+      "nearest_is_preregistered_sibling": true,
+      "n_fold": 20217,
+      "n_subsample_base": 20000
+    }
+  ],
+  "aggregate": {
+    "n_types_swept": 15,
+    "n_types_detected": 14,
+    "n_types_detected_over_swept": "14/15",
+    "detected_ratio": 0.9333333333333333,
+    "median_auroc": 0.9113398447282745,
+    "auroc_min": 0.515469486642221,
+    "auroc_max": 0.9506795484151107,
+    "auroc_range": [
+      0.515469486642221,
+      0.9506795484151107
+    ],
+    "types_detected": [
+      "adipocyte",
+      "capillary endothelial cell",
+      "cardiac muscle cell",
+      "endocardial cell",
+      "endothelial cell",
+      "endothelial cell of artery",
+      "fibroblast",
+      "innate lymphoid cell",
+      "mesothelial cell of epicardium",
+      "myeloid cell",
+      "neuron",
+      "pericyte",
+      "smooth muscle cell",
+      "vein endothelial cell"
+    ],
+    "types_failing": [
+      "unknown"
+    ],
+    "types_underpowered_excluded": [
+      "fetal cardiomyocyte"
+    ],
+    "spearman_auroc_vs_n_total": {
+      "rho": 0.3928571428571428,
+      "pvalue": 0.14746665531132622,
+      "n": 15
+    },
+    "spearman_auroc_vs_mean_silhouette": {
+      "rho": 0.5642857142857142,
+      "pvalue": 0.028432522148708533,
+      "n": 15
+    },
+    "spearman_auroc_vs_nearest_centroid_dist": {
+      "rho": 0.2178571428571428,
+      "pvalue": 0.43539267351553756,
+      "n": 15
+    },
+    "abundance_direction": "rarer types are harder (positive Spearman with n_total)",
+    "median_nearest_centroid_euclidean": 4.900605033496569,
+    "n_failures": 1,
+    "n_failures_with_preregistered_sibling": 0,
+    "n_failures_with_close_sibling": 0,
+    "fail_mode": "1/1 failures lack a close sibling; the SC31 mechanism claim (types inside another type's manifold fail) weakens on this atlas",
+    "fail_mode_matches_nk_to_t": false,
+    "mechanism_claim_weakens": true,
+    "sc31_median_reported": 0.777,
+    "median_minus_sc31": 0.13433984472827443,
+    "protocol_replicates": false,
+    "protocol_replicates_rule": "median AUROC within 0.1 of 0.777 AND detected ratio >= 0.7",
+    "replicates_worse_note": "protocol does not replicate on this atlas: median AUROC 0.911 is outside 0.777\u00b10.10"
+  },
+  "failing_detail": [
+    {
+      "type": "unknown",
+      "auroc": 0.515469486642221,
+      "auroc_ci": [
+        0.4449728223522539,
+        0.581493344945349
+      ],
+      "n_total": 395,
+      "n_in_held_donor": 92,
+      "mean_silhouette_type_vs_rest": 0.3015939727066619,
+      "nearest_centroid_type": "cardiac muscle cell",
+      "nearest_centroid_euclidean": 5.0823916718215605,
+      "nearest_is_preregistered_sibling": false,
+      "nearest_dist_le_median": false,
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is cardiac muscle cell at Euclidean 5.082; nearest class is NOT a pre-registered sibling"
+    }
+  ],
+  "depth_control_best3_worst3": [
+    {
+      "type": "neuron",
+      "auroc": 0.9506795484151107,
+      "rank_group": "best",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.30813721233174124,
+      "depth_alone_auroc_ci": [
+        0.2749533408293727,
+        0.34031922242605095
+      ],
+      "residual_auroc": 0.9429070777247069,
+      "residual_auroc_ci": [
+        0.9217418757143866,
+        0.9657181035848851
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "mesothelial cell of epicardium",
+      "auroc": 0.9357551705152224,
+      "rank_group": "best",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.7477080492644695,
+      "depth_alone_auroc_ci": [
+        0.7143439453482923,
+        0.7776965213539624
+      ],
+      "residual_auroc": 0.941249939952923,
+      "residual_auroc_ci": [
+        0.9204547175011676,
+        0.9575455948991365
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "adipocyte",
+      "auroc": 0.9316741975426575,
+      "rank_group": "best",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.8045030252673356,
+      "depth_alone_auroc_ci": [
+        0.7778711542860528,
+        0.8282053042853306
+      ],
+      "residual_auroc": 0.919598361290997,
+      "residual_auroc_ci": [
+        0.8994756634353663,
+        0.9399477249131145
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "unknown",
+      "auroc": 0.515469486642221,
+      "rank_group": "worst",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.35023899947616555,
+      "depth_alone_auroc_ci": [
+        0.297510833851558,
+        0.4103995932933649
+      ],
+      "residual_auroc": 0.5239294133053956,
+      "residual_auroc_ci": [
+        0.4551509060760637,
+        0.5872814214643703
+      ],
+      "residual_ci_lo_gt_0.5": false
+    },
+    {
+      "type": "endothelial cell of artery",
+      "auroc": 0.6424054817869685,
+      "rank_group": "worst",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.3456484152678934,
+      "depth_alone_auroc_ci": [
+        0.298700961963382,
+        0.4040735622021499
+      ],
+      "residual_auroc": 0.5662227490240832,
+      "residual_auroc_ci": [
+        0.4967249308082883,
+        0.6650812514922966
+      ],
+      "residual_ci_lo_gt_0.5": false
+    },
+    {
+      "type": "endocardial cell",
+      "auroc": 0.6660540878120697,
+      "rank_group": "worst",
+      "library_size_source": "heart obs nCount_RNA; covariate = log1p(nCount_RNA)",
+      "depth_alone_auroc": 0.5669327716036427,
+      "depth_alone_auroc_ci": [
+        0.5355443875436238,
+        0.6023498536249949
+      ],
+      "residual_auroc": 0.6565736195219837,
+      "residual_auroc_ci": [
+        0.6023262369102181,
+        0.7021492045478174
+      ],
+      "residual_ci_lo_gt_0.5": true
+    }
+  ],
+  "protocol_replicates": false,
+  "paper_number": {
+    "stratum": "adult",
+    "held_donor": "D2",
+    "cal_donor": "D3",
+    "train_donors": [
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "median_auroc": 0.9113398447282745,
+    "auroc_range": [
+      0.515469486642221,
+      0.9506795484151107
+    ],
+    "n_types_detected": 14,
+    "n_types_swept": 15,
+    "n_types_detected_over_swept": "14/15",
+    "protocol_replicates": false,
+    "fail_mode_matches_nk_to_t": false
+  },
+  "honest_reading": "SC33 is a new within-atlas type-novelty estimand on the heart atlas, not a re-opening of the SC30 fetal-cardiomyocyte STOP. Primary adult sweep (held D2, cal D3): 14/15 scored types have novelty AUROC CI-lo > 0.5; median 0.911 range [0.515, 0.951]. protocol does not replicate on this atlas: median AUROC 0.911 is outside 0.777\u00b10.10. Failures: ['unknown']. 1/1 failures lack a close sibling; the SC31 mechanism claim (types inside another type's manifold fail) weakens on this atlas Fetal-only secondary is reported separately and is not the replication verdict. Labels are benchmark labels, not clinical calls. fm_embed=false, cuda=false.",
+  "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC33/sc33_within_atlas_sweep_heart.json",
+  "hard_refuse_basenames": [
+    "sc30_fetal_cardiomyocyte_stop.json",
+    "sc30_fetal_cardiomyocyte_holdout.json",
+    "sc31_within_atlas_type_sweep.json",
+    "sc31_fetal_lung_pns_novel.json",
+    "sc31_atlas_confound_control.json",
+    "sc31_fetal_lung_pns_redteam.json",
+    "sc31_fetal_lung_pns_stop.json"
+  ]
+}

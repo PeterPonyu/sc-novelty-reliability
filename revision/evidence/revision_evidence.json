@@ -1,0 +1,243 @@
+{
+  "headline_check": "PASS",
+  "headline_failures": [],
+  "hepatic_fail_closed": {
+    "ceiling_provenance": "declared once in this script; not tuned per atlas",
+    "declared_risk_ceiling": 0.3,
+    "per_atlas": {
+      "Adult cardiac": {
+        "frac_types_null_delta_gt_0": 1.0,
+        "median_null_delta": 0.413000250438267,
+        "median_selective_risk_at_80_coverage": {
+          "ci_hi": 0.05822596630327059,
+          "ci_lo": 0.032705649157581784,
+          "n_units": 15,
+          "point_estimate": 0.03745019920318726
+        },
+        "n_types_below_chance": 0,
+        "trips_null_separation_gate": false,
+        "trips_retained_risk_gate": false,
+        "verdict": "SUPPORTED"
+      },
+      "Hepatic": {
+        "frac_types_null_delta_gt_0": 0.45454545454545453,
+        "median_null_delta": -0.12769739852853174,
+        "median_selective_risk_at_80_coverage": {
+          "ci_hi": 0.4066037735849056,
+          "ci_lo": 0.3009367681498829,
+          "n_units": 11,
+          "point_estimate": 0.38563049853372433
+        },
+        "n_types_below_chance": 6,
+        "trips_null_separation_gate": true,
+        "trips_retained_risk_gate": true,
+        "verdict": "UNSUPPORTED"
+      },
+      "Pulmonary": {
+        "frac_types_null_delta_gt_0": 0.9090909090909091,
+        "median_null_delta": 0.25678885104857496,
+        "median_selective_risk_at_80_coverage": {
+          "ci_hi": 0.2912621359223301,
+          "ci_lo": 0.15805356469256882,
+          "n_units": 13,
+          "point_estimate": 0.1971830985915493
+        },
+        "n_types_below_chance": 1,
+        "trips_null_separation_gate": false,
+        "trips_retained_risk_gate": false,
+        "verdict": "SUPPORTED"
+      }
+    },
+    "rule": "A context is marked unsupported when median null separation over scored types is not positive, or median selective risk at 80% requested coverage exceeds the declared ceiling."
+  },
+  "printed_in_manuscript": {
+    "Adult cardiac": 0.911,
+    "Hepatic": 0.425,
+    "Pulmonary": 0.777,
+    "below_chance": 7,
+    "pooled": 0.74,
+    "scored_types": 37
+  },
+  "recomputed": {
+    "n_below_chance": 7,
+    "n_scored_types": 37,
+    "per_atlas": {
+      "Adult cardiac": {
+        "auroc_max": 0.9506795484151107,
+        "auroc_min": 0.515469486642221,
+        "median_auroc": 0.9113398447282745,
+        "n_below_chance": 0,
+        "n_scored": 15
+      },
+      "Hepatic": {
+        "auroc_max": 0.6945654128770362,
+        "auroc_min": 0.1454393435275053,
+        "median_auroc": 0.42547891074649946,
+        "n_below_chance": 6,
+        "n_scored": 11
+      },
+      "Pulmonary": {
+        "auroc_max": 0.9089019851116624,
+        "auroc_min": 0.3328523005671712,
+        "median_auroc": 0.7767523203305329,
+        "n_below_chance": 1,
+        "n_scored": 11
+      }
+    },
+    "pooled_median_auroc": 0.7395092708768994
+  },
+  "sources": {
+    "Adult cardiac": "SC33/sc33_within_atlas_sweep_heart.json",
+    "Hepatic": "SC32/sc32_within_atlas_sweep_liver.json",
+    "Pulmonary": "SC31/sc31_within_atlas_type_sweep.json",
+    "e1": "SC31_SC33/e1_dependence_aware_intervals.json",
+    "e2": "SC31_SC33/e2_multi_split/"
+  },
+  "type_level_instability_across_calibration_schemes": {
+    "anchor_scheme": 1,
+    "available": true,
+    "per_atlas": {
+      "Adult cardiac": {
+        "crosses_chance_under_some_scheme": [],
+        "max_cross_scheme_range": 0.07215004745724984,
+        "max_range_type": "adipocyte",
+        "max_range_type_by_scheme": {
+          "1": 0.8113925784054105,
+          "2": 0.7552023981046863,
+          "3": 0.8273524455619361,
+          "4": 0.7891594627387399,
+          "5": 0.8145442736638885
+        },
+        "median_cross_scheme_range": 0.029367422321555092,
+        "n_types": 15,
+        "n_types_range_gt_0_20": 0,
+        "schemes_run": [
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "Hepatic": {
+        "crosses_chance_under_some_scheme": [
+          "M1 macrophage",
+          "endothelial cell of hepatic sinusoid",
+          "hepatocyte",
+          "plasma cell"
+        ],
+        "max_cross_scheme_range": 0.34643871482231975,
+        "max_range_type": "plasma cell",
+        "max_range_type_by_scheme": {
+          "1": 0.42520688371560295,
+          "2": 0.5789164733843026,
+          "3": 0.6739970792887209,
+          "4": 0.7716455985379227
+        },
+        "median_cross_scheme_range": 0.15587125502162802,
+        "n_types": 11,
+        "n_types_range_gt_0_20": 4,
+        "schemes_run": [
+          2,
+          3,
+          4
+        ]
+      },
+      "Pulmonary": {
+        "crosses_chance_under_some_scheme": [],
+        "max_cross_scheme_range": 0.3873434575494598,
+        "max_range_type": "Ciliated",
+        "max_range_type_by_scheme": {
+          "1": 0.4407547965422728,
+          "2": 0.05341133899281296,
+          "3": 0.38806200390082674
+        },
+        "median_cross_scheme_range": 0.09004882047080498,
+        "n_types": 13,
+        "n_types_range_gt_0_20": 1,
+        "schemes_run": [
+          2,
+          3
+        ]
+      }
+    },
+    "source": "SC31_SC33/e2_multi_split/e2_replication_summary.json",
+    "unit": "per-type median AUROC, one value per calibration-offset scheme"
+  },
+  "unknown_sensitivity": {
+    "dropped_rows": [
+      {
+        "atlas": "Adult cardiac",
+        "auroc": 0.515469486642221,
+        "n_in_held_donor": 92,
+        "n_total": 395,
+        "type": "unknown"
+      }
+    ],
+    "scored_types_still_referencing_placeholder_as_nearest_centroid": [
+      "Adult cardiac / adipocyte",
+      "Adult cardiac / endothelial cell",
+      "Adult cardiac / fibroblast",
+      "Adult cardiac / innate lymphoid cell",
+      "Adult cardiac / myeloid cell",
+      "Adult cardiac / neuron",
+      "Adult cardiac / pericyte"
+    ],
+    "second_order_effect": "Removing the placeholder from the reference set, rather than from the scored targets, would additionally perturb nearest-centroid distances for the listed types. That variant was not computed and is not claimed.",
+    "with_placeholder": {
+      "n_below_chance": 7,
+      "n_scored_types": 37,
+      "per_atlas": {
+        "Adult cardiac": {
+          "auroc_max": 0.9506795484151107,
+          "auroc_min": 0.515469486642221,
+          "median_auroc": 0.9113398447282745,
+          "n_below_chance": 0,
+          "n_scored": 15
+        },
+        "Hepatic": {
+          "auroc_max": 0.6945654128770362,
+          "auroc_min": 0.1454393435275053,
+          "median_auroc": 0.42547891074649946,
+          "n_below_chance": 6,
+          "n_scored": 11
+        },
+        "Pulmonary": {
+          "auroc_max": 0.9089019851116624,
+          "auroc_min": 0.3328523005671712,
+          "median_auroc": 0.7767523203305329,
+          "n_below_chance": 1,
+          "n_scored": 11
+        }
+      },
+      "pooled_median_auroc": 0.7395092708768994
+    },
+    "without_placeholder": {
+      "n_below_chance": 7,
+      "n_scored_types": 36,
+      "per_atlas": {
+        "Adult cardiac": {
+          "auroc_max": 0.9506795484151107,
+          "auroc_min": 0.6424054817869685,
+          "median_auroc": 0.9133708623725867,
+          "n_below_chance": 0,
+          "n_scored": 14
+        },
+        "Hepatic": {
+          "auroc_max": 0.6945654128770362,
+          "auroc_min": 0.1454393435275053,
+          "median_auroc": 0.42547891074649946,
+          "n_below_chance": 6,
+          "n_scored": 11
+        },
+        "Pulmonary": {
+          "auroc_max": 0.9089019851116624,
+          "auroc_min": 0.3328523005671712,
+          "median_auroc": 0.7767523203305329,
+          "n_below_chance": 1,
+          "n_scored": 11
+        }
+      },
+      "pooled_median_auroc": 0.7581307956037162
+    }
+  }
+}

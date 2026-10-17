@@ -1,0 +1,789 @@
+{
+  "experiment": "SC31_within_atlas_type_sweep",
+  "jointly_preregistered": true,
+  "preregistration_note": "Full GSE130148 type list with n_total>=60 is frozen here before any novelty AUROC is computed. Donor split is pinned to the published SC31 GSE split (held ASK440, cal ASK452, train ASK454+ASK428). Types with n_in_held_donor<30 are listed as underpowered and excluded from the aggregate; no alternate donor fold is fabricated to rescue them.",
+  "does_not_replace_cross_atlas_pns": true,
+  "does_not_replace_cross_atlas_pns_note": "This sweep answers a related, cleaner question: can a held-out cell type inside one atlas be detected as novel without protocol confound? It does not clear, replace, or salvage the cross-atlas He PNS vs GSE130148 headline (0.795), whose decisive shared-type control remains impossible.",
+  "metric_preregistered": "per-type AUROC of (1-max softmax) on held-donor remaining types vs held-donor cells of the removed type; bootstrap 95% CI n_boot=200; label-shuffle null; acc@80cov vs forced on the mixed held-donor test set",
+  "split": "donor-held-out orig.ident; train=['ASK454', 'ASK428']; cal=ASK452; test=ASK440; temperature on cal donor only; never random cells",
+  "features": "HVG(1000)+PCA(30)+logistic; fit on remaining types in train donors only",
+  "novelty_score": "1 - max_softmax after temperature scaling",
+  "min_n_total": 60,
+  "min_n_in_held_donor": 30,
+  "held_gse_donor": "ASK440",
+  "cal_gse_donor": "ASK452",
+  "train_gse_donors": [
+    "ASK454",
+    "ASK428"
+  ],
+  "types_all": [
+    "B cell",
+    "Ciliated",
+    "Endothelium",
+    "Fibroblast",
+    "Lymphatic",
+    "Macrophages",
+    "Mast cell",
+    "NK cell",
+    "Secretory",
+    "T cell",
+    "Transformed epithelium",
+    "Type 1",
+    "Type 2"
+  ],
+  "types_eligible_n_ge_60": [
+    "B cell",
+    "Ciliated",
+    "Endothelium",
+    "Fibroblast",
+    "Lymphatic",
+    "Macrophages",
+    "Mast cell",
+    "NK cell",
+    "Secretory",
+    "T cell",
+    "Transformed epithelium",
+    "Type 1",
+    "Type 2"
+  ],
+  "types_underpowered_held_n_lt_30": [
+    "B cell",
+    "Transformed epithelium"
+  ],
+  "types_to_score": [
+    "Ciliated",
+    "Endothelium",
+    "Fibroblast",
+    "Lymphatic",
+    "Macrophages",
+    "Mast cell",
+    "NK cell",
+    "Secretory",
+    "T cell",
+    "Type 1",
+    "Type 2"
+  ],
+  "n_types_eligible": 13,
+  "n_types_underpowered": 2,
+  "n_types_swept": 11,
+  "detected_rule": "CI-lo > 0.5 on a scored (powered) type",
+  "aggregate_excludes_underpowered": true,
+  "type_n_total": {
+    "B cell": 1250,
+    "Ciliated": 433,
+    "Endothelium": 360,
+    "Fibroblast": 204,
+    "Lymphatic": 195,
+    "Macrophages": 2878,
+    "Mast cell": 660,
+    "NK cell": 354,
+    "Secretory": 706,
+    "T cell": 827,
+    "Transformed epithelium": 659,
+    "Type 1": 424,
+    "Type 2": 1410
+  },
+  "type_n_held_donor": {
+    "B cell": 16,
+    "Ciliated": 211,
+    "Endothelium": 76,
+    "Fibroblast": 32,
+    "Lymphatic": 126,
+    "Macrophages": 1293,
+    "Mast cell": 90,
+    "NK cell": 83,
+    "Secretory": 563,
+    "T cell": 112,
+    "Transformed epithelium": 17,
+    "Type 1": 83,
+    "Type 2": 612
+  },
+  "type_x_donor": {
+    "B cell": {
+      "ASK428": 6,
+      "ASK440": 16,
+      "ASK452": 17,
+      "ASK454": 1211
+    },
+    "Ciliated": {
+      "ASK428": 81,
+      "ASK440": 211,
+      "ASK452": 136,
+      "ASK454": 5
+    },
+    "Endothelium": {
+      "ASK428": 40,
+      "ASK440": 76,
+      "ASK452": 162,
+      "ASK454": 82
+    },
+    "Fibroblast": {
+      "ASK428": 25,
+      "ASK440": 32,
+      "ASK452": 124,
+      "ASK454": 23
+    },
+    "Lymphatic": {
+      "ASK428": 44,
+      "ASK440": 126,
+      "ASK452": 22,
+      "ASK454": 3
+    },
+    "Macrophages": {
+      "ASK428": 606,
+      "ASK440": 1293,
+      "ASK452": 911,
+      "ASK454": 68
+    },
+    "Mast cell": {
+      "ASK428": 40,
+      "ASK440": 90,
+      "ASK452": 162,
+      "ASK454": 368
+    },
+    "NK cell": {
+      "ASK428": 75,
+      "ASK440": 83,
+      "ASK452": 85,
+      "ASK454": 111
+    },
+    "Secretory": {
+      "ASK428": 70,
+      "ASK440": 563,
+      "ASK452": 68,
+      "ASK454": 5
+    },
+    "T cell": {
+      "ASK428": 199,
+      "ASK440": 112,
+      "ASK452": 104,
+      "ASK454": 412
+    },
+    "Transformed epithelium": {
+      "ASK428": 49,
+      "ASK440": 17,
+      "ASK452": 574,
+      "ASK454": 19
+    },
+    "Type 1": {
+      "ASK428": 205,
+      "ASK440": 83,
+      "ASK452": 86,
+      "ASK454": 50
+    },
+    "Type 2": {
+      "ASK428": 749,
+      "ASK440": 612,
+      "ASK452": 34,
+      "ASK454": 15
+    }
+  },
+  "gse_donor_n": {
+    "ASK440": 3314,
+    "ASK452": 2485,
+    "ASK454": 2372,
+    "ASK428": 2189
+  },
+  "abundance_correlation": "Spearman(AUROC, n_total) on scored types",
+  "distinctness_correlation": "Spearman(AUROC, mean silhouette of held-out type vs rest) and Spearman(AUROC, nearest remaining-type centroid Euclidean) in LOTO PCA on non-test (train+cal) cells",
+  "depth_control": "library-size residual AUROC of novelty score \u22a5 log1p(nUMI) for the 3 best and 3 worst scored types by AUROC",
+  "fm_embed": false,
+  "cuda": false,
+  "mouse_lung_used": false,
+  "he_pns_used": false,
+  "scope": "within-atlas leave-one-type-out novelty; labels are benchmark labels only, not clinical calls",
+  "do_not_claim": [
+    "clinical or diagnostic cell-type call",
+    "never-pretrained",
+    "foundation-model training",
+    "this sweep replaces the cross-atlas PNS question"
+  ],
+  "seed": 20260820,
+  "n_boot": 200,
+  "runner": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/pipelines/sc31_within_atlas_type_sweep.py",
+  "source_gse": "${SOURCE_ROOT}/Desktop/data/datasets/DevelopmentDatasets2/GSE130148_LungHmDev.h5ad",
+  "science_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json",
+  "redteam_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json",
+  "confound_dest": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json",
+  "prereg_sha256": "6c1303ec0713362f009bee21c0bfda715757234ab07b58ec4708f6c0811035e9",
+  "scoring_started": true,
+  "timestamp_preregistered": "2026-08-21T05:46:26.769410+00:00",
+  "timestamp": "2026-08-21T05:47:20.125026+00:00",
+  "readonly_sha256_before": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    }
+  },
+  "readonly_sha256_after": {
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_novel.json": {
+      "sha256": "a5846e2dad206c6e8fecd3cb747dd776a0ebd8e1a466462b2aac691f430a0e21",
+      "bytes": 4190
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_fetal_lung_pns_redteam.json": {
+      "sha256": "091d3332384ff1e61148b63aece13eba6e18d1d6aceb939b67a42d9f77db033a",
+      "bytes": 17416
+    },
+    "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_atlas_confound_control.json": {
+      "sha256": "62e7b543d0ed43e74c0f0deed3fed7ed5e3ed89cf2ad55a17ca9619a842a0a14",
+      "bytes": 12949
+    }
+  },
+  "readonly_byte_identical": true,
+  "science_dest_untouched": true,
+  "redteam_dest_untouched": true,
+  "confound_dest_untouched": true,
+  "per_type": [
+    {
+      "type": "B cell",
+      "underpowered": true,
+      "reason": "n_in_held_donor=16 < 30; excluded from aggregate; no alternate donor fold fabricated",
+      "n_total": 1250,
+      "n_in_held_donor": 16,
+      "auroc": null,
+      "auroc_ci": null,
+      "ci_lo_gt_0.5": null,
+      "shuffle_auroc": null,
+      "acc@80cov_mixed": null,
+      "acc_forced_mixed": null,
+      "mean_silhouette_type_vs_rest": null,
+      "nearest_centroid_type": null,
+      "nearest_centroid_euclidean": null
+    },
+    {
+      "type": "Ciliated",
+      "underpowered": false,
+      "n_total": 433,
+      "n_in_held_donor": 211,
+      "n_train": 4475,
+      "n_cal": 2349,
+      "n_test_known": 3103,
+      "n_hvg": 1000,
+      "temperature": 1.6968788007560873,
+      "auroc": 0.7293415789337027,
+      "auroc_ci": [
+        0.7056950925675557,
+        0.7485667023835293
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.515898847316387,
+      "shuffle_auroc_ci": [
+        0.4778111217134569,
+        0.5521806493145864
+      ],
+      "acc@80cov_mixed": 0.8370426254243681,
+      "acc_forced_mixed": 0.7441158720579361,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 222,
+      "mean_silhouette_type_vs_rest": -0.06342734636185592,
+      "nearest_centroid_type": "Secretory",
+      "nearest_centroid_euclidean": 4.104618458404951
+    },
+    {
+      "type": "Endothelium",
+      "underpowered": false,
+      "n_total": 360,
+      "n_in_held_donor": 76,
+      "n_train": 4439,
+      "n_cal": 2323,
+      "n_test_known": 3238,
+      "n_hvg": 1000,
+      "temperature": 1.6974460825789917,
+      "auroc": 0.8793927375572965,
+      "auroc_ci": [
+        0.8446358289544765,
+        0.913345499285957
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4223692337700335,
+      "shuffle_auroc_ci": [
+        0.3534336424345538,
+        0.48186454545872426
+      ],
+      "acc@80cov_mixed": 0.8955111278762731,
+      "acc_forced_mixed": 0.7936028968014484,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 284,
+      "mean_silhouette_type_vs_rest": 0.11397638998093475,
+      "nearest_centroid_type": "Transformed epithelium",
+      "nearest_centroid_euclidean": 5.57658912589697
+    },
+    {
+      "type": "Fibroblast",
+      "underpowered": false,
+      "n_total": 204,
+      "n_in_held_donor": 32,
+      "n_train": 4513,
+      "n_cal": 2361,
+      "n_test_known": 3282,
+      "n_hvg": 1000,
+      "temperature": 1.5728633204382054,
+      "auroc": 0.7181596587446678,
+      "auroc_ci": [
+        0.6432776384878004,
+        0.7861348884814776
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5210428092626447,
+      "shuffle_auroc_ci": [
+        0.440544765261189,
+        0.609337960509717
+      ],
+      "acc@80cov_mixed": 0.9007921539041871,
+      "acc_forced_mixed": 0.799939649969825,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 172,
+      "mean_silhouette_type_vs_rest": 0.1251584032850263,
+      "nearest_centroid_type": "Transformed epithelium",
+      "nearest_centroid_euclidean": 5.047837108451632
+    },
+    {
+      "type": "Lymphatic",
+      "underpowered": false,
+      "n_total": 195,
+      "n_in_held_donor": 126,
+      "n_train": 4514,
+      "n_cal": 2463,
+      "n_test_known": 3188,
+      "n_hvg": 1000,
+      "temperature": 1.872296226053504,
+      "auroc": 0.7395092708768994,
+      "auroc_ci": [
+        0.6975844881290384,
+        0.7870550653817691
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.4827204198283245,
+      "shuffle_auroc_ci": [
+        0.4263113328989831,
+        0.5322717107688255
+      ],
+      "acc@80cov_mixed": 0.8657110524330441,
+      "acc_forced_mixed": 0.7616173808086905,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 69,
+      "mean_silhouette_type_vs_rest": 0.20642737182691268,
+      "nearest_centroid_type": "Transformed epithelium",
+      "nearest_centroid_euclidean": 5.412200485381827
+    },
+    {
+      "type": "Macrophages",
+      "underpowered": false,
+      "n_total": 2878,
+      "n_in_held_donor": 1293,
+      "n_train": 3887,
+      "n_cal": 1574,
+      "n_test_known": 2021,
+      "n_hvg": 1000,
+      "temperature": 2.0766069003165937,
+      "auroc": 0.8876300009987934,
+      "auroc_ci": [
+        0.8772803177506684,
+        0.8994248341240277
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5154061013649028,
+      "shuffle_auroc_ci": [
+        0.4931992632094612,
+        0.5329863811792066
+      ],
+      "acc@80cov_mixed": 0.5205582798943795,
+      "acc_forced_mixed": 0.4260712130356065,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 1585,
+      "mean_silhouette_type_vs_rest": 0.31658816798758777,
+      "nearest_centroid_type": "B cell",
+      "nearest_centroid_euclidean": 2.757245486499837
+    },
+    {
+      "type": "Mast cell",
+      "underpowered": false,
+      "n_total": 660,
+      "n_in_held_donor": 90,
+      "n_train": 4153,
+      "n_cal": 2323,
+      "n_test_known": 3224,
+      "n_hvg": 1000,
+      "temperature": 1.957552141911645,
+      "auroc": 0.9089019851116624,
+      "auroc_ci": [
+        0.8818662324938827,
+        0.9304202339399334
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.46436104218362284,
+      "shuffle_auroc_ci": [
+        0.40324391441751783,
+        0.5281080076971408
+      ],
+      "acc@80cov_mixed": 0.8743870237646171,
+      "acc_forced_mixed": 0.7785153892576946,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 570,
+      "mean_silhouette_type_vs_rest": 0.35896646394129955,
+      "nearest_centroid_type": "B cell",
+      "nearest_centroid_euclidean": 2.3606441094232964
+    },
+    {
+      "type": "NK cell",
+      "underpowered": false,
+      "n_total": 354,
+      "n_in_held_donor": 83,
+      "n_train": 4375,
+      "n_cal": 2400,
+      "n_test_known": 3231,
+      "n_hvg": 1000,
+      "temperature": 1.7086039926972052,
+      "auroc": 0.3328523005671712,
+      "auroc_ci": [
+        0.2810370463251692,
+        0.3903435460747678
+      ],
+      "ci_lo_gt_0.5": false,
+      "shuffle_auroc": 0.49783535255227035,
+      "shuffle_auroc_ci": [
+        0.443496656244059,
+        0.556714828743517
+      ],
+      "acc@80cov_mixed": 0.8789136175028291,
+      "acc_forced_mixed": 0.7933011466505733,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 271,
+      "mean_silhouette_type_vs_rest": 0.36599468374827965,
+      "nearest_centroid_type": "T cell",
+      "nearest_centroid_euclidean": 3.616117230668753
+    },
+    {
+      "type": "Secretory",
+      "underpowered": false,
+      "n_total": 706,
+      "n_in_held_donor": 563,
+      "n_train": 4486,
+      "n_cal": 2417,
+      "n_test_known": 2751,
+      "n_hvg": 1000,
+      "temperature": 1.6929922100046402,
+      "auroc": 0.8305502342761845,
+      "auroc_ci": [
+        0.8143506424680248,
+        0.846731700958824
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5067809993846901,
+      "shuffle_auroc_ci": [
+        0.4816323237535014,
+        0.5334437027365837
+      ],
+      "acc@80cov_mixed": 0.8879668049792531,
+      "acc_forced_mixed": 0.7812311406155703,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 143,
+      "mean_silhouette_type_vs_rest": 0.16487800557530327,
+      "nearest_centroid_type": "Type 2",
+      "nearest_centroid_euclidean": 2.737970270490608
+    },
+    {
+      "type": "T cell",
+      "underpowered": false,
+      "n_total": 827,
+      "n_in_held_donor": 112,
+      "n_train": 3950,
+      "n_cal": 2381,
+      "n_test_known": 3202,
+      "n_hvg": 1000,
+      "temperature": 1.809433609241705,
+      "auroc": 0.6018810787900419,
+      "auroc_ci": [
+        0.5438829017949273,
+        0.6523153243606531
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.46811423663781565,
+      "shuffle_auroc_ci": [
+        0.4178690154999962,
+        0.5271953935353862
+      ],
+      "acc@80cov_mixed": 0.8702376461712561,
+      "acc_forced_mixed": 0.7682558841279421,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 715,
+      "mean_silhouette_type_vs_rest": 0.3470142483677991,
+      "nearest_centroid_type": "B cell",
+      "nearest_centroid_euclidean": 4.525145237965105
+    },
+    {
+      "type": "Transformed epithelium",
+      "underpowered": true,
+      "reason": "n_in_held_donor=17 < 30; excluded from aggregate; no alternate donor fold fabricated",
+      "n_total": 659,
+      "n_in_held_donor": 17,
+      "auroc": null,
+      "auroc_ci": null,
+      "ci_lo_gt_0.5": null,
+      "shuffle_auroc": null,
+      "acc@80cov_mixed": null,
+      "acc_forced_mixed": null,
+      "mean_silhouette_type_vs_rest": null,
+      "nearest_centroid_type": null,
+      "nearest_centroid_euclidean": null
+    },
+    {
+      "type": "Type 1",
+      "underpowered": false,
+      "n_total": 424,
+      "n_in_held_donor": 83,
+      "n_train": 4306,
+      "n_cal": 2399,
+      "n_test_known": 3231,
+      "n_hvg": 1000,
+      "temperature": 1.6774699609246446,
+      "auroc": 0.7767523203305329,
+      "auroc_ci": [
+        0.7394572943936654,
+        0.8162534565534952
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5364037393771931,
+      "shuffle_auroc_ci": [
+        0.46699005004020333,
+        0.5902684211827502
+      ],
+      "acc@80cov_mixed": 0.8751414560543191,
+      "acc_forced_mixed": 0.7803258901629451,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 341,
+      "mean_silhouette_type_vs_rest": 0.31105538176311714,
+      "nearest_centroid_type": "Type 2",
+      "nearest_centroid_euclidean": 2.4505846447755975
+    },
+    {
+      "type": "Type 2",
+      "underpowered": false,
+      "n_total": 1410,
+      "n_in_held_donor": 612,
+      "n_train": 3797,
+      "n_cal": 2451,
+      "n_test_known": 2702,
+      "n_hvg": 1000,
+      "temperature": 1.4217905185440385,
+      "auroc": 0.8940859590813873,
+      "auroc_ci": [
+        0.8822566168974875,
+        0.9049445362216595
+      ],
+      "ci_lo_gt_0.5": true,
+      "shuffle_auroc": 0.5095529576251917,
+      "shuffle_auroc_ci": [
+        0.48463117328425176,
+        0.5330481193810058
+      ],
+      "acc@80cov_mixed": 0.8419464353074312,
+      "acc_forced_mixed": 0.7151478575739287,
+      "acc80_gt_forced": true,
+      "n_distinctness_nontest": 798,
+      "mean_silhouette_type_vs_rest": 0.36892747769204526,
+      "nearest_centroid_type": "Secretory",
+      "nearest_centroid_euclidean": 3.458302213051518
+    }
+  ],
+  "aggregate": {
+    "n_types_swept": 11,
+    "n_types_detected": 10,
+    "n_types_detected_over_swept": "10/11",
+    "median_auroc": 0.7767523203305329,
+    "auroc_min": 0.3328523005671712,
+    "auroc_max": 0.9089019851116624,
+    "auroc_range": [
+      0.3328523005671712,
+      0.9089019851116624
+    ],
+    "types_detected": [
+      "Ciliated",
+      "Endothelium",
+      "Fibroblast",
+      "Lymphatic",
+      "Macrophages",
+      "Mast cell",
+      "Secretory",
+      "T cell",
+      "Type 1",
+      "Type 2"
+    ],
+    "types_failing": [
+      "NK cell"
+    ],
+    "types_underpowered_excluded": [
+      "B cell",
+      "Transformed epithelium"
+    ],
+    "spearman_auroc_vs_n_total": {
+      "rho": 0.4909090909090909,
+      "pvalue": 0.12520440713849534,
+      "n": 11
+    },
+    "spearman_auroc_vs_mean_silhouette": {
+      "rho": 0.18181818181818182,
+      "pvalue": 0.5926152128455,
+      "n": 11
+    },
+    "spearman_auroc_vs_nearest_centroid_dist": {
+      "rho": -0.46363636363636374,
+      "pvalue": 0.15090149929248603,
+      "n": 11
+    },
+    "abundance_direction": "rarer types are harder (positive Spearman with n_total)"
+  },
+  "failing_detail": [
+    {
+      "type": "NK cell",
+      "auroc": 0.3328523005671712,
+      "auroc_ci": [
+        0.2810370463251692,
+        0.3903435460747678
+      ],
+      "n_total": 354,
+      "n_in_held_donor": 83,
+      "mean_silhouette_type_vs_rest": 0.36599468374827965,
+      "nearest_centroid_type": "T cell",
+      "nearest_centroid_euclidean": 3.616117230668753,
+      "why": "CI-lo <= 0.5: held-out type is not linearly novel in LOTO HVG/PCA space under the pre-registered donor split; nearest remaining centroid is T cell at Euclidean 3.616"
+    }
+  ],
+  "depth_control_best3_worst3": [
+    {
+      "type": "Mast cell",
+      "auroc": 0.9089019851116624,
+      "rank_group": "best",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.5123966087675765,
+      "depth_alone_auroc_ci": [
+        0.46873831628886065,
+        0.5665833047655604
+      ],
+      "residual_auroc": 0.9084298318169286,
+      "residual_auroc_ci": [
+        0.8799665662858055,
+        0.9303710419738594
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "Type 2",
+      "auroc": 0.8940859590813873,
+      "rank_group": "best",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.5223660275854729,
+      "depth_alone_auroc_ci": [
+        0.498145206921635,
+        0.5503240570937513
+      ],
+      "residual_auroc": 0.9095556184477245,
+      "residual_auroc_ci": [
+        0.9003971799314725,
+        0.9203954810271698
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "Macrophages",
+      "auroc": 0.8876300009987934,
+      "rank_group": "best",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.6205237504271659,
+      "depth_alone_auroc_ci": [
+        0.600644411673741,
+        0.6366126406790966
+      ],
+      "residual_auroc": 0.8903072265573427,
+      "residual_auroc_ci": [
+        0.8801416728270341,
+        0.9010053209618333
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "NK cell",
+      "auroc": 0.3328523005671712,
+      "rank_group": "worst",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.4119001540050639,
+      "depth_alone_auroc_ci": [
+        0.3733136288228781,
+        0.46011747231686456
+      ],
+      "residual_auroc": 0.2662012954324261,
+      "residual_auroc_ci": [
+        0.2102570736197942,
+        0.3199922798395303
+      ],
+      "residual_ci_lo_gt_0.5": false
+    },
+    {
+      "type": "T cell",
+      "auroc": 0.6018810787900419,
+      "rank_group": "worst",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.37794179976800213,
+      "depth_alone_auroc_ci": [
+        0.3357360161150603,
+        0.4215568328143922
+      ],
+      "residual_auroc": 0.559775698224324,
+      "residual_auroc_ci": [
+        0.5004436203494017,
+        0.6241889646204744
+      ],
+      "residual_ci_lo_gt_0.5": true
+    },
+    {
+      "type": "Fibroblast",
+      "auroc": 0.7181596587446678,
+      "rank_group": "worst",
+      "library_size_source": "GSE obs nUMI; covariate = log1p(nUMI)",
+      "depth_alone_auroc": 0.4650413238878733,
+      "depth_alone_auroc_ci": [
+        0.3620389731860147,
+        0.5673176817822717
+      ],
+      "residual_auroc": 0.7185119591712371,
+      "residual_auroc_ci": [
+        0.6506078289308342,
+        0.7922564095180177
+      ],
+      "residual_ci_lo_gt_0.5": true
+    }
+  ],
+  "mast_cell_anecdote_reference": {
+    "confound_sidecar_held_donor_auroc": 0.8583712434518886,
+    "confound_sidecar_ci": [
+      0.8358362564160327,
+      0.8838990798850281
+    ],
+    "note": "Confound sidecar used PNS-shared genes. This sweep is GSE-only genes, so Mast AUROC need not match 0.858 exactly."
+  },
+  "paper_number": {
+    "median_auroc": 0.7767523203305329,
+    "auroc_range": [
+      0.3328523005671712,
+      0.9089019851116624
+    ],
+    "n_types_detected": 10,
+    "n_types_swept": 11
+  },
+  "honest_reading": "Within-atlas leave-one-type-out on GSE130148 is the primary confound-free face: 10/11 scored types have novelty AUROC CI-lo > 0.5; median 0.777 range [0.333, 0.909]. Underpowered in held donor ASK440 and excluded: ['B cell', 'Transformed epithelium']. This does not replace the cross-atlas PNS question (shared-type control still impossible; atlas-label probe 0.995).",
+  "writes_only": "${SOURCE_ROOT}/Desktop/singlecell-genomics-research/research/results/SC31/sc31_within_atlas_type_sweep.json",
+  "hard_refuse_basenames": [
+    "sc31_fetal_lung_pns_novel.json",
+    "sc31_fetal_lung_pns_redteam.json",
+    "sc31_atlas_confound_control.json",
+    "sc31_fetal_lung_pns_stop.json"
+  ]
+}

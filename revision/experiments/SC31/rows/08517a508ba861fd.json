@@ -1,0 +1,1502 @@
+{
+  "atlas": "SC31",
+  "type": "Secretory",
+  "test_donor": "ASK428",
+  "calibration_donor": "ASK454",
+  "training_donors": [
+    "ASK440",
+    "ASK452"
+  ],
+  "n_total": 706,
+  "n_novel": 70,
+  "row_id": "08517a508ba861fd",
+  "analysis_plan_sha256": "17ac7f39b2e79f93be9d38b9d088d260c8a11a948cbc601a33ee9589d9413c79",
+  "input_sha256": "771ce46b7f937c562cc2039142ebbbf41afe5df1e73630ff8a4b59fa4ceeca70",
+  "n_train": 5168,
+  "n_calibration": 2367,
+  "n_known": 2119,
+  "excluded_calibration_target": 5,
+  "excluded_calibration_other": 0,
+  "excluded_test_other": 0,
+  "training_classes": [
+    "B cell",
+    "Ciliated",
+    "Endothelium",
+    "Fibroblast",
+    "Lymphatic",
+    "Macrophages",
+    "Mast cell",
+    "NK cell",
+    "T cell",
+    "Transformed epithelium",
+    "Type 1",
+    "Type 2"
+  ],
+  "n_hvg": 1000,
+  "pca_solver_resolved": "randomized",
+  "readout_n_iter": 95,
+  "readout_converged": true,
+  "fit_wall_seconds": 0.6119871059781872,
+  "status": "SCORED",
+  "temperature": 1.9176448515006508,
+  "known_test_calibration_raw": {
+    "nll": 0.2861651434549831,
+    "brier": 0.14845276784103004,
+    "ece": 0.017376367680570423,
+    "accuracy": 0.8975932043416706,
+    "bins": [
+      {
+        "bin": 0,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 1,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 2,
+        "n": 1,
+        "confidence": 0.292637415434893,
+        "accuracy": 0.0
+      },
+      {
+        "bin": 3,
+        "n": 8,
+        "confidence": 0.3632802296777721,
+        "accuracy": 0.25
+      },
+      {
+        "bin": 4,
+        "n": 44,
+        "confidence": 0.4652482710572849,
+        "accuracy": 0.5
+      },
+      {
+        "bin": 5,
+        "n": 95,
+        "confidence": 0.5506014827092431,
+        "accuracy": 0.4631578947368421
+      },
+      {
+        "bin": 6,
+        "n": 77,
+        "confidence": 0.6539031721533782,
+        "accuracy": 0.6103896103896104
+      },
+      {
+        "bin": 7,
+        "n": 127,
+        "confidence": 0.7554688385442656,
+        "accuracy": 0.7244094488188977
+      },
+      {
+        "bin": 8,
+        "n": 190,
+        "confidence": 0.8569379732639847,
+        "accuracy": 0.8631578947368421
+      },
+      {
+        "bin": 9,
+        "n": 1577,
+        "confidence": 0.9818063126827136,
+        "accuracy": 0.9708306911857958
+      }
+    ]
+  },
+  "known_test_calibration_temperature": {
+    "nll": 0.3771398630169056,
+    "brier": 0.17444691372099608,
+    "ece": 0.1182391940776063,
+    "accuracy": 0.8975932043416706,
+    "bins": [
+      {
+        "bin": 0,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 1,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 2,
+        "n": 8,
+        "confidence": 0.26808693849377385,
+        "accuracy": 0.125
+      },
+      {
+        "bin": 3,
+        "n": 75,
+        "confidence": 0.3567698548681747,
+        "accuracy": 0.44
+      },
+      {
+        "bin": 4,
+        "n": 145,
+        "confidence": 0.45165112197323826,
+        "accuracy": 0.6
+      },
+      {
+        "bin": 5,
+        "n": 192,
+        "confidence": 0.5495760518988893,
+        "accuracy": 0.7708333333333334
+      },
+      {
+        "bin": 6,
+        "n": 252,
+        "confidence": 0.6542704523292667,
+        "accuracy": 0.8849206349206349
+      },
+      {
+        "bin": 7,
+        "n": 309,
+        "confidence": 0.7508283395191799,
+        "accuracy": 0.9093851132686084
+      },
+      {
+        "bin": 8,
+        "n": 388,
+        "confidence": 0.8535243614820558,
+        "accuracy": 0.9871134020618557
+      },
+      {
+        "bin": 9,
+        "n": 750,
+        "confidence": 0.9677073684509915,
+        "accuracy": 0.9946666666666667
+      }
+    ]
+  },
+  "calibration_fit_raw": {
+    "nll": 0.885472334241796,
+    "brier": 0.39467629126733894,
+    "ece": 0.1247946799780149,
+    "accuracy": 0.7342627798901563,
+    "bins": [
+      {
+        "bin": 0,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 1,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 2,
+        "n": 9,
+        "confidence": 0.27559255884953426,
+        "accuracy": 0.2222222222222222
+      },
+      {
+        "bin": 3,
+        "n": 37,
+        "confidence": 0.36478724219117126,
+        "accuracy": 0.2702702702702703
+      },
+      {
+        "bin": 4,
+        "n": 77,
+        "confidence": 0.4543087075390643,
+        "accuracy": 0.4155844155844156
+      },
+      {
+        "bin": 5,
+        "n": 173,
+        "confidence": 0.5514078473781844,
+        "accuracy": 0.49710982658959535
+      },
+      {
+        "bin": 6,
+        "n": 191,
+        "confidence": 0.6508448950934422,
+        "accuracy": 0.4816753926701571
+      },
+      {
+        "bin": 7,
+        "n": 199,
+        "confidence": 0.7550679665052682,
+        "accuracy": 0.5628140703517588
+      },
+      {
+        "bin": 8,
+        "n": 270,
+        "confidence": 0.8544754031354276,
+        "accuracy": 0.6555555555555556
+      },
+      {
+        "bin": 9,
+        "n": 1411,
+        "confidence": 0.9792756621519114,
+        "accuracy": 0.8695960311835578
+      }
+    ]
+  },
+  "calibration_fit_temperature": {
+    "nll": 0.7193900813186864,
+    "brier": 0.36607420651316225,
+    "ece": 0.01940035151666776,
+    "accuracy": 0.7342627798901563,
+    "bins": [
+      {
+        "bin": 0,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 1,
+        "n": 0,
+        "confidence": null,
+        "accuracy": null
+      },
+      {
+        "bin": 2,
+        "n": 39,
+        "confidence": 0.2666348927551103,
+        "accuracy": 0.2564102564102564
+      },
+      {
+        "bin": 3,
+        "n": 120,
+        "confidence": 0.3558690792057628,
+        "accuracy": 0.375
+      },
+      {
+        "bin": 4,
+        "n": 215,
+        "confidence": 0.45583912980075836,
+        "accuracy": 0.5116279069767442
+      },
+      {
+        "bin": 5,
+        "n": 301,
+        "confidence": 0.5492224769313009,
+        "accuracy": 0.5614617940199336
+      },
+      {
+        "bin": 6,
+        "n": 302,
+        "confidence": 0.647992227424965,
+        "accuracy": 0.6225165562913907
+      },
+      {
+        "bin": 7,
+        "n": 303,
+        "confidence": 0.7503417122614096,
+        "accuracy": 0.735973597359736
+      },
+      {
+        "bin": 8,
+        "n": 365,
+        "confidence": 0.8517253782087453,
+        "accuracy": 0.8547945205479452
+      },
+      {
+        "bin": 9,
+        "n": 722,
+        "confidence": 0.9631303472843835,
+        "accuracy": 0.943213296398892
+      }
+    ]
+  },
+  "scores": {
+    "msp_raw": {
+      "auroc": 0.8170093709971011,
+      "average_precision": 0.10068916495714354,
+      "novel_prevalence": 0.03197807217907721,
+      "operating_points": [
+        {
+          "nominal_known_coverage": 0.6,
+          "threshold": 0.10512817266948615,
+          "calibration_realized_coverage": 0.6003379805661174,
+          "held_known_coverage": 0.7484662576687117,
+          "novel_acceptance": 0.2,
+          "held_mixture_coverage": 0.7309273640931933,
+          "selective_risk": 0.038124999999999964,
+          "accepted_n": 1600,
+          "accepted_known_error_per_known": 0.022180273714016045,
+          "topk_coverage": 0.5998172681589767,
+          "topk_risk": 0.01980198019801982,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.7484662576687117,
+              "risk": 0.029634300126103404
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.7429815950920245,
+              "risk": 0.03224638555670874
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.7210429447852761,
+              "risk": 0.0430921074161098
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.6936196319018405,
+              "risk": 0.0576140646899536
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.6113496932515338,
+              "risk": 0.10899687367324096
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.47423312883435587,
+              "risk": 0.2342521643944671
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.7,
+          "threshold": 0.18503495191208208,
+          "calibration_realized_coverage": 0.7004647232784115,
+          "held_known_coverage": 0.827748938178386,
+          "novel_acceptance": 0.4142857142857143,
+          "held_mixture_coverage": 0.8145271813613523,
+          "selective_risk": 0.05440269209197979,
+          "accepted_n": 1783,
+          "accepted_known_error_per_known": 0.03209060877772534,
+          "topk_coverage": 0.6998629511192326,
+          "topk_risk": 0.03524804177545693,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.827748938178386,
+              "risk": 0.03876852907639681
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8236143059394593,
+              "risk": 0.043603613455744206
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.8070757769837523,
+              "risk": 0.06343935168575321
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.786402615789119,
+              "risk": 0.08940728059248793
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.724383132205218,
+              "risk": 0.17620424811129135
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.6210173262320502,
+              "risk": 0.3593911990924437
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.8,
+          "threshold": 0.3053108492376847,
+          "calibration_realized_coverage": 0.8001689902830588,
+          "held_known_coverage": 0.8957055214723927,
+          "novel_acceptance": 0.6428571428571429,
+          "held_mixture_coverage": 0.8876199177706715,
+          "selective_risk": 0.07822954194544518,
+          "accepted_n": 1943,
+          "accepted_known_error_per_known": 0.05049551675318546,
+          "topk_coverage": 0.7999086340794883,
+          "topk_risk": 0.0531125071387778,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.8957055214723927,
+              "risk": 0.05637513171759746
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8931770376862402,
+              "risk": 0.06316679743623708
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.8830631025416301,
+              "risk": 0.09072239325570343
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.8704206836108677,
+              "risk": 0.1260674078979471
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.8324934268185802,
+              "risk": 0.23854353305596893
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.7692813321647678,
+              "risk": 0.45064960673049537
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.9,
+          "threshold": 0.43364567790377084,
+          "calibration_realized_coverage": 0.9002957329953528,
+          "held_known_coverage": 0.9462010382255781,
+          "novel_acceptance": 0.7714285714285715,
+          "held_mixture_coverage": 0.9406121516674281,
+          "selective_risk": 0.10101991257892184,
+          "accepted_n": 2059,
+          "accepted_known_error_per_known": 0.0726757904672015,
+          "topk_coverage": 0.8999543170397442,
+          "topk_risk": 0.08426395939086295,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9462010382255781,
+              "risk": 0.07680798004987531
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.944453313557608,
+              "risk": 0.08434860371947443
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9374624148857278,
+              "risk": 0.11479226026185547
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9287237915458775,
+              "risk": 0.15349135002351955
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9025079215263264,
+              "risk": 0.2740851130582883
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.8588148048270747,
+              "risk": 0.49143561402957897
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.95,
+          "threshold": 0.5040206370486178,
+          "calibration_realized_coverage": 0.9501478664976764,
+          "held_known_coverage": 0.9787635677206229,
+          "novel_acceptance": 0.8857142857142857,
+          "held_mixture_coverage": 0.9757880310644129,
+          "selective_risk": 0.11750936329588013,
+          "accepted_n": 2136,
+          "accepted_known_error_per_known": 0.08919301557338367,
+          "topk_coverage": 0.949748743718593,
+          "topk_risk": 0.10485810485810487,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9787635677206229,
+              "risk": 0.09112825458052073
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9778330749005596,
+              "risk": 0.09936075059096683
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.974111103620306,
+              "risk": 0.13244801193716654
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9694586395199891,
+              "risk": 0.17416435906030472
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9555012472190386,
+              "risk": 0.30175087049626226
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9322389267174542,
+              "risk": 0.522884892138358
+            }
+          ]
+        }
+      ]
+    },
+    "msp_temperature": {
+      "auroc": 0.8395065057641745,
+      "average_precision": 0.1216086676329585,
+      "novel_prevalence": 0.03197807217907721,
+      "operating_points": [
+        {
+          "nominal_known_coverage": 0.6,
+          "threshold": 0.3097318770817501,
+          "calibration_realized_coverage": 0.6003379805661174,
+          "held_known_coverage": 0.6970268994808873,
+          "novel_acceptance": 0.15714285714285714,
+          "held_mixture_coverage": 0.6797624486066697,
+          "selective_risk": 0.03427419354838712,
+          "accepted_n": 1488,
+          "accepted_known_error_per_known": 0.018876828692779613,
+          "topk_coverage": 0.5998172681589767,
+          "topk_risk": 0.01980198019801982,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.6970268994808873,
+              "risk": 0.02708192281651997
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.6916280590575069,
+              "risk": 0.02929246249044368
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.6700326973639857,
+              "risk": 0.03849085308335836
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.6430384952470842,
+              "risk": 0.05085765748008794
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.5620558888963797,
+              "risk": 0.09508544765937285
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.4270848783118722,
+              "risk": 0.2060710818554211
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.7,
+          "threshold": 0.38917872729892367,
+          "calibration_realized_coverage": 0.7004647232784115,
+          "held_known_coverage": 0.7918829636621048,
+          "novel_acceptance": 0.24285714285714285,
+          "held_mixture_coverage": 0.7743261763362266,
+          "selective_risk": 0.04778761061946901,
+          "accepted_n": 1695,
+          "accepted_known_error_per_known": 0.030202925908447382,
+          "topk_coverage": 0.6998629511192326,
+          "topk_risk": 0.036553524804177506,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.7918829636621048,
+              "risk": 0.03814064362336115
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.7863927054540552,
+              "risk": 0.04111109863267059
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.7644316726218566,
+              "risk": 0.05341960337125176
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.7369803815816085,
+              "risk": 0.06983679469575901
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.6546265084608642,
+              "risk": 0.1273496857645281
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.5173700532596238,
+              "risk": 0.26389241805281366
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.8,
+          "threshold": 0.4661680520870074,
+          "calibration_realized_coverage": 0.8001689902830588,
+          "held_known_coverage": 0.8598395469561114,
+          "novel_acceptance": 0.42857142857142855,
+          "held_mixture_coverage": 0.8460484239378712,
+          "selective_risk": 0.06479481641468687,
+          "accepted_n": 1852,
+          "accepted_known_error_per_known": 0.04247286455875413,
+          "topk_coverage": 0.7999086340794883,
+          "topk_risk": 0.052541404911479184,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.8598395469561114,
+              "risk": 0.04939626783754116
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8555268657722647,
+              "risk": 0.05415826440126619
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.8382761410368773,
+              "risk": 0.07369623174885295
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.8167127351176431,
+              "risk": 0.09927936405735373
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.7520225173599406,
+              "risk": 0.18483157399314196
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.64420548776377,
+              "risk": 0.36560096279629534
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.9,
+          "threshold": 0.5549199453983041,
+          "calibration_realized_coverage": 0.9002957329953528,
+          "held_known_coverage": 0.929683813119396,
+          "novel_acceptance": 0.6571428571428571,
+          "held_mixture_coverage": 0.9209684787574235,
+          "selective_risk": 0.09325396825396826,
+          "accepted_n": 2016,
+          "accepted_known_error_per_known": 0.06701274185936762,
+          "topk_coverage": 0.8999543170397442,
+          "topk_risk": 0.08578680203045685,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.929683813119396,
+              "risk": 0.07208121827411167
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9269584035596306,
+              "risk": 0.0786594551947573
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9160567653205689,
+              "risk": 0.10536382817910385
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9024297175217421,
+              "risk": 0.13965159938860308
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.8615485741252612,
+              "risk": 0.24902283762476182
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.7934133351311266,
+              "risk": 0.45635456762429155
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.95,
+          "threshold": 0.6272789919433281,
+          "calibration_realized_coverage": 0.9501478664976764,
+          "held_known_coverage": 0.9726285983954696,
+          "novel_acceptance": 0.8142857142857143,
+          "held_mixture_coverage": 0.9675650982183646,
+          "selective_risk": 0.11237016052880078,
+          "accepted_n": 2118,
+          "accepted_known_error_per_known": 0.08541764983482775,
+          "topk_coverage": 0.949748743718593,
+          "topk_risk": 0.10389610389610393,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9726285983954696,
+              "risk": 0.08782144590004852
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9710451695543719,
+              "risk": 0.09547066746841552
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9647114541899817,
+              "risk": 0.1263186546900622
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.956794309984494,
+              "risk": 0.1654529658338812
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9330428773680308,
+              "risk": 0.28684069343362356
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.893457156340592,
+              "risk": 0.5034955273096324
+            }
+          ]
+        }
+      ]
+    },
+    "entropy_raw": {
+      "auroc": 0.8344502123643227,
+      "average_precision": 0.12847175813437742,
+      "novel_prevalence": 0.03197807217907721,
+      "operating_points": [
+        {
+          "nominal_known_coverage": 0.6,
+          "threshold": 0.15082732171783964,
+          "calibration_realized_coverage": 0.6003379805661174,
+          "held_known_coverage": 0.733364794714488,
+          "novel_acceptance": 0.18571428571428572,
+          "held_mixture_coverage": 0.7158519872087711,
+          "selective_risk": 0.03765156349712828,
+          "accepted_n": 1567,
+          "accepted_known_error_per_known": 0.021708352996696555,
+          "topk_coverage": 0.5998172681589767,
+          "topk_risk": 0.01904036557501909,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.733364794714488,
+              "risk": 0.0296010296010296
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.727888289624486,
+              "risk": 0.0320769170993502
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.7059822692644779,
+              "risk": 0.042364590351165764
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.6785997438144677,
+              "risk": 0.056158209041226266
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.5964521674644374,
+              "risk": 0.10513808079980334
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.45953954021438687,
+              "risk": 0.22568530078414398
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.7,
+          "threshold": 0.2228282277444584,
+          "calibration_realized_coverage": 0.7004647232784115,
+          "held_known_coverage": 0.8135913166588014,
+          "novel_acceptance": 0.34285714285714286,
+          "held_mixture_coverage": 0.7985381452718137,
+          "selective_risk": 0.05205949656750575,
+          "accepted_n": 1748,
+          "accepted_known_error_per_known": 0.03161868806040585,
+          "topk_coverage": 0.6998629511192326,
+          "topk_risk": 0.03394255874673624,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.8135913166588014,
+              "risk": 0.0388631090487239
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8088839749207848,
+              "risk": 0.042937026428017055
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.7900546079687184,
+              "risk": 0.05971816419316522
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.7665178992786355,
+              "risk": 0.08185397053235953
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.6959077732083868,
+              "risk": 0.15724540804464077
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.578224229757972,
+              "risk": 0.32381540901035355
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.8,
+          "threshold": 0.2790448953001046,
+          "calibration_realized_coverage": 0.8001689902830588,
+          "held_known_coverage": 0.8697498820198206,
+          "novel_acceptance": 0.4857142857142857,
+          "held_mixture_coverage": 0.8574691640018273,
+          "selective_risk": 0.06979222163026111,
+          "accepted_n": 1877,
+          "accepted_known_error_per_known": 0.045776309579990564,
+          "topk_coverage": 0.7999086340794883,
+          "topk_risk": 0.052541404911479184,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.8697498820198206,
+              "risk": 0.052631578947368425
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8659095260567653,
+              "risk": 0.05794564885990666
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.8505481022045438,
+              "risk": 0.07968180542763342
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.8313463223892672,
+              "risk": 0.1079816013805452
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.773740982943437,
+              "risk": 0.20130871576819523
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.6777320838670532,
+              "risk": 0.3921096609899729
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.9,
+          "threshold": 0.3656537881244352,
+          "calibration_realized_coverage": 0.9002957329953528,
+          "held_known_coverage": 0.9386503067484663,
+          "novel_acceptance": 0.6857142857142857,
+          "held_mixture_coverage": 0.9305619004111466,
+          "selective_risk": 0.09720176730486008,
+          "accepted_n": 2037,
+          "accepted_known_error_per_known": 0.07078810759792355,
+          "topk_coverage": 0.8999543170397442,
+          "topk_risk": 0.08324873096446705,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9386503067484663,
+              "risk": 0.07541478129713423
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9361209465381245,
+              "risk": 0.08218742424641795
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9260035056967572,
+              "risk": 0.10964798284142956
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9133567046450483,
+              "risk": 0.14482920499386617
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.8754163014899212,
+              "risk": 0.2564718657225039
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.812182296231376,
+              "risk": 0.4657220409891177
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.95,
+          "threshold": 0.44144632116540367,
+          "calibration_realized_coverage": 0.9501478664976764,
+          "held_known_coverage": 0.9754601226993865,
+          "novel_acceptance": 0.8142857142857143,
+          "held_mixture_coverage": 0.970306075833714,
+          "selective_risk": 0.11393596986817323,
+          "accepted_n": 2124,
+          "accepted_known_error_per_known": 0.0873053327041057,
+          "topk_coverage": 0.949748743718593,
+          "topk_risk": 0.10630110630110634,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9754601226993865,
+              "risk": 0.08950169327527817
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9738483786152498,
+              "risk": 0.09711484723566681
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9674014022787029,
+              "risk": 0.12782114176382187
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9593426818580193,
+              "risk": 0.16678437631105705
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9351665205959685,
+              "risk": 0.28770322950403077
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.8948729184925504,
+              "risk": 0.5037536773984548
+            }
+          ]
+        }
+      ]
+    },
+    "entropy_temperature": {
+      "auroc": 0.8591990831254636,
+      "average_precision": 0.17692922763724625,
+      "novel_prevalence": 0.03197807217907721,
+      "operating_points": [
+        {
+          "nominal_known_coverage": 0.6,
+          "threshold": 0.3399840380569162,
+          "calibration_realized_coverage": 0.6003379805661174,
+          "held_known_coverage": 0.5700802265219443,
+          "novel_acceptance": 0.05714285714285714,
+          "held_mixture_coverage": 0.5536774783005939,
+          "selective_risk": 0.02640264026402639,
+          "accepted_n": 1212,
+          "accepted_known_error_per_known": 0.013213780084945729,
+          "topk_coverage": 0.5998172681589767,
+          "topk_risk": 0.030464584920030457,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.5700802265219443,
+              "risk": 0.023178807947019864
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.5649508528281535,
+              "risk": 0.024166829357239378
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.54443335805299,
+              "risk": 0.02830508768410442
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.5187864895840356,
+              "risk": 0.033938215709614875
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.4418458841771726,
+              "risk": 0.05476128717252323
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.31361154183240075,
+              "risk": 0.11217163248634936
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.7,
+          "threshold": 0.3895538578812595,
+          "calibration_realized_coverage": 0.7004647232784115,
+          "held_known_coverage": 0.6521944313355357,
+          "novel_acceptance": 0.11428571428571428,
+          "held_mixture_coverage": 0.6349931475559616,
+          "selective_risk": 0.033812949640287804,
+          "accepted_n": 1390,
+          "accepted_known_error_per_known": 0.018404907975460124,
+          "topk_coverage": 0.6998629511192326,
+          "topk_risk": 0.044386422976501305,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.6521944313355357,
+              "risk": 0.028219971056439943
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.6468153441650374,
+              "risk": 0.02993700785431884
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.6252989954830446,
+              "risk": 0.03710056862165851
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.5984035596305536,
+              "risk": 0.04677944867802598
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.5177172520730803,
+              "risk": 0.08184990819475733
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.383240072810625,
+              "risk": 0.17311684199415964
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.8,
+          "threshold": 0.4636267836538155,
+          "calibration_realized_coverage": 0.8001689902830588,
+          "held_known_coverage": 0.7659273242095328,
+          "novel_acceptance": 0.18571428571428572,
+          "held_mixture_coverage": 0.7473732297852901,
+          "selective_risk": 0.0488997555012225,
+          "accepted_n": 1636,
+          "accepted_known_error_per_known": 0.03161868806040585,
+          "topk_coverage": 0.7999086340794883,
+          "topk_risk": 0.060536836093660784,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.7659273242095328,
+              "risk": 0.04128157732593962
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.7601251938245803,
+              "risk": 0.04362392446183957
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.7369166722847704,
+              "risk": 0.05336216348746671
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.7079060203600082,
+              "risk": 0.06643289712648222
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.6208740645857211,
+              "risk": 0.11297393702647014
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.47582080496190926,
+              "risk": 0.22837691364934082
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.9,
+          "threshold": 0.5513957115999615,
+          "calibration_realized_coverage": 0.9002957329953528,
+          "held_known_coverage": 0.8886267107126002,
+          "novel_acceptance": 0.4,
+          "held_mixture_coverage": 0.8730013704888077,
+          "selective_risk": 0.07796964939822082,
+          "accepted_n": 1911,
+          "accepted_known_error_per_known": 0.05710240679565833,
+          "topk_coverage": 0.8999543170397442,
+          "topk_risk": 0.08883248730964466,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.8886267107126002,
+              "risk": 0.06425916091343602
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.8837404436054742,
+              "risk": 0.06849452592748444
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.8641953751769702,
+              "risk": 0.08591493149413237
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.8397640396413403,
+              "risk": 0.10883076888494263
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.7664700330344502,
+              "risk": 0.18634362589662287
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.6443133553563001,
+              "risk": 0.35472057423276937
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.95,
+          "threshold": 0.6173902573972954,
+          "calibration_realized_coverage": 0.9501478664976764,
+          "held_known_coverage": 0.9523360075507314,
+          "novel_acceptance": 0.6428571428571429,
+          "held_mixture_coverage": 0.942439470077661,
+          "selective_risk": 0.103247697527872,
+          "accepted_n": 2063,
+          "accepted_known_error_per_known": 0.07928268050967438,
+          "topk_coverage": 0.949748743718593,
+          "topk_risk": 0.10678210678210676,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9523360075507314,
+              "risk": 0.08325074331020814
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9492412189037955,
+              "risk": 0.08945926856317377
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.936862064316052,
+              "risk": 0.11470354892157905
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9213881210813726,
+              "risk": 0.1472128016858187
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.8749662913773343,
+              "risk": 0.25163974688664803
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.7975965752039371,
+              "risk": 0.4526974198592651
+            }
+          ]
+        }
+      ]
+    },
+    "centroid_distance": {
+      "auroc": 0.6040585181689476,
+      "average_precision": 0.04162785643712272,
+      "novel_prevalence": 0.03197807217907721,
+      "operating_points": [
+        {
+          "nominal_known_coverage": 0.6,
+          "threshold": 10.361853548270192,
+          "calibration_realized_coverage": 0.6003379805661174,
+          "held_known_coverage": 0.929683813119396,
+          "novel_acceptance": 0.9285714285714286,
+          "held_mixture_coverage": 0.9296482412060302,
+          "selective_risk": 0.12972972972972974,
+          "accepted_n": 2035,
+          "accepted_known_error_per_known": 0.09391222274657858,
+          "topk_coverage": 0.5998172681589767,
+          "topk_risk": 0.07463823305407469,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.929683813119396,
+              "risk": 0.10101522842639594
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9296726892739162,
+              "risk": 0.1099944270544209
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9296281938919975,
+              "risk": 0.14591337045182184
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9295725746645992,
+              "risk": 0.19081688526908588
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9294057169824042,
+              "risk": 0.3255596761177655
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9291276208454122,
+              "risk": 0.5502385400983184
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.7,
+          "threshold": 11.206650671337446,
+          "calibration_realized_coverage": 0.7004647232784115,
+          "held_known_coverage": 0.9438414346389806,
+          "novel_acceptance": 0.9571428571428572,
+          "held_mixture_coverage": 0.944266788487894,
+          "selective_risk": 0.13014029995162069,
+          "accepted_n": 2067,
+          "accepted_known_error_per_known": 0.09532798489853704,
+          "topk_coverage": 0.6998629511192326,
+          "topk_risk": 0.08616187989556134,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9438414346389806,
+              "risk": 0.10099999999999999
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9439744488640194,
+              "risk": 0.1101154101639819
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9445065057641744,
+              "risk": 0.14655137647650424
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9451715768893684,
+              "risk": 0.1920386483905182
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9471667902649498,
+              "risk": 0.3281171871246483
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9504921458909189,
+              "risk": 0.553645207165225
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.8,
+          "threshold": 12.270226571373936,
+          "calibration_realized_coverage": 0.8001689902830588,
+          "held_known_coverage": 0.9589428975932044,
+          "novel_acceptance": 0.9857142857142858,
+          "held_mixture_coverage": 0.9597989949748744,
+          "selective_risk": 0.13089005235602091,
+          "accepted_n": 2101,
+          "accepted_known_error_per_known": 0.09721566776781501,
+          "topk_coverage": 0.7999086340794883,
+          "topk_risk": 0.10908052541404911,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9589428975932044,
+              "risk": 0.10137795275590551
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9592106114744152,
+              "risk": 0.11061246891773957
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9602814669992584,
+              "risk": 0.14749904432472813
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9616200364053125,
+              "risk": 0.19349173531991326
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9656357446234747,
+              "risk": 0.3307047445503909
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9723285916537451,
+              "risk": 0.5568744778142561
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.9,
+          "threshold": 14.085522953365295,
+          "calibration_realized_coverage": 0.9002957329953528,
+          "held_known_coverage": 0.9778197262859839,
+          "novel_acceptance": 0.9857142857142858,
+          "held_mixture_coverage": 0.9780721790772042,
+          "selective_risk": 0.1307800093414292,
+          "accepted_n": 2141,
+          "accepted_known_error_per_known": 0.09957527135441246,
+          "topk_coverage": 0.8999543170397442,
+          "topk_risk": 0.12639593908629443,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9778197262859839,
+              "risk": 0.10183397683397684
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9778986718802669,
+              "risk": 0.11088742076877274
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.978214454257399,
+              "risk": 0.1470865835668241
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9786091822288141,
+              "risk": 0.1923026844708251
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9797933661430593,
+              "risk": 0.3277323934213039
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9817670060001349,
+              "risk": 0.5527225657594309
+            }
+          ]
+        },
+        {
+          "nominal_known_coverage": 0.95,
+          "threshold": 15.874225072822004,
+          "calibration_realized_coverage": 0.9501478664976764,
+          "held_known_coverage": 0.9915054270882492,
+          "novel_acceptance": 1.0,
+          "held_mixture_coverage": 0.9917770671539515,
+          "selective_risk": 0.13219714417319206,
+          "accepted_n": 2171,
+          "accepted_known_error_per_known": 0.1024067956583294,
+          "topk_coverage": 0.949748743718593,
+          "topk_risk": 0.13083213083213086,
+          "forced_risk": 0.13111009593421652,
+          "prevalence_sensitivity": [
+            {
+              "novel_prevalence": 0,
+              "coverage": 0.9915054270882492,
+              "risk": 0.10328415040456924
+            },
+            {
+              "novel_prevalence": 0.01,
+              "coverage": 0.9915903728173667,
+              "risk": 0.112327358912611
+            },
+            {
+              "novel_prevalence": 0.05,
+              "coverage": 0.9919301557338367,
+              "risk": 0.14848470431514346
+            },
+            {
+              "novel_prevalence": 0.1,
+              "coverage": 0.9923548843794242,
+              "risk": 0.19364656648278486
+            },
+            {
+              "novel_prevalence": 0.25,
+              "coverage": 0.9936290703161869,
+              "risk": 0.3289004986938969
+            },
+            {
+              "novel_prevalence": 0.5,
+              "coverage": 0.9957527135441246,
+              "risk": 0.5535545023696682
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "scores_sha256": "c48f20da3ae0340455436c30e3ba410a2c76c1bbb5e5b6ad9459614724c80aba"
+}
