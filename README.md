@@ -42,6 +42,6 @@ Raw matrices, independent barcodes and model weights are excluded and retain pro
 
 ## Versioned citation and licensing
 
-Use the [v0.2.0 code and numerical release](https://github.com/PeterPonyu/sc-novelty-reliability/releases/tag/v0.2.0) for the revision analyses. The [historical Zenodo version DOI](https://doi.org/10.5281/zenodo.22224024) identifies v0.1.1; the [concept DOI](https://doi.org/10.5281/zenodo.22224023) currently resolves to that archived version. A new Zenodo version is pending and no new DOI is claimed.
+Use the [v0.2.0 code and numerical release](https://github.com/PeterPonyu/sc-novelty-reliability/releases/tag/v0.2.0), archived at [Zenodo DOI 10.5281/zenodo.23436000](https://doi.org/10.5281/zenodo.23436000), for the revision analyses. All four deposited file sizes and server MD5 checksums match the verified local files. The numerical ZIP is one unchanged archive, with SHA-256 `c71ff2d5cc93e16560c5a7ec6f3fbcfa4db6326ac12ed25b4f158ced7b0b56b7`. The [historical version DOI](https://doi.org/10.5281/zenodo.22224024) identifies v0.1.1; the [concept DOI](https://doi.org/10.5281/zenodo.22224023) identifies their version lineage. The immutable v0.2.0 tag and release archives retain their original bytes. The separately pinned display patch above reproduces the final figure layout without changing scientific arrays.
 
 Original software is MIT licensed. Original derived documentation and examples are CC BY 4.0; source-provider terms remain applicable. `CITATION.cff` identifies software authorship for the current code snapshot.
