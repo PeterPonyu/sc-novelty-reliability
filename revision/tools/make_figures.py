@@ -36,6 +36,94 @@ plt.rcParams.update({'font.family':'Arial','font.size':10.5,'axes.labelsize':11.
  'svg.fonttype':'none','svg.hashsalt':'array-05851-enhanced','axes.spines.top':False,'axes.spines.right':False,'axes.linewidth':.7,
  'xtick.major.width':.6,'ytick.major.width':.6,'savefig.facecolor':'white','figure.facecolor':'white'})
 MANIFEST=[]
+# These are panel-specific header allocations in points, not a common grid.
+# Legends occupy the original panel's upper strip; the data frame ends below it.
+LEGEND_HEADERS={
+ '1':{'B':(3,20),'D':(2,20),'F':(1,32)},
+ '2':{'A':(3,20)},
+ '3':{'B':(2,32),'D':(2,20),'E':(2,20)},
+ '4':{'G':(2,32)},
+ '5':{'B':(2,44),'F':(2,20)},
+ '6':{'B':(3,32),'D':(2,32)},
+ '7':{'A':(3,20),'B':(3,34),'H':(2,32)},
+ '8':{'C':(2,44)},
+ '9':{'E':(3,20),'F':(2,32)}}
+NOTE_HEADERS={'1':{'G':20},'3':{'A':20,'C':20},
+              '4':{'E':20},'5':{'H':32},'7':{'F':32},'9':{'G':20}}
+LAYOUT_CHECKS=[]
+
+def panel_headers(fig,number):
+    """Place legends/statistics outside data frames in measured, reserved strips."""
+    axes=fig._main_axes
+    for i,ax in enumerate(axes):
+        letter=chr(65+i);old=ax.get_position().frozen()
+        spec=LEGEND_HEADERS.get(number,{}).get(letter)
+        reserve=spec[1] if spec else NOTE_HEADERS.get(number,{}).get(letter,0)
+        # D--F share three covariate rows and therefore retain aligned frames.
+        if number=='3' and letter=='F':reserve=20
+        if not reserve:continue
+        delta=reserve/(fig.get_figheight()*72)
+        ax.set_position([old.x0,old.y0,old.width,old.height-delta])
+        height=ax.get_position().height
+        ax.set_title(ax.get_title(),y=1+delta/height,pad=7,
+                     loc='center',fontweight='normal',fontsize=11.8)
+        if spec:
+            legend=ax.get_legend();assert legend is not None,(number,letter)
+            labels=[t.get_text() for t in legend.get_texts()]
+            handles,source_labels=ax.get_legend_handles_labels()
+            if not handles or source_labels!=labels:handles=legend.legend_handles
+            if number in ['3','4']:
+                labels=[s.replace('Adult cardiac','Cardiac') for s in labels]
+            if number=='9' and letter=='F':
+                labels=[s.removesuffix(' context') for s in labels]
+            title=legend.get_title().get_text()
+            legend.remove()
+            legend=ax.legend(handles,labels,loc='lower center',
+                bbox_to_anchor=(.5,1+3/(height*fig.get_figheight()*72)),
+                ncol=spec[0],frameon=False,fontsize=9.8,
+                title=title or None,title_fontsize=9.8,
+                handlelength=1.15,handletextpad=.35,columnspacing=.8,
+                labelspacing=.25,borderpad=0,borderaxespad=0)
+            ax._header_legend=legend
+        else:
+            for text in ax.texts:
+                if number in ['4','9']:
+                    x=text.get_position()[0]
+                    text.set_transform(ax.get_xaxis_transform())
+                    text.set_position((x,1+4/(height*fig.get_figheight()*72)))
+                    text.set_ha('center');text.set_va('bottom')
+                else:
+                    text.set_transform(ax.transAxes)
+                    text.set_position((.5,1+4/(height*fig.get_figheight()*72)))
+                    text.set_ha('center');text.set_va('bottom')
+                text.set_bbox(None)
+                text.set_clip_on(False)
+    fig.canvas.draw();renderer=fig.canvas.get_renderer()
+    frames=[a.get_window_extent(renderer) for a in axes]
+    records=[];notes=[]
+    for i,ax in enumerate(axes):
+        legend=ax.get_legend()
+        if legend is None:continue
+        bbox=legend.get_window_extent(renderer)
+        overlap=[chr(65+j) for j,frame in enumerate(frames)
+                 if bbox.overlaps(frame)]
+        assert not overlap,(number,chr(65+i),'legend enters data frame',overlap)
+        width=frames[i].width
+        assert bbox.width<=width+1,(number,chr(65+i),'legend wider than panel',bbox.width,width)
+        records.append({'panel':chr(65+i),'legend_labels':[t.get_text() for t in legend.get_texts()],
+                        'legend_bbox_pixels':list(map(float,bbox.extents)),
+                        'data_frame_intersections':overlap})
+    for i,ax in enumerate(axes):
+        if chr(65+i) not in NOTE_HEADERS.get(number,{}):continue
+        for text in ax.texts:
+            bbox=text.get_window_extent(renderer)
+            overlap=[chr(65+j) for j,frame in enumerate(frames) if bbox.overlaps(frame)]
+            assert not overlap,(number,chr(65+i),'note enters data frame',text.get_text(),overlap)
+            notes.append({'panel':chr(65+i),'text':text.get_text(),
+                          'data_frame_intersections':overlap})
+    LAYOUT_CHECKS.append({'figure':number,'legends':records,
+                          'statistical_notes':notes,
+                          'legends_clear_of_every_data_frame':True})
 
 def plate(number,titles,sources):
     fig=plt.figure(figsize=SIZES[number]);axes=[]
@@ -44,7 +132,7 @@ def plate(number,titles,sources):
         ax._panel_letter=fig.text(x-.038,y+h+.013,chr(65+k),fontsize=15,fontweight='bold',ha='left',va='bottom')
         wrap=40 if w>=.38 else 25 if w>=.27 else 21
         ax.set_title(textwrap.fill(title,wrap),pad=7,loc='center',fontweight='normal',fontsize=11.8)
-        ax.tick_params(length=3,pad=2.5)
+        ax.tick_params(length=3,pad=2.5 if str(number).startswith('S') else 4.5)
         ax.grid(axis='y',color='#E9ECEF',lw=.5,zorder=0);ax.set_axisbelow(True)
     fig._main_axes=axes
     MANIFEST.append({'figure':number,'layout':'hand-positioned by panel content','figure_inches':list(SIZES[number]),
@@ -69,6 +157,7 @@ def save(fig,number):
         if artist not in letters:
             artist.set_fontweight('normal')
             if artist.get_fontsize()<9.8:artist.set_fontsize(9.8)
+    if not str(number).startswith('S'):panel_headers(fig,number)
     for ext in ['pdf','svg','png']:
         kw={'dpi':300} if ext=='png' else {}
         if ext=='pdf':kw['metadata']={'CreationDate':None,'ModDate':None}
@@ -116,7 +205,8 @@ def hchance(ax):ax.axhline(.5,color='#6C727B',lw=.75,ls='--')
 def vchance(ax):ax.axvline(.5,color='#6C727B',lw=.75,ls='--')
 
 def heat(ax,frame,vmin=0,vmax=1,cmap='viridis',fmt=None,label='AUROC',labelsize=7,
-         compact_numbers=None,adaptive_contrast=False,colorbar_title_pad=4):
+         compact_numbers=None,adaptive_contrast=False,colorbar_title_pad=10,
+         horizontal_colorbar=False,scale_heading_above_frame=False):
     v=frame.to_numpy(float);cm=plt.get_cmap(cmap).copy();cm.set_bad('#F0F2F4')
     im=ax.imshow(v,vmin=vmin,vmax=vmax,cmap=cm,aspect='auto',interpolation='nearest')
     ax.set_xticks(range(frame.shape[1]),frame.columns);ax.set_yticks(range(frame.shape[0]),frame.index)
@@ -141,11 +231,20 @@ def heat(ax,frame,vmin=0,vmax=1,cmap='viridis',fmt=None,label='AUROC',labelsize=
                         foreground='white' if 1.05/(luminance+.05)>(luminance+.05)/.05 else 'black'
                     ax.text(j,i,text,ha='center',va='center',fontsize=6.8,color=foreground)
                 else:ax.text(j,i,'-',ha='center',va='center',color='#818A94')
-    pos=ax.get_position();cax=ax.figure.add_axes([pos.x1+.008,pos.y0+.025,.008,pos.height-.05])
-    ax._colorbar_axes=cax;cb=ax.figure.colorbar(im,cax=cax);cb.outline.set_visible(False);cb.ax.tick_params(labelsize=6.5,length=2,pad=2)
+    pos=ax.get_position()
+    cax=ax.figure.add_axes([pos.x0,.055,pos.width,.009] if horizontal_colorbar
+                          else [pos.x1+.008,pos.y0+.025,.008,pos.height-.05])
+    ax._colorbar_axes=cax
+    cb=ax.figure.colorbar(im,cax=cax,orientation='horizontal' if horizontal_colorbar else 'vertical')
+    cb.outline.set_visible(False);cb.ax.tick_params(labelsize=6.5,length=2,pad=2)
     # Keep scale headings in the reserved colorbar margin, never over data.
     heading='log10\n(n+1)' if label=='log10(n+1)' else label
-    cb.ax.set_title(heading,fontsize=6.5,pad=colorbar_title_pad,loc='left')
+    if horizontal_colorbar:
+        cb.set_ticks([-1,0,1]);cb.ax.set_xlabel(heading,fontsize=9.8,labelpad=1)
+    elif scale_heading_above_frame:
+        cb.ax.set_title(heading,fontsize=9.8,pad=4,loc='center',
+                       y=1+.025/cax.get_position().height)
+    else:cb.ax.set_title(heading,fontsize=6.5,pad=colorbar_title_pad,loc='left')
     return im
 
 def distribution(ax,frame,column,group,groups,colorset=None,labels=None,limits=None):
@@ -264,7 +363,8 @@ def figure3():
             if k==1:a.legend(frameon=False,loc='lower right',fontsize=6.5)
             if k==2:a.axhline(0,color='#9AA1A9',lw=.7);a.axvline(0,color='#9AA1A9',lw=.7)
         a.set_xlabel('Centered log10 distance' if k==2 else 'log10 nearest-centroid distance');a.set_ylabel('Centered AUROC' if k==2 else 'Type AUROC')
-        a.text(.02,.94,f"r = {AG['covariates']['log10_distance']['centered_r' if k==2 else 'pooled_r']:+.3f}" if k!=1 else 'Within-atlas signs differ',transform=a.transAxes,fontsize=8,va='top',bbox=dict(facecolor='white',edgecolor='none',alpha=.8,pad=1.5))
+        if k!=1:
+            a.text(.02,.94,f"r = {AG['covariates']['log10_distance']['centered_r' if k==2 else 'pooled_r']:+.3f}",transform=a.transAxes,fontsize=8,va='top')
     names=['raw_distance','log10_distance','silhouette'];labels=['Raw distance','Log distance','Silhouette'];a=ax[3]
     for i,name in enumerate(names):
         d=AG['covariates'][name]
@@ -357,7 +457,7 @@ def figure5():
     frame.index=[x.replace('Transformed epithelium','Transformed epi.') for x in frame.index];heat(a,frame,label='Median',labelsize=6.5);a.tick_params(axis='x',rotation=35)
     for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
     a=ax[4];frame=N.pivot_table(index='test_donor',columns='method',values='auroc',aggfunc='median')[METHODS];frame.columns=[x.replace('\n',' ') for x in MSHORT];heat(a,frame,vmin=.4,vmax=.9,fmt='.2f',label='Median',labelsize=6.5);a.tick_params(axis='x',rotation=35)
-    for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
+    for tick in a.get_xticklabels():tick.set_rotation(90);tick.set_ha('center');tick.set_rotation_mode('default')
     a=ax[5];wide=N.pivot(index='row_id',columns='method',values='auroc');a.scatter(wide.msp_raw,wide.msp_temperature,s=15,color='#218572',alpha=.7,label='MSP');a.scatter(wide.entropy_raw,wide.entropy_temperature,s=15,color='#6F55A5',alpha=.65,label='Entropy');diagonal(a);a.set_xlabel('AUROC without scaling');a.set_ylabel('AUROC with temperature scaling');a.legend(frameon=False,loc='lower right')
     a=ax[6];d=NC[NC.method=='msp_temperature'];a.scatter(d.observed_auroc,d.control_auroc,color='#B94E5D',s=28,edgecolor='white',lw=.4);diagonal(a);hchance(a);a.set_xlabel('Observed readout AUROC');a.set_ylabel('Within-donor label-shuffle AUROC')
     a=ax[7];d=anchors.merge(P[P.atlas=='Pulmonary'],on='type',suffixes=('_fresh','_primary'));a.scatter(d.auroc_primary,d.auroc_fresh,s=30,color='#218572');diagonal(a,.25,1);a.set_xlabel('Frozen primary AUROC');a.set_ylabel('Fresh anchor AUROC');a.text(.03,.92,f"Maximum absolute change\n{np.abs(d.auroc_primary-d.auroc_fresh).max():.5f}",transform=a.transAxes,va='top',fontsize=8)
@@ -413,11 +513,11 @@ def figure7():
 def figure8():
     fig,ax=plate('8',['Target-level frozen-representation results','Distribution across the same target set','Selective risk at fixed requested coverage','Diagnostic score error and calibration',
                      'Targets below chance across configurations','Fitted temperatures','Agreement of target rankings','Representation spread within each target'],['historical-frozen-representations.csv'])
-    a=ax[0];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO];frame.columns=MFL;frame.index=[x.replace('Transformed epithelium','Transformed epi.') for x in frame.index];heat(a,frame,label='AUROC',labelsize=6.5);a.tick_params(axis='x',rotation=35)
-    for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
+    a=ax[0];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO];frame.columns=MFL;frame.index=[x.replace('Transformed epithelium','Transformed epi.') for x in frame.index];heat(a,frame,label='AUROC',labelsize=6.5);a.tick_params(axis='x',rotation=90)
+    for tick in a.get_xticklabels():tick.set_ha('center');tick.set_rotation_mode('default')
     cmap=dict(zip(MFO,['#396FAC','#7B9DCE','#218572','#C28B29','#BA526C','#6F55A5']))
-    a=ax[1];distribution(a,FM,'auroc','model',MFO,cmap,labels=MFL,limits=(0,1.05));a.set_ylabel('AUROC across 11 targets');a.tick_params(axis='x',rotation=35)
-    for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
+    a=ax[1];distribution(a,FM,'auroc','model',MFO,cmap,labels=MFL,limits=(0,1.05));a.set_ylabel('AUROC across 11 targets');a.tick_params(axis='x',rotation=90)
+    for tick in a.get_xticklabels():tick.set_ha('center');tick.set_rotation_mode('default')
     hchance(a)
     a=ax[2];data=FM.melt(id_vars=['model'],value_vars=['risk_0.60','risk_0.70','risk_0.80','risk_0.90'],var_name='q',value_name='risk');data['coverage']=data.q.str.replace('risk_','').astype(float)
     curves(a,data,'coverage','risk','model',MFO,cmap,dict(zip(MFO,MFL)),band=False);a.set_xlabel('Requested held-mixture coverage');a.set_ylabel('Median selective risk');a.set_ylim(-.003,.22);a.legend(frameon=False,ncol=2,fontsize=6.2,loc='upper left')
@@ -426,11 +526,11 @@ def figure8():
         d=FM[FM.model==m];a.scatter(d.brier,d.ece,s=18,color=cmap[m],alpha=.8)
     a.set_xlabel('Diagnostic novelty-score Brier value');a.set_ylabel('Diagnostic expected calibration error')
     a=ax[4];counts=FM.assign(below=FM.auroc<.5).groupby('type').below.sum().sort_values();a.barh(range(len(counts)),counts,color='#BA526C');a.set_yticks(range(len(counts)),[v.replace('Transformed epithelium','Transformed epi.') for v in counts.index],fontsize=6.7);a.set_xlabel('Configurations with AUROC below 0.5');a.set_xlim(0,6.3);a.set_xticks([0,2,4,6])
-    a=ax[5];distribution(a,FM,'temperature','model',MFO,cmap,labels=MFL);a.set_ylabel('Calibration temperature');a.tick_params(axis='x',rotation=35)
-    for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
+    a=ax[5];distribution(a,FM,'temperature','model',MFO,cmap,labels=MFL);a.set_ylabel('Calibration temperature');a.tick_params(axis='x',rotation=90)
+    for tick in a.get_xticklabels():tick.set_ha('center');tick.set_rotation_mode('default')
     a.axhline(1,color='#8A939C',ls='--',lw=.8)
-    a=ax[6];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO].corr(method='spearman');frame.index=MFL;frame.columns=MFL;heat(a,frame,vmin=-1,vmax=1,cmap='RdBu_r',fmt='.2f',label='Rank r',labelsize=6.5,adaptive_contrast=True);a.tick_params(axis='x',rotation=35)
-    for tick in a.get_xticklabels():tick.set_ha('right');tick.set_rotation_mode('anchor')
+    a=ax[6];frame=FM.pivot(index='type',columns='model',values='auroc')[MFO].corr(method='spearman');frame.index=MFL;frame.columns=MFL;heat(a,frame,vmin=-1,vmax=1,cmap='RdBu_r',fmt='.2f',label='Rank r',labelsize=6.5,adaptive_contrast=True,horizontal_colorbar=True);a.tick_params(axis='x',rotation=90)
+    for tick in a.get_xticklabels():tick.set_ha('center');tick.set_rotation_mode('default')
     a=ax[7];d=FM.groupby('type').auroc.agg(['min','median','max']).sort_values('median');y=np.arange(len(d));a.hlines(y,d['min'],d['max'],color='#778999',lw=2);a.scatter(d['median'],y,color='#396FAC',s=18);a.set_yticks(y,[v.replace('Transformed epithelium','Transformed epi.') for v in d.index],fontsize=6.7);a.set_xlabel('Across-configuration AUROC range');a.set_xlim(0,1.03);vchance(a)
     save(fig,'8')
 
@@ -441,7 +541,8 @@ def figure9():
                      'Selective risk in cached contexts','Discrimination and diagnostic calibration','Eligible targets and held-group support','Matched representation contrasts'],['historical-portability.csv'])
     for i,dataset in enumerate(datasets):
         d=EX[EX.dataset==dataset];frame=d.pivot(index='type',columns='model',values='auroc')[models];frame.columns=ml;frame.index=[textwrap.shorten(str(v),width=24,placeholder='...') for v in frame.index]
-        heat(ax[i],frame,label='AUROC',fmt='.2f',labelsize=6.8)
+        heat(ax[i],frame,label='AUROC',fmt='.2f',labelsize=6.8,scale_heading_above_frame=True)
+        if i<2:ax[i]._colorbar_axes.title.set_x(-.8)
     a=ax[3];y=0;yt=[];yl=[]
     for ds in datasets:
         for m,l in zip(models,ml):
@@ -539,3 +640,4 @@ if __name__=='__main__':
     for item in MANIFEST:
         number=item['figure'];item['files']={ext:{'path':f'figures/Figure{number}.{ext}','sha256':hashlib.sha256((F/f'Figure{number}.{ext}').read_bytes()).hexdigest()} for ext in ['pdf','svg','png']}
     (E/'figure-panel-manifest.json').write_text(json.dumps({'figures':MANIFEST,'main_panels':sum(len(f['panels']) for f in MANIFEST if not str(f['figure']).startswith('S')),'supplement_panels':sum(len(f['panels']) for f in MANIFEST if str(f['figure']).startswith('S'))},indent=2)+'\n')
+    (E/'figure-legend-layout-checks.json').write_text(json.dumps({'status':'PASS','figures':LAYOUT_CHECKS},indent=2)+'\n')

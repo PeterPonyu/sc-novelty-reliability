@@ -1,4 +1,4 @@
-This Git directory contains the v0.2.0 analysis code and derived records plus the display-only corrections described in the root README. The immutable v0.2.0 archive retains the original figures; figure-readability.patch updates its plotting script to the final proof layout. Saved prediction arrays are supplied in numerical-reproduction-v0.2.0.zip on the v0.2.0 GitHub release. Extract that complete archive to a separate working directory before running saved-prediction checks.
+This Git directory contains the v0.2.0 analysis code and derived records plus the display-only corrections described in the root README. The immutable v0.2.0 archive retains the original figures; figure-readability.patch updates its plotting script and panel geometry to the current proof layout. Saved prediction arrays are supplied in numerical-reproduction-v0.2.0.zip on the v0.2.0 GitHub release. Extract that complete archive to a separate working directory before running saved-prediction checks.
 
 SC NOVELTY RELIABILITY VERSION 0.2.0
 
@@ -26,4 +26,4 @@ Files exclude raw provider matrices, independent cell barcodes, model weights an
 
 Version and citation
 Code and this archive: https://github.com/PeterPonyu/sc-novelty-reliability/releases/tag/v0.2.0
-The historical version DOI https://doi.org/10.5281/zenodo.22224024 identifies v0.1.1, not these files. Its concept DOI is https://doi.org/10.5281/zenodo.22224023. A new Zenodo version has not yet been published; no new DOI is claimed.
+The historical version DOI https://doi.org/10.5281/zenodo.22224024 identifies v0.1.1, not these files. Its concept DOI is https://doi.org/10.5281/zenodo.22224023. The matching public v0.2.0 archive is published at https://doi.org/10.5281/zenodo.23436000. The immutable deposited archive retains its original display layout; apply figure-readability.patch for the current figures. The patch changes no plotted scientific arrays, numerical CSVs or saved predictions.
